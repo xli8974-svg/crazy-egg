@@ -584,7 +584,7 @@ _updateCD();
 setInterval(_updateCD, 1000);
 
 // Early bird timer
-var _ebTarget = new Date('2026-04-05T23:59:59');
+var _ebTarget = new Date('2026-04-05T20:00:00');
 function _updateEB() {
   var diff = _ebTarget - new Date();
   var el = document.getElementById('eb-timer');
@@ -897,8 +897,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </ul>
         <div class="pay-box">
           <div class="pay-title">转账即报名 💸</div>
-          <div class="pay-row"><span class="pay-icon">🏦</span><div><div class="pay-label">Zelle</div><div class="pay-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afd5d7ccd9c5dac2efc6ccc3c0dacb81ccc0c2">[email&#160;protected]</a></div></div></div>
-          <div class="pay-row"><span class="pay-icon">💜</span><div><div class="pay-label">Venmo</div><div class="pay-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="453f3d26332f3028052c26292a30216b262a28">[email&#160;protected]</a></div></div></div>
+          <div class="pay-row"><span class="pay-icon">🏦</span><div><div class="pay-label">Zelle</div><div class="pay-val"><span class="email-reveal" onclick="(function(t){var e='zxcvjum',d='icloud.com',full=e+'@'+d;t.textContent=full;t.style.color='var(--orange)';t.style.fontWeight='700';if(navigator.clipboard)navigator.clipboard.writeText(full);})(this)" style="cursor:pointer;color:var(--orange-light);font-weight:700;font-family:monospace;text-decoration:underline;">&#x70B9;&#x51FB;&#x663E;&#x793A;&#x8D26;&#x53F7;</span></div></div></div>
+          <div class="pay-row"><span class="pay-icon">💜</span><div><div class="pay-label">Venmo</div><div class="pay-val"><span class="email-reveal" onclick="(function(t){var e='zxcvjum',d='icloud.com',full=e+'@'+d;t.textContent=full;t.style.color='var(--orange)';t.style.fontWeight='700';if(navigator.clipboard)navigator.clipboard.writeText(full);})(this)" style="cursor:pointer;color:var(--orange-light);font-weight:700;font-family:monospace;text-decoration:underline;">&#x70B9;&#x51FB;&#x663E;&#x793A;&#x8D26;&#x53F7;</span></div></div></div>
           <div class="pay-note">转账后请备注「彩蛋+姓名」，收到即确认报名成功！</div>
         </div>
       </div>
@@ -914,8 +914,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </ul>
         <div class="pay-box pay-box-secondary">
           <div class="pay-title">转账即报名 💸</div>
-          <div class="pay-row"><span class="pay-icon">🏦</span><div><div class="pay-label">Zelle</div><div class="pay-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9fe5e7fce9f5eaf2dff6fcf3f0eafbb1fcf0f2">[email&#160;protected]</a></div></div></div>
-          <div class="pay-row"><span class="pay-icon">💜</span><div><div class="pay-label">Venmo</div><div class="pay-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6c16140f1a0619012c050f00031908420f0301">[email&#160;protected]</a></div></div></div>
+          <div class="pay-row"><span class="pay-icon">🏦</span><div><div class="pay-label">Zelle</div><div class="pay-val"><span class="email-reveal" onclick="(function(t){var e='zxcvjum',d='icloud.com',full=e+'@'+d;t.textContent=full;t.style.color='var(--orange)';t.style.fontWeight='700';if(navigator.clipboard)navigator.clipboard.writeText(full);})(this)" style="cursor:pointer;color:var(--orange-light);font-weight:700;font-family:monospace;text-decoration:underline;">&#x70B9;&#x51FB;&#x663E;&#x793A;&#x8D26;&#x53F7;</span></div></div></div>
+          <div class="pay-row"><span class="pay-icon">💜</span><div><div class="pay-label">Venmo</div><div class="pay-val"><span class="email-reveal" onclick="(function(t){var e='zxcvjum',d='icloud.com',full=e+'@'+d;t.textContent=full;t.style.color='var(--orange)';t.style.fontWeight='700';if(navigator.clipboard)navigator.clipboard.writeText(full);})(this)" style="cursor:pointer;color:var(--orange-light);font-weight:700;font-family:monospace;text-decoration:underline;">&#x70B9;&#x51FB;&#x663E;&#x793A;&#x8D26;&#x53F7;</span></div></div></div>
           <div class="pay-note">转账后请备注「彩蛋+姓名」，收到即确认报名成功！</div>
         </div>
       </div>
@@ -1012,12 +1012,12 @@ document.addEventListener('DOMContentLoaded', function() {
       完整版：<a href="waiver.html" target="_blank" style="color:var(--orange);">点击签署完整 Waiver →</a></div>
       <label class="disclaimer-check"><input type="checkbox" id="f-agree"><span>我已阅读并同意免责声明，自愿参加本次活动 ✅</span></label>
       <button class="form-submit" onclick="submitForm()">确认报名 →</button>
-      <div class="form-note">提交后请转账至 <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1bbb9a2b7abb4ac81a8a2adaeb4a5efa2aeac">[email&#160;protected]</a></strong>（Zelle / Venmo）<br>备注「彩蛋+姓名」🎉</div>
+      <div class="form-note">提交后请转账至 <strong><span class="email-reveal" onclick="(function(t){var e='zxcvjum',d='icloud.com',full=e+'@'+d;t.textContent=full;t.style.color='var(--orange)';t.style.fontWeight='700';if(navigator.clipboard)navigator.clipboard.writeText(full);})(this)" style="cursor:pointer;color:var(--orange-light);font-weight:700;font-family:monospace;text-decoration:underline;">&#x70B9;&#x51FB;&#x663E;&#x793A;&#x8D26;&#x53F7;</span></strong>（Zelle / Venmo）<br>备注「彩蛋+姓名」🎉</div>
     </div>
     <div class="success-screen" id="successScreen">
       <div class="success-icon">🎉</div>
       <div class="success-title">报名成功！</div>
-      <div class="success-desc">请在 <strong>24小时内</strong> 完成付款：<br><span class="ticket-tag"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e892908b9e829d85a8818b84879d8cc68b8785">[email&#160;protected]</a></span><br>备注「彩蛋+<span id="confirm-name"></span>」<br><br>收到付款后将通过微信/邮件确认 🥚</div>
+      <div class="success-desc">请在 <strong>24小时内</strong> 完成付款：<br><span class="ticket-tag"><span class="email-reveal" onclick="(function(t){var e='zxcvjum',d='icloud.com',full=e+'@'+d;t.textContent=full;t.style.color='var(--orange)';t.style.fontWeight='700';if(navigator.clipboard)navigator.clipboard.writeText(full);})(this)" style="cursor:pointer;color:var(--orange-light);font-weight:700;font-family:monospace;text-decoration:underline;">&#x70B9;&#x51FB;&#x663E;&#x793A;&#x8D26;&#x53F7;</span></span><br>备注「彩蛋+<span id="confirm-name"></span>」<br><br>收到付款后将通过微信/邮件确认 🥚</div>
     </div>
   </div>
 </div>
