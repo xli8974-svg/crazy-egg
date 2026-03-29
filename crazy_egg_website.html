@@ -461,6 +461,17 @@ window.enterSite = function() {
     requestAnimationFrame(function() { f.style.opacity = '1'; });
   }, 500);
 };
+
+window.showEmail = function(el) {
+  var e = el.getAttribute('data-e');
+  var d = el.getAttribute('data-d');
+  var full = e + '@' + d;
+  el.textContent = full;
+  el.style.textDecoration = 'none';
+  if (navigator.clipboard) navigator.clipboard.writeText(full);
+  showToast('\u5df2\u590d\u5236\uff01' + full);
+};
+
 window.openModal = function() {
   var m = document.getElementById('signupModal');
   if (m) { m.classList.add('active'); document.body.style.overflow = 'hidden'; }
@@ -507,6 +518,13 @@ window.showAchievement = function(icon, title, desc) {
   if(d) d.textContent = desc;
   toast.classList.add('show');
   setTimeout(function(){ toast.classList.remove('show'); }, 4000);
+};
+window.showToast = window.showToast || function(msg) {
+  var t = document.getElementById('toast') || document.getElementById('copyToast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
 };
 window.submitForm = function() {
   var n = document.getElementById('f-name').value.trim();
@@ -869,7 +887,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="ticket-card featured">
         <div class="featured-badge">🔥 推荐</div>
         <div class="ticket-type">早鸟票 EARLY BIRD</div>
-        <div class="ticket-price"><sup>$</sup>25</div>
+        <div class="ticket-price"><sup>$</sup>20</div>
         <div class="ticket-until">📅 截止 4月5日 · 售完即止</div>
         <hr class="ticket-divider">
         <ul class="ticket-perks">
@@ -886,7 +904,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div class="ticket-card">
         <div class="ticket-type">正常票 REGULAR</div>
-        <div class="ticket-price"><sup>$</sup>20</div>
+        <div class="ticket-price"><sup>$</sup>25</div>
         <div class="ticket-until">4月5日后 · 活动当天可购</div>
         <hr class="ticket-divider">
         <ul class="ticket-perks">

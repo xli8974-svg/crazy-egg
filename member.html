@@ -388,7 +388,7 @@ window.closeJoinModal = function() {
 };
 
 window.copyAcc = function() {
-  copyText('zxcvjum@icloud.com');
+  copyText('zxcvjum[at]icloud.com');
   showToast('✅ 账号已复制！');
 };
 
@@ -428,7 +428,7 @@ window.shareJoinLink = function() {
     '🗓 定期活动优先报名',
     '🏪 合作商家专属优惠',
     '',
-    '转账 $2 至 zxcvjum@icloud.com（Zelle/Venmo）',
+    '转账 $2 至 zxcvjum[at]icloud.com（Zelle/Venmo）',
     '备注「会员+姓名」即可！'
   ];
   var text = lines.join('\n');
@@ -448,8 +448,8 @@ window.copyShareLink = function() {
 window.copyPayInfo = function() {
   var lines = [
     '🥚 疯狂的彩蛋会员招募！4月11日前只需 $2！',
-    '💜 Venmo: zxcvjum@icloud.com',
-    '🏦 Zelle: zxcvjum@icloud.com',
+    '💜 Venmo: zxcvjum[at]icloud.com',
+    '🏦 Zelle: zxcvjum[at]icloud.com',
     '备注「会员+姓名」即可！'
   ];
   copyText(lines.join('\n'));
@@ -466,7 +466,7 @@ window.reserveSpot = function() {
     '活动：2026年4月19日 蛋糕杀',
     '地点：4949 Stevens Creek Blvd, Santa Clara',
     '我要预付锁定会员名额！',
-    '转账至 zxcvjum@icloud.com 备注：蛋糕杀+' + name
+    '转账至 zxcvjum[at]icloud.com 备注：蛋糕杀+' + name
   ];
   copyText(lines.join('\n'));
   showToast('✅ 预约信息已复制！发给主办方微信锁定名额 🎂');
@@ -1162,7 +1162,7 @@ updateUbTimer();
 setInterval(updateUbTimer, 1000);
 
 function copyPayInfo() {
-  var text = '🥚 疯狂的彩蛋会员招募！\n4月11日前只需 $2 成为会员！\n\n会员福利：\n🎟 活动门票8折\n🗓 定期活动优先报名\n🤝 联合活动专属席位\n🏪 合作商家专属优惠\n\n转账 $2 至：\n💜 Venmo: zxcvjum@icloud.com\n🏦 Zelle: zxcv
+  var text = '🥚 疯狂的彩蛋会员招募！\n4月11日前只需 $2 成为会员！\n\n会员福利：\n🎟 活动门票8折\n🗓 定期活动优先报名\n🤝 联合活动专属席位\n🏪 合作商家专属优惠\n\n转账 $2 至：\n💜 Venmo: zxcvjum[at]icloud.com\n🏦 Zelle: zxcv
 
 <!-- JOIN MEMBER MODAL -->
 <div class="join-modal-overlay" id="joinModal">
@@ -1180,8 +1180,8 @@ function copyPayInfo() {
       </div>
       <div class="jm-pay-box">
         <div class="jm-pay-title">&#x8F6C;&#x8D26;&#x4FE1;&#x606F;</div>
-        <div class="jm-pay-row"><span class="jm-pay-icon">&#x1F3E6;</span><div><div class="jm-pay-label">Zelle</div><div class="jm-pay-val" onclick="copyAcc()">zxcvjum@icloud.com</div></div></div>
-        <div class="jm-pay-row"><span class="jm-pay-icon">&#x1F49C;</span><div><div class="jm-pay-label">Venmo</div><div class="jm-pay-val" onclick="copyAcc()">zxcvjum@icloud.com</div></div></div>
+        <div class="jm-pay-row"><span class="jm-pay-icon">&#x1F3E6;</span><div><div class="jm-pay-label">Zelle</div><div class="jm-pay-val" onclick="var e='zxcvjum@icloud.com';this.textContent=e;if(navigator.clipboard)navigator.clipboard.writeText(e);" style="cursor:pointer;">点击显示账号 👆</div></div></div>
+        <div class="jm-pay-row"><span class="jm-pay-icon">&#x1F49C;</span><div><div class="jm-pay-label">Venmo</div><div class="jm-pay-val" onclick="var e='zxcvjum@icloud.com';this.textContent=e;if(navigator.clipboard)navigator.clipboard.writeText(e);" style="cursor:pointer;">点击显示账号 👆</div></div></div>
         <div class="jm-pay-amount">
           <div class="jm-pay-num">$2</div>
           <div class="jm-pay-hint">&#x5165;&#x4F1A;&#x8D39;</div>
