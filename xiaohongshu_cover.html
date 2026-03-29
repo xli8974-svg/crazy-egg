@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小红书封面</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0ece6; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; font-family: 'Noto Sans SC', sans-serif; gap: 32px; }
+
+  /* 3:4 ratio = 1080x1440 → display at 360x480 */
+  .poster {
+    width: 360px;
+    height: 480px;
+    background: #FFF8F0;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+
+  /* Soft background blobs */
+  .blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.55; }
+  .blob-1 { width: 220px; height: 220px; background: #FFE0B2; top: -60px; right: -60px; }
+  .blob-2 { width: 180px; height: 180px; background: #C8E6C9; bottom: 20px; left: -50px; }
+  .blob-3 { width: 140px; height: 140px; background: #BBDEFB; bottom: 80px; right: -30px; }
+  .blob-4 { width: 100px; height: 100px; background: #F8BBD0; top: 160px; left: -20px; }
+
+  /* Decorative dots pattern */
+  .dots { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.08; background-image: radial-gradient(circle, #a0783c 1px, transparent 1px); background-size: 20px 20px; }
+
+  .content { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 28px 24px 24px; }
+
+  /* Top badge */
+  .badge { background: #FF8A65; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; letter-spacing: 1px; }
+
+  /* Egg cluster */
+  .egg-cluster { position: relative; width: 180px; height: 120px; flex-shrink: 0; }
+  .egg { position: absolute; font-size: 52px; line-height: 1; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); animation: float 3s ease-in-out infinite; }
+  .egg-1 { left: 50%; transform: translateX(-50%); top: 0; animation-delay: 0s; font-size: 60px; }
+  .egg-2 { left: 8px; top: 38px; animation-delay: 0.4s; font-size: 44px; transform: rotate(-15deg); }
+  .egg-3 { right: 8px; top: 38px; animation-delay: 0.8s; font-size: 44px; transform: rotate(15deg); }
+  .egg-gold { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 32px; animation-delay: 1.2s; }
+  .egg-gold-glow { position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; background: radial-gradient(circle, rgba(255,200,0,0.6) 0%, transparent 70%); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50% { transform: translateY(-6px) rotate(var(--r, 0deg)); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.3); }
+  }
+
+  /* Main text block */
+  .main-text { text-align: center; }
+  .question-line { font-size: 13px; color: #888; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .headline { font-size: 28px; font-weight: 900; color: #2d1f0e; line-height: 1.25; text-align: center; }
+  .headline em { font-style: normal; color: #E65100; }
+  .headline .gold { color: #F59700; }
+  .sub-headline { font-size: 13px; color: #7a6050; margin-top: 10px; line-height: 1.6; text-align: center; }
+
+  /* Tags row */
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .tag { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+  .tag-a { background: #FFE0B2; color: #E65100; }
+  .tag-b { background: #C8E6C9; color: #2E7D32; }
+  .tag-c { background: #BBDEFB; color: #1565C0; }
+  .tag-d { background: #F8BBD0; color: #880E4F; }
+
+  /* Bottom info */
+  .bottom { width: 100%; background: rgba(255,255,255,0.7); backdrop-filter: blur(8px); border-radius: 14px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .date-block { display: flex; flex-direction: column; gap: 1px; }
+  .date-main { font-size: 14px; font-weight: 700; color: #2d1f0e; }
+  .date-sub { font-size: 11px; color: #888; }
+  .price-block { text-align: right; }
+  .price-label { font-size: 10px; color: #888; }
+  .price-main { font-size: 16px; font-weight: 900; color: #E65100; }
+  .price-normal { font-size: 10px; color: #bbb; text-decoration: line-through; }
+
+  /* Decorative stars */
+  .star { position: absolute; font-size: 14px; opacity: 0.5; animation: twinkle 2s ease-in-out infinite; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+  }
+
+  /* Caption below poster */
+  .caption { width: 360px; }
+  .caption h2 { font-size: 15px; font-weight: 700; color: #2d1f0e; margin-bottom: 12px; }
+  .caption-text { font-size: 13px; color: #555; line-height: 1.9; white-space: pre-line; background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .hashtags { font-size: 12px; color: #E65100; margin-top: 10px; line-height: 2; }
+</style>
+</head>
+<body>
+
+<div class="poster">
+  <!-- Background -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+  <div class="dots"></div>
+
+  <!-- Stars -->
+  <span class="star" style="top:40px;left:30px;animation-delay:0s;">✦</span>
+  <span class="star" style="top:80px;right:28px;animation-delay:0.5s;">✧</span>
+  <span class="star" style="top:200px;left:22px;animation-delay:1s;">✦</span>
+  <span class="star" style="bottom:140px;right:24px;animation-delay:0.3s;">✧</span>
+
+  <div class="content">
+    <span class="badge">🌿 Sunnyvale 公园 限定</span>
+
+    <div class="egg-cluster">
+      <div class="egg egg-2" style="--r:-15deg;">🥚</div>
+      <div class="egg egg-3" style="--r:15deg;">🥚</div>
+      <div class="egg egg-1">🥚</div>
+      <div class="egg-gold-glow"></div>
+      <div class="egg egg-gold">🥇</div>
+    </div>
+
+    <div class="main-text">
+      <div class="question-line">公园里藏着一个秘密……</div>
+      <div class="headline">
+        <span class="gold">5颗金蛋</span><br>
+        只有<em>1颗</em>是真的<br>
+        你能找到吗？
+      </div>
+      <div class="sub-headline">组队 · 抢蛋 · 完成任务 · 推理金蛋<br>户外实景解谜 × 团队互动游戏</div>
+    </div>
+
+    <div class="tags">
+      <span class="tag tag-a">⏱ 约115分钟</span>
+      <span class="tag tag-b">👥 随机组队</span>
+      <span class="tag tag-c">🏹 户外公园</span>
+      <span class="tag tag-d">🎁 特别奖励</span>
+    </div>
+
+    <div class="bottom">
+      <div class="date-block">
+        <div class="date-main">📅 4月11日 下午2–5点</div>
+        <div class="date-sub">📍 Sunnyvale 公园</div>
+      </div>
+      <div class="price-block">
+        <div class="price-label">早鸟价</div>
+        <div class="price-main">$20</div>
+        <div class="price-normal">$25</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 文案区域 -->
+<div class="caption">
+  <h2>📝 配套文案（直接复制）</h2>
+  <div class="caption-text">上周有人告诉我，Sunnyvale 公园里藏了 5 颗金蛋……
+
+但只有 1 颗是真的。
+
+4月11日，我们要在公园里玩一个超好玩的团队游戏——
+
+🥚 随机组队抢彩蛋
+🏹 用蛋完成 NPC 任务拿线索
+🕵️ 黑市交易情报
+🏆 最终推理出谁藏着真正的金蛋！
+
+全程约115分钟，完全不需要任何经验，第一次玩的人最多！
+
+早鸟票 $20，名额有限，想来评论区找我～</div>
+  <div class="hashtags">
+    #湾区活动 #Sunnyvale #湾区华人 #户外游戏 #团队游戏 #实景解谜 #湾区周末 #彩蛋猎人 #BayArea
+  </div>
+</div>
+
+</body>
+</html>
