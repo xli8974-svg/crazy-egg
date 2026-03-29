@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>疯狂的彩蛋 · 游戏规则</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #f5f3ee; padding: 24px 16px 40px; color: #1a1a18; }
+  .card { background: #fff; border-radius: 16px; padding: 24px 20px; max-width: 480px; margin: 0 auto; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .header { text-align: center; margin-bottom: 22px; }
+  .egg-big { font-size: 44px; line-height: 1; margin-bottom: 8px; }
+  h1 { font-size: 22px; font-weight: 700; color: #1a1a18; }
+  .sub { font-size: 13px; color: #888; margin-top: 4px; }
+  .tags { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .t-or { background: #FAC775; color: #633806; }
+  .t-gr { background: #C0DD97; color: #27500A; }
+  .t-bl { background: #B5D4F4; color: #0C447C; }
+  .info-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+  .chip { font-size: 12px; background: #f5f3ee; border: 0.5px solid #ddd; border-radius: 20px; padding: 4px 11px; color: #444; }
+  hr { border: none; border-top: 1px solid #f0ede8; margin: 18px 0; }
+  .sec { font-size: 10px; font-weight: 700; color: #aaa; letter-spacing: 1.2px; text-transform: uppercase; margin: 18px 0 10px; }
+  /* Props */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pcard { background: #f9f8f5; border: 0.5px solid #e8e5df; border-radius: 10px; padding: 12px; }
+  .pe { font-size: 22px; }
+  .pt { font-size: 13px; font-weight: 600; color: #1a1a18; margin-top: 6px; }
+  .pd { font-size: 12px; color: #777; margin-top: 4px; line-height: 1.5; }
+  /* Timeline */
+  .tl { display: flex; flex-direction: column; }
+  .tlr { display: flex; align-items: stretch; }
+  .tll { display: flex; flex-direction: column; align-items: center; width: 40px; flex-shrink: 0; }
+  .dot { width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid; flex-shrink: 0; margin-top: 4px; }
+  .ln { width: 2px; flex: 1; min-height: 10px; }
+  .tlb { padding: 0 0 18px 12px; flex: 1; }
+  .tm { font-size: 11px; font-weight: 600; color: #aaa; margin-bottom: 2px; }
+  .tt { font-size: 14px; font-weight: 600; color: #1a1a18; }
+  .tdesc { font-size: 12px; color: #777; margin-top: 4px; line-height: 1.6; }
+  .pr { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+  .p { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  /* Dot colors */
+  .d1{background:#FAC775;border-color:#BA7517;} .l1{background:#FAC775;}
+  .d2{background:#D3D1C7;border-color:#888;}    .l2{background:#e0ddd8;}
+  .d3{background:#CECBF6;border-color:#534AB7;} .l3{background:#CECBF6;}
+  .d4{background:#9FE1CB;border-color:#0F6E56;} .l4{background:#9FE1CB;}
+  .d5{background:#F5C4B3;border-color:#993C1D;} .l5{background:#F5C4B3;}
+  .d6{background:#D3D1C7;border-color:#888;}    .l6{background:#e0ddd8;}
+  .d7{background:#F0997B;border-color:#993C1D;} .l7{background:#F0997B;}
+  .d8{background:#C0DD97;border-color:#3B6D11;}
+  /* Pill colors */
+  .pa{background:#FAC775;color:#633806;} .pb{background:#B5D4F4;color:#0C447C;}
+  .pc{background:#F7C1C1;color:#791F1F;} .pd2{background:#D3D1C7;color:#444;}
+  .pe2{background:#CECBF6;color:#3C3489;} .pf{background:#9FE1CB;color:#085041;}
+  .pg{background:#C0DD97;color:#27500A;} .ph{background:#F5C4B3;color:#712B13;}
+  /* Supply choice */
+  .cr { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .ci { background: #f9f8f5; border: 0.5px solid #e8e5df; border-radius: 8px; padding: 10px; text-align: center; }
+  .ci-i { font-size: 20px; }
+  .ci-n { font-size: 12px; font-weight: 600; color: #1a1a18; margin-top: 4px; }
+  .ci-d { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.4; }
+  .warn { font-size: 11px; color: #a32d2d; font-weight: 600; text-align: center; margin-top: 8px; }
+  /* NPC */
+  .ng { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .nc { background: #f9f8f5; border: 0.5px solid #e8e5df; border-radius: 10px; padding: 12px; }
+  .ni { font-size: 22px; }
+  .nn { font-size: 13px; font-weight: 600; color: #1a1a18; margin-top: 5px; }
+  .nr { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.4; }
+  .nz { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; margin-top: 5px; background: #B5D4F4; color: #0C447C; }
+  /* Rules */
+  .rl { display: flex; flex-direction: column; gap: 8px; }
+  .ri { display: flex; align-items: flex-start; gap: 10px; }
+  .rn { font-size: 11px; font-weight: 700; background: #f5f3ee; color: #888; border-radius: 20px; padding: 2px 7px; min-width: 28px; text-align: center; margin-top: 1px; flex-shrink: 0; }
+  .rt { font-size: 13px; color: #333; line-height: 1.5; }
+  /* Reward */
+  .rb { background: #f9f8f5; border: 0.5px solid #e8e5df; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; }
+  .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #bbb; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="egg-big">🥚</div>
+    <h1>疯狂的彩蛋</h1>
+    <div class="sub">游戏规则说明 · Game Rules</div>
+    <div class="tags">
+      <span class="tag t-or">⏱ 约115分钟</span>
+      <span class="tag t-gr">👥 5人随机组队</span>
+      <span class="tag t-bl">📍 户外公园</span>
+    </div>
+  </div>
+
+  <div class="info-bar">
+    <span class="chip">📅 4月11日 下午 2–5点</span>
+    <span class="chip">📍 Sunnyvale 公园</span>
+    <span class="chip">🎟 早鸟 $20 / 正常 $25</span>
+  </div>
+
+  <hr>
+
+  <div class="sec">道具说明</div>
+  <div class="two">
+    <div class="pcard"><div class="pe">🥚</div><div class="pt">彩蛋（道具）</div><div class="pd">完成 NPC 任务的门票，也可在黑市出价交换线索。</div></div>
+    <div class="pcard"><div class="pe">🔍</div><div class="pt">线索</div><div class="pd">完成任务后获得，用于最终推理出藏有真正金蛋的人！</div></div>
+  </div>
+
+  <hr>
+
+  <div class="sec">游戏时间轴</div>
+  <div class="tl">
+
+    <div class="tlr">
+      <div class="tll"><div class="dot d1"></div><div class="ln l1"></div></div>
+      <div class="tlb">
+        <div class="tm">0 – 25 分钟</div>
+        <div class="tt">🥚 抢蛋 + NPC 任务</div>
+        <div class="tdesc">组队后前往彩蛋区抢蛋，再用彩蛋挑战 NPC，完成任务获取线索。</div>
+        <div class="pr">
+          <span class="p pc">⏱ 抢蛋限时 45秒</span>
+          <span class="p pa">🥚 上限 10个</span>
+          <span class="p pb">每人至少拿 1个</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tlr">
+      <div class="tll"><div class="dot d2"></div><div class="ln l2"></div></div>
+      <div class="tlb">
+        <div class="tm">25 – 30 分钟</div>
+        <div class="tt">⏸ 第一次休整</div>
+        <div class="tdesc">短暂休息，整理彩蛋与线索，准备黑市交易。</div>
+        <div class="pr"><span class="p pd2">5 分钟</span></div>
+      </div>
+    </div>
+
+    <div class="tlr">
+      <div class="tll"><div class="dot d3"></div><div class="ln l3"></div></div>
+      <div class="tlb">
+        <div class="tm">30 – 45 分钟</div>
+        <div class="tt">🕵️ 第一轮黑市</div>
+        <div class="tdesc">神秘商人坐镇，各队用彩蛋或线索互相谈判交易，只能谈判不能强抢！</div>
+        <div class="pr">
+          <span class="p pe2">🕵️ 神秘商人主持</span>
+          <span class="p pc">限时 15 分钟</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tlr">
+      <div class="tll"><div class="dot d4"></div><div class="ln l4"></div></div>
+      <div class="tlb">
+        <div class="tm">45 – 50 分钟</div>
+        <div class="tt">🥚 补给时间（仅此一次）</div>
+        <div class="tdesc">前往大本营，二选一：</div>
+        <div class="cr">
+          <div class="ci"><div class="ci-i">🥚</div><div class="ci-n">补给彩蛋</div><div class="ci-d">最多补给 5 个蛋</div></div>
+          <div class="ci"><div class="ci-i">🪄</div><div class="ci-n">交易市场</div><div class="ci-d">魔法师主持，用蛋换线索</div></div>
+        </div>
+        <div class="warn">⚠️ 补给上限 5 个 · 全程仅一次机会</div>
+      </div>
+    </div>
+
+    <div class="tlr">
+      <div class="tll"><div class="dot d5"></div><div class="ln l5"></div></div>
+      <div class="tlb">
+        <div class="tm">50 – 75 分钟</div>
+        <div class="tt">🏹 继续 NPC 任务</div>
+        <div class="tdesc">用补给后的彩蛋继续挑战剩余 NPC，争取更多线索！每个 NPC 每队仍只能挑战一次。</div>
+        <div class="pr">
+          <span class="p pf">继续收集线索</span>
+          <span class="p pa">每个 NPC 限 1 次</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tlr">
+      <div class="tll"><div class="dot d6"></div><div class="ln l6"></div></div>
+      <div class="tlb">
+        <div class="tm">75 – 80 分钟</div>
+        <div class="tt">⏸ 第二次休整</div>
+        <div class="tdesc">整理所有线索，制定最终推理策略，准备最后一轮黑市。</div>
+        <div class="pr"><span class="p pd2">5 分钟</span></div>
+      </div>
+    </div>
+
+    <div class="tlr">
+      <div class="tll"><div class="dot d7"></div><div class="ln l7"></div></div>
+      <div class="tlb">
+        <div class="tm">80 – 95 分钟</div>
+        <div class="tt">🕵️ 第二轮黑市</div>
+        <div class="tdesc">最后一次情报交换！神秘商人再次坐镇，拿到关键线索的最后机会，不要错过！</div>
+        <div class="pr">
+          <span class="p pe2">🕵️ 神秘商人主持</span>
+          <span class="p pc">限时 15 分钟</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tlr">
+      <div class="tll"><div class="dot d8"></div></div>
+      <div class="tlb">
+        <div class="tm">95 – 115 分钟</div>
+        <div class="tt">🏆 回大本营 · 最终推理</div>
+        <div class="tdesc">所有队伍回到大本营，最后一轮交易后各自推理提交答案——谁手里藏着真正的金蛋？</div>
+        <div class="pr">
+          <span class="p pg">🏆 提交最终答案</span>
+          <span class="p pb">15–20 分钟</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <div class="sec">公园里的 NPC（5人）</div>
+  <div class="ng">
+    <div class="nc"><div class="ni">🕵️</div><div class="nn">神秘商人</div><div class="nr">黑市情报交易掌门人</div><span class="nz">黑市区</span></div>
+    <div class="nc"><div class="ni">🧙‍♀️</div><div class="nn">巫婆</div><div class="nr">掌握神秘线索，完成考验才肯开口</div><span class="nz">森林区</span></div>
+    <div class="nc"><div class="ni">🏹</div><div class="nn">猎人</div><div class="nr">发布任务挑战，考验队伍实力</div><span class="nz">任务区</span></div>
+    <div class="nc"><div class="ni">🧚</div><div class="nn">精灵</div><div class="nr">彩蛋区守护者，管理抢蛋环节</div><span class="nz">彩蛋区</span></div>
+    <div class="nc" style="grid-column:span 2;"><div class="ni">🪄</div><div class="nn">魔法师</div><div class="nr">交易市场操盘手，掌控彩蛋与线索的一切交换</div><span class="nz">交易市场</span></div>
+  </div>
+
+  <hr>
+
+  <div class="sec">核心规则</div>
+  <div class="rl">
+    <div class="ri"><div class="rn">01</div><div class="rt">抢蛋限时 45秒，彩蛋区上限10个，每位队员至少拿1个。</div></div>
+    <div class="ri"><div class="rn">02</div><div class="rt">用彩蛋才能向 NPC 发起挑战，成功获得线索。每个 NPC 每队限挑战一次。</div></div>
+    <div class="ri"><div class="rn">03</div><div class="rt">第一轮黑市（30–45分钟）：用彩蛋或线索与其他队谈判交易。</div></div>
+    <div class="ri"><div class="rn">04</div><div class="rt">补给时间（45–50分钟）：补蛋最多5个，或前往交易市场，二选一，全程仅一次。</div></div>
+    <div class="ri"><div class="rn">05</div><div class="rt">50–75分钟可继续挑战 NPC 任务，每个 NPC 每队仍限1次。</div></div>
+    <div class="ri"><div class="rn">06</div><div class="rt">第二轮黑市（80–95分钟）：最后一次情报交换，只能谈判不能强抢。</div></div>
+    <div class="ri"><div class="rn">07</div><div class="rt">95分钟后回大本营，最终交易后提交推理答案，揭晓真正金蛋！</div></div>
+  </div>
+
+  <hr>
+
+  <div class="sec">胜利奖励</div>
+  <div class="rb">
+    <div style="font-size:30px;">🏆</div>
+    <div>
+      <div style="font-size:14px;font-weight:700;color:#1a1a18;">找出藏有真正金蛋的人！</div>
+      <div style="font-size:12px;color:#888;margin-top:3px;line-height:1.5;">推理正确的队伍获得特别奖励 🎁<br>所有参与者都有纪念品，来玩就不亏！</div>
+    </div>
+  </div>
+
+  <div class="footer">不需要任何经验 · 上手即玩 · 欢迎第一次参加！</div>
+</div>
+</body>
+</html>

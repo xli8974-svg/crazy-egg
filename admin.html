@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>后台管理 · 疯狂的彩蛋</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Fraunces:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#E65100;--gold:#F59700;--cream:#FFF8F0;--warm:#FDF3E7;--text:#2d1f0e;--muted:#7a6050;--border:rgba(0,0,0,.08);--green:#2E7D32;--red:#C62828;--blue:#1565C0;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans SC',sans-serif;background:#f0ece6;color:var(--text);}
+
+/* Login */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.login-card{background:#fff;border-radius:20px;padding:36px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+.login-icon{font-size:48px;margin-bottom:12px;}
+.login-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:20px;}
+.login-input{width:100%;padding:12px 16px;border:1.5px solid #e8e5df;border-radius:10px;font-size:15px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:2px;}
+.login-input:focus{border-color:var(--orange);}
+.login-btn{width:100%;background:var(--orange);color:#fff;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* Header */
+.header{background:var(--text);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.header-logo{font-family:'Fraunces',serif;font-size:16px;color:#fff;}
+.header-tag{font-size:11px;background:var(--orange);color:#fff;padding:3px 10px;border-radius:20px;margin-left:8px;}
+.header-right{display:flex;align-items:center;gap:12px;}
+.header-sync{font-size:12px;color:rgba(255,255,255,.6);cursor:pointer;}
+.header-sync:hover{color:#fff;}
+
+/* Layout */
+.layout{display:flex;min-height:calc(100vh - 50px);}
+.sidebar{width:200px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);padding:16px 0;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;}
+.nav-item:hover{background:var(--warm);color:var(--text);}
+.nav-item.active{background:var(--warm);color:var(--orange);font-weight:700;}
+.nav-icon{font-size:16px;width:20px;text-align:center;}
+.nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;}
+.content{flex:1;padding:24px;overflow-y:auto;}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.stat-card{background:#fff;border-radius:14px;padding:16px 18px;border:1px solid var(--border);}
+.stat-num{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:var(--text);line-height:1;}
+.stat-label{font-size:11px;color:var(--muted);margin-top:4px;}
+.stat-sub{font-size:11px;font-weight:700;margin-top:6px;}
+.sub-green{color:var(--green);}
+.sub-orange{color:var(--orange);}
+.sub-red{color:var(--red);}
+
+/* Filter bar */
+.filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-btn{font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .15s;}
+.filter-btn.active{background:var(--orange);color:#fff;border-color:var(--orange);}
+.search-input{flex:1;min-width:160px;padding:7px 14px;border:1.5px solid var(--border);border-radius:20px;font-size:13px;font-family:inherit;outline:none;}
+.search-input:focus{border-color:var(--orange);}
+
+/* Table */
+.table-wrap{background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--border);}
+.table-head{display:grid;grid-template-columns:140px 80px 100px 100px 80px 120px 140px;gap:0;background:#f9f8f6;border-bottom:1px solid var(--border);padding:10px 16px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.table-row{display:grid;grid-template-columns:140px 80px 100px 100px 80px 120px 140px;gap:0;padding:14px 16px;border-bottom:1px solid #f5f1eb;align-items:center;transition:background .15s;}
+.table-row:last-child{border-bottom:none;}
+.table-row:hover{background:var(--warm);}
+.td{font-size:13px;color:var(--text);padding-right:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.td-muted{font-size:11px;color:var(--muted);}
+.td-name{font-weight:700;}
+.status-pill{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.sp-pending{background:#FFF3E0;color:#E65100;}
+.sp-ai-ok{background:#E8F5E9;color:#2E7D32;}
+.sp-manual{background:#FFF8E1;color:#F57F17;}
+.sp-approved{background:#E8F5E9;color:#2E7D32;}
+.sp-rejected{background:#FFEBEE;color:#C62828;}
+
+/* Action buttons */
+.action-row{display:flex;gap:6px;}
+.act-btn{font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.act-approve{background:#E8F5E9;color:#2E7D32;}
+.act-approve:hover{background:#2E7D32;color:#fff;}
+.act-reject{background:#FFEBEE;color:#C62828;}
+.act-reject:hover{background:#C62828;color:#fff;}
+.act-view{background:#E3F2FD;color:#1565C0;}
+.act-view:hover{background:#1565C0;color:#fff;}
+
+/* Detail modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.modal-overlay.show{display:flex;}
+.modal-box{background:#fff;border-radius:20px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:28px;position:relative;animation:modalIn .3s ease;}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:16px;right:16px;font-size:20px;cursor:pointer;color:#aaa;background:none;border:none;}
+.modal-section{margin-bottom:20px;}
+.modal-sec-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #f5f1eb;}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.modal-field{background:var(--warm);border-radius:10px;padding:10px 12px;}
+.mf-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.mf-val{font-size:14px;font-weight:700;color:var(--text);}
+.ai-result-box{background:var(--warm);border-radius:12px;padding:14px;font-size:13px;color:var(--text);line-height:1.7;}
+.ai-result-box.ai-ok{border-left:3px solid var(--green);}
+.ai-result-box.ai-warn{border-left:3px solid #F57F17;}
+.screenshot-box{background:#f5f1eb;border-radius:12px;padding:12px;text-align:center;font-size:13px;color:var(--muted);}
+.approve-section{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
+.member-id-input{padding:10px 14px;border:1.5px solid #e8e5df;border-radius:10px;font-size:15px;font-family:monospace;font-weight:700;color:var(--orange);letter-spacing:2px;outline:none;width:100%;}
+.member-id-input:focus{border-color:var(--orange);}
+.big-approve{background:var(--green);color:#fff;border:none;border-radius:12px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;transition:transform .15s;}
+.big-approve:hover{transform:translateY(-1px);}
+.big-reject{background:#FFEBEE;color:var(--red);border:1.5px solid #FFCDD2;border-radius:12px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;}
+.notify-box{background:#E8F5E9;border-radius:12px;padding:14px;font-size:13px;color:var(--green);line-height:1.7;margin-top:12px;display:none;}
+.notify-box.show{display:block;}
+.copy-notify{font-size:12px;font-weight:700;color:var(--green);cursor:pointer;text-decoration:underline;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#1a0f05;color:#fff;border-radius:14px;padding:12px 18px;font-size:13px;font-weight:700;z-index:999;opacity:0;transform:translateY(8px);transition:all .3s;}
+.toast.show{opacity:1;transform:translateY(0);}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 24px;color:var(--muted);}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+
+/* Screens */
+.screen{display:none;}
+.screen.active{display:block;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="login-icon">🔐</div>
+    <div class="login-title">后台管理</div>
+    <input class="login-input" type="password" id="pwInput" placeholder="输入管理密码" onkeydown="if(event.key==='Enter')login()">
+    <button class="login-btn" onclick="login()">进入后台 →</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" style="display:none;">
+
+<div class="header">
+  <div>
+    <span class="header-logo">🥚 疯狂的彩蛋</span>
+    <span class="header-tag">后台管理</span>
+  </div>
+  <div class="header-right">
+    <span class="header-sync" onclick="syncFromSheet()">🔄 同步数据</span>
+    <span style="font-size:12px;color:rgba(255,255,255,.5);" id="lastSync">上次同步: --</span>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="nav-item active" onclick="showScreen('registrations')" id="nav-reg">
+      <span class="nav-icon">📋</span>报名管理
+      <span class="nav-badge" id="pendingBadge">0</span>
+    </div>
+    <div class="nav-item" onclick="showScreen('members')" id="nav-mem">
+      <span class="nav-icon">🏅</span>会员列表
+    </div>
+    <div class="nav-item" onclick="showScreen('stats')" id="nav-stats">
+      <span class="nav-icon">📊</span>数据统计
+    </div>
+    <div class="nav-item" onclick="showScreen('setup')" id="nav-setup">
+      <span class="nav-icon">⚙️</span>设置
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Stats row (always visible) -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">总报名人数</div>
+        <div class="stat-sub sub-orange" id="stat-today">今日 +0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-pending">0</div>
+        <div class="stat-label">待审核</div>
+        <div class="stat-sub sub-orange">需要你确认</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-approved">0</div>
+        <div class="stat-label">已批准</div>
+        <div class="stat-sub sub-green">已发会员编号</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-members">0</div>
+        <div class="stat-label">会员总数</div>
+        <div class="stat-sub sub-green">NEXT-030501起</div>
+      </div>
+    </div>
+
+    <!-- REGISTRATIONS SCREEN -->
+    <div class="screen active" id="screen-registrations">
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterReg('all',this)">全部</button>
+        <button class="filter-btn" onclick="filterReg('pending',this)">⏳ 待审核</button>
+        <button class="filter-btn" onclick="filterReg('ai-ok',this)">🤖 AI通过</button>
+        <button class="filter-btn" onclick="filterReg('approved',this)">✅ 已批准</button>
+        <button class="filter-btn" onclick="filterReg('rejected',this)">❌ 已拒绝</button>
+        <input class="search-input" placeholder="搜索姓名/微信..." oninput="searchReg(this.value)">
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <div>姓名 / 微信</div><div>票种</div><div>付款</div><div>AI验证</div><div>角色</div><div>状态</div><div>操作</div>
+        </div>
+        <div id="regTableBody"></div>
+      </div>
+    </div>
+
+    <!-- MEMBERS SCREEN -->
+    <div class="screen" id="screen-members">
+      <div class="filter-bar">
+        <input class="search-input" style="max-width:300px;" placeholder="搜索会员姓名/编号..." oninput="searchMembers(this.value)">
+      </div>
+      <div class="table-wrap">
+        <div class="table-head" style="grid-template-columns:120px 120px 80px 100px 100px 100px;">
+          <div>会员编号</div><div>姓名</div><div>角色</div><div>票种</div><div>加入日期</div><div>操作</div>
+        </div>
+        <div id="memberTableBody"></div>
+      </div>
+    </div>
+
+    <!-- STATS SCREEN -->
+    <div class="screen" id="screen-stats">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="table-wrap" style="padding:20px;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px;">🎭 角色许愿分布</div>
+          <div id="roleStats"></div>
+        </div>
+        <div class="table-wrap" style="padding:20px;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px;">🎟 票种分布</div>
+          <div id="ticketStats"></div>
+        </div>
+        <div class="table-wrap" style="padding:20px;grid-column:span 2;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px;">💰 付款方式</div>
+          <div id="payStats"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETUP SCREEN -->
+    <div class="screen" id="screen-setup">
+      <div class="table-wrap" style="padding:24px;">
+        <div style="font-size:15px;font-weight:700;margin-bottom:16px;">⚙️ Google Sheet 连接设置</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.8;">
+          1. 打开 Google Sheet → 扩展程序 → Apps Script<br>
+          2. 粘贴下方代码，点击部署为 Web App<br>
+          3. 复制 Web App URL 粘贴到下方
+        </div>
+        <div style="background:#1a1a1a;border-radius:10px;padding:16px;font-family:monospace;font-size:12px;color:#a8ff78;margin-bottom:16px;overflow-x:auto;line-height:1.8;">
+function doPost(e) {<br>
+&nbsp;&nbsp;var data = JSON.parse(e.postData.contents);<br>
+&nbsp;&nbsp;var sheet = SpreadsheetApp.getActiveSheet();<br>
+&nbsp;&nbsp;sheet.appendRow([<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data.timestamp, data.submissionId, data.name,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data.age, data.wechat, data.phone, data.email,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data.ticket, data.role, data.payMethod,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data.aiVerifyResult, data.status, '', ''<br>
+&nbsp;&nbsp;]);<br>
+&nbsp;&nbsp;return ContentService.createTextOutput('OK');<br>
+}<br>
+function doGet(e) {<br>
+&nbsp;&nbsp;var sheet = SpreadsheetApp.getActiveSheet();<br>
+&nbsp;&nbsp;var data = sheet.getDataRange().getValues();<br>
+&nbsp;&nbsp;return ContentService.createTextOutput(JSON.stringify(data))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.setMimeType(ContentService.MimeType.JSON);<br>
+}
+        </div>
+        <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">Google Apps Script Web App URL</label>
+        <input id="sheetUrl" type="text" placeholder="https://script.google.com/macros/s/..." style="width:100%;padding:10px 14px;border:1.5px solid #e8e5df;border-radius:10px;font-size:13px;font-family:inherit;outline:none;margin-bottom:10px;">
+        <button onclick="saveSheetUrl()" style="background:var(--orange);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">保存设置</button>
+
+        <div style="margin-top:24px;border-top:1px solid #f5f1eb;padding-top:20px;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:12px;">🔐 修改管理密码</div>
+          <input id="newPw" type="password" placeholder="新密码" style="width:100%;padding:10px 14px;border:1.5px solid #e8e5df;border-radius:10px;font-size:13px;font-family:inherit;outline:none;margin-bottom:10px;">
+          <button onclick="savePw()" style="background:var(--text);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">更新密码</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- end admin panel -->
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:700;margin-bottom:20px;" id="modalTitle">报名详情</div>
+
+    <div class="modal-section">
+      <div class="modal-sec-title">基本信息</div>
+      <div class="modal-grid" id="modalBasicInfo"></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-sec-title">AI 截图验证结果</div>
+      <div class="ai-result-box" id="modalAiResult"></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-sec-title">审核操作</div>
+      <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">分配会员编号</label>
+      <input class="member-id-input" id="assignId" placeholder="NEXT-030501">
+      <div class="approve-section" style="margin-top:10px;">
+        <button class="big-approve" onclick="approveReg()">✅ 批准 · 发送编号</button>
+        <button class="big-reject" onclick="rejectReg()">❌ 拒绝</button>
+      </div>
+      <div class="notify-box" id="notifyBox">
+        <div style="font-weight:700;margin-bottom:6px;">📱 发送给用户的消息（复制到微信）</div>
+        <div id="notifyText" style="margin-bottom:8px;"></div>
+        <span class="copy-notify" onclick="copyNotify()">复制消息 →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== AUTH =====
+var ADMIN_PW = localStorage.getItem('adminPw') || 'egg2026';
+function login() {
+  var pw = document.getElementById('pwInput').value;
+  if (pw === ADMIN_PW) {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    initAdmin();
+  } else {
+    showToast('❌ 密码错误');
+  }
+}
+document.getElementById('pwInput').addEventListener('keydown', function(e){ if(e.key==='Enter') login(); });
+
+// ===== DEMO DATA =====
+var registrations = [
+  { id:'REG-A1B2C3', source:'activity', name:'张小明', age:25, wechat:'zhangxm99', phone:'415-xxx-0001', email:'zhang@email.com', ticket:'早鸟票 $20', role:'detective', payMethod:'zelle', aiResult:'状态：✅ 验证通过\n金额：$20\n备注：彩蛋+张小明\n说明：截图清晰，金额与票种一致。', status:'pending-ai', time:'2026/03/28 10:23' },
+  { id:'REG-D4E5F6', source:'activity', name:'李美华', age:28, wechat:'limh_sf', phone:'408-xxx-0002', email:'li@email.com', ticket:'早鸟票 $20', role:'angel', payMethod:'venmo', aiResult:'状态：⚠️ 需人工确认\n金额：$20\n备注：彩蛋（未含姓名）\n说明：金额正确但备注缺少姓名，建议人工确认。', status:'pending-manual', time:'2026/03/28 11:45' },
+  { id:'REG-G7H8I9', source:'activity', name:'王大伟', age:31, wechat:'wangdawei', phone:'650-xxx-0003', email:'wang@email.com', ticket:'正常票 $25', role:'warrior', payMethod:'zelle', aiResult:'状态：✅ 验证通过\n金额：$25\n备注：彩蛋+王大伟\n说明：截图清晰，金额与正常票一致。', status:'approved', memberId:'NEXT-030501', time:'2026/03/27 16:30' },
+];
+
+var nextMemberId = 30502;
+var currentFilter = 'all';
+var currentSearch = '';
+var currentRegId = null;
+
+// ===== INIT =====
+function initAdmin() {
+  renderStats();
+  renderRegTable();
+  renderMemberTable();
+  renderCharts();
+  document.getElementById('sheetUrl').value = localStorage.getItem('sheetUrl') || '';
+  document.getElementById('lastSync').textContent = '上次同步: ' + (localStorage.getItem('lastSync') || '未同步');
+}
+
+function renderStats() {
+  var total = registrations.length;
+  var pending = registrations.filter(r => r.status.startsWith('pending')).length;
+  var approved = registrations.filter(r => r.status === 'approved').length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-pending').textContent = pending;
+  document.getElementById('stat-approved').textContent = approved;
+  document.getElementById('stat-members').textContent = approved;
+  document.getElementById('stat-today').textContent = '今日 +' + registrations.filter(r => r.time && r.time.startsWith('2026/03/28')).length;
+  document.getElementById('pendingBadge').textContent = pending;
+  document.getElementById('pendingBadge').style.display = pending > 0 ? 'block' : 'none';
+}
+
+// ===== REGISTRATION TABLE =====
+function renderRegTable() {
+  var filtered = registrations.filter(function(r) {
+    var matchFilter = currentFilter === 'all' ||
+      (currentFilter === 'pending' && r.status.startsWith('pending')) ||
+      (currentFilter === 'ai-ok' && r.status === 'pending-ai') ||
+      (currentFilter === 'approved' && r.status === 'approved') ||
+      (currentFilter === 'rejected' && r.status === 'rejected');
+    var matchSearch = !currentSearch ||
+      r.name.includes(currentSearch) || r.wechat.includes(currentSearch) || r.email.includes(currentSearch);
+    return matchFilter && matchSearch;
+  });
+
+  var html = '';
+  if (filtered.length === 0) {
+    html = '<div class="empty-state"><div class="empty-icon">📭</div><div>暂无符合条件的报名</div></div>';
+  } else {
+    filtered.forEach(function(r) {
+      var statusPill = '';
+      if (r.status === 'pending-ai') statusPill = '<span class="status-pill sp-ai-ok">🤖 AI通过</span>';
+      else if (r.status === 'pending-manual') statusPill = '<span class="status-pill sp-manual">⚠️ 人工核查</span>';
+      else if (r.status === 'approved') statusPill = '<span class="status-pill sp-approved">✅ 已批准</span>';
+      else if (r.status === 'rejected') statusPill = '<span class="status-pill sp-rejected">❌ 已拒绝</span>';
+      var roleEmoji = {detective:'🔍',merchant:'💰',warrior:'⚔️',thief:'🗝️',angel:'😇',none:'🎲'}[r.role] || '🎲';
+      var actions = r.status === 'approved' ?
+        '<div class="action-row"><button class="act-btn act-view" onclick="viewReg(\''+r.id+'\')">查看</button></div>' :
+        '<div class="action-row"><button class="act-btn act-approve" onclick="quickApprove(\''+r.id+'\')">批准</button><button class="act-btn act-view" onclick="viewReg(\''+r.id+'\')">详情</button><button class="act-btn act-reject" onclick="quickReject(\''+r.id+'\')">拒绝</button></div>';
+      html += '<div class="table-row"><div class="td"><div class="td-name">'+r.name+'</div><div class="td-muted">'+r.wechat+'</div></div><div class="td td-muted">'+r.ticket+'</div><div class="td td-muted">'+r.payMethod.toUpperCase()+'</div><div class="td">'+statusPill+'</div><div class="td">'+roleEmoji+'</div><div class="td">'+(r.memberId?'<span style="color:var(--gold);font-weight:700;font-size:12px;">'+r.memberId+'</span>':'<span class="td-muted">-</span>')+'</div><div class="td">'+actions+'</div></div>';
+    });
+  }
+  document.getElementById('regTableBody').innerHTML = html;
+}
+
+function filterReg(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderRegTable();
+}
+function searchReg(v) { currentSearch = v; renderRegTable(); }
+
+function quickApprove(id) {
+  var r = registrations.find(function(x){ return x.id === id; });
+  if (!r) return;
+  r.status = 'approved';
+  r.memberId = 'NEXT-0' + String(nextMemberId++).padStart(5,'0');
+  renderStats(); renderRegTable(); renderMemberTable();
+  showToast('✅ 已批准！会员编号：' + r.memberId);
+}
+function quickReject(id) {
+  var r = registrations.find(function(x){ return x.id === id; });
+  if (!r) return;
+  r.status = 'rejected';
+  renderStats(); renderRegTable();
+  showToast('❌ 已拒绝该报名');
+}
+
+function viewReg(id) {
+  var r = registrations.find(function(x){ return x.id === id; });
+  if (!r) return;
+  currentRegId = id;
+  document.getElementById('modalTitle').textContent = '报名详情 · ' + r.id;
+  var roleNames = {detective:'侦探🔍',merchant:'商人💰',warrior:'战士⚔️',thief:'盗贼🗝️',angel:'天使😇',none:'随机🎲'};
+  document.getElementById('modalBasicInfo').innerHTML = [
+    ['姓名',r.name],['年龄',r.age+'岁'],
+    ['微信',r.wechat],['电话',r.phone],
+    ['邮箱',r.email],['票种',r.ticket],
+    ['付款',r.payMethod.toUpperCase()],['角色偏好',roleNames[r.role]||'随机'],
+    ['提交时间',r.time],['提交编号',r.id]
+  ].map(function(f){ return '<div class="modal-field"><div class="mf-label">'+f[0]+'</div><div class="mf-val">'+f[1]+'</div></div>'; }).join('');
+
+  var aiBox = document.getElementById('modalAiResult');
+  aiBox.textContent = r.aiResult || '无AI验证结果';
+  aiBox.className = 'ai-result-box ' + (r.aiResult && r.aiResult.includes('✅') ? 'ai-ok' : 'ai-warn');
+
+  var suggestId = r.memberId || ('NEXT-0' + String(nextMemberId).padStart(5,'0'));
+  document.getElementById('assignId').value = suggestId;
+  document.getElementById('notifyBox').classList.remove('show');
+  document.getElementById('detailModal').classList.add('show');
+}
+
+function approveReg() {
+  var r = registrations.find(function(x){ return x.id === currentRegId; });
+  if (!r) return;
+  var memberId = document.getElementById('assignId').value.trim() || ('NEXT-0' + String(nextMemberId++).padStart(5,'0'));
+  r.status = 'approved';
+  r.memberId = memberId;
+  var msg = '🥚 恭喜！你的疯狂的彩蛋报名已通过审核！\n\n🏅 你的会员编号：' + memberId + '\n\n请保存此编号，登录会员中心查看专属福利：\n👉 [网站链接]/member.html?id=' + memberId + '&name=' + encodeURIComponent(r.name) + '\n\n期待4月11日 Sunnyvale 公园见！\n下次见面，预备役！🥚';
+  document.getElementById('notifyText').textContent = msg;
+  document.getElementById('notifyBox').classList.add('show');
+  renderStats(); renderRegTable(); renderMemberTable();
+  showToast('✅ 已批准！编号：' + memberId);
+}
+
+function rejectReg() {
+  var r = registrations.find(function(x){ return x.id === currentRegId; });
+  if (!r) return;
+  r.status = 'rejected';
+  renderStats(); renderRegTable();
+  closeModal();
+  showToast('❌ 已拒绝该报名');
+}
+
+function copyNotify() {
+  var text = document.getElementById('notifyText').textContent;
+  navigator.clipboard ? navigator.clipboard.writeText(text) : fallbackCopy(text);
+  showToast('✅ 消息已复制，去微信发送给用户！');
+}
+
+// ===== MEMBER TABLE =====
+function renderMemberTable() {
+  var approved = registrations.filter(function(r){ return r.status === 'approved'; });
+  var roleNames = {detective:'侦探🔍',merchant:'商人💰',warrior:'战士⚔️',thief:'盗贼🗝️',angel:'天使😇',none:'随机🎲'};
+  var html = approved.length === 0 ? '<div class="empty-state"><div class="empty-icon">🏅</div><div>暂无已批准会员</div></div>' :
+    approved.map(function(r){
+      return '<div class="table-row" style="grid-template-columns:120px 120px 80px 100px 100px 100px;"><div class="td" style="color:var(--gold);font-weight:700;font-size:12px;">'+r.memberId+'</div><div class="td"><div class="td-name">'+r.name+'</div><div class="td-muted">'+r.wechat+'</div></div><div class="td">'+roleNames[r.role]+'</div><div class="td td-muted">'+r.ticket+'</div><div class="td td-muted">'+r.time.split(' ')[0]+'</div><div class="td"><button class="act-btn act-view" onclick="viewReg(\''+r.id+'\')">详情</button></div></div>';
+    }).join('');
+  document.getElementById('memberTableBody').innerHTML = html;
+}
+function searchMembers(v) {
+  var approved = registrations.filter(function(r){ return r.status === 'approved' && (r.name.includes(v) || (r.memberId && r.memberId.includes(v.toUpperCase()))); });
+  document.getElementById('memberTableBody').innerHTML = approved.length === 0 ? '<div class="empty-state"><div>未找到会员</div></div>' :
+    approved.map(function(r){ return '<div class="table-row" style="grid-template-columns:120px 120px 80px 100px 100px 100px;"><div class="td" style="color:var(--gold);font-weight:700;font-size:12px;">'+r.memberId+'</div><div class="td"><div class="td-name">'+r.name+'</div></div><div class="td"></div><div class="td td-muted">'+r.ticket+'</div><div class="td td-muted">'+r.time.split(' ')[0]+'</div><div class="td"><button class="act-btn act-view" onclick="viewReg(\''+r.id+'\')">详情</button></div></div>'; }).join('');
+}
+
+// ===== CHARTS =====
+function renderCharts() {
+  var roles = {}; var tickets = {}; var pays = {};
+  registrations.forEach(function(r){
+    roles[r.role] = (roles[r.role]||0)+1;
+    tickets[r.ticket] = (tickets[r.ticket]||0)+1;
+    pays[r.payMethod] = (pays[r.payMethod]||0)+1;
+  });
+  var rNames = {detective:'侦探🔍',merchant:'商人💰',warrior:'战士⚔️',thief:'盗贼🗝️',angel:'天使😇',none:'随机🎲'};
+  document.getElementById('roleStats').innerHTML = Object.keys(roles).map(function(k){ var pct=Math.round(roles[k]/registrations.length*100); return '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>'+(rNames[k]||k)+'</span><span style="font-weight:700;">'+roles[k]+'人 ('+pct+'%)</span></div><div style="background:#f5f1eb;border-radius:20px;height:8px;"><div style="background:var(--orange);height:8px;border-radius:20px;width:'+pct+'%;"></div></div></div>'; }).join('');
+  document.getElementById('ticketStats').innerHTML = Object.keys(tickets).map(function(k){ var pct=Math.round(tickets[k]/registrations.length*100); return '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>'+k+'</span><span style="font-weight:700;">'+tickets[k]+'人</span></div><div style="background:#f5f1eb;border-radius:20px;height:8px;"><div style="background:var(--gold);height:8px;border-radius:20px;width:'+pct+'%;"></div></div></div>'; }).join('');
+  document.getElementById('payStats').innerHTML = Object.keys(pays).map(function(k){ var pct=Math.round(pays[k]/registrations.length*100); return '<div style="margin-bottom:10px;display:flex;align-items:center;gap:12px;"><span style="font-size:13px;min-width:80px;">'+k.toUpperCase()+'</span><div style="flex:1;background:#f5f1eb;border-radius:20px;height:8px;"><div style="background:var(--blue);height:8px;border-radius:20px;width:'+pct+'%;"></div></div><span style="font-size:13px;font-weight:700;min-width:60px;text-align:right;">'+pays[k]+'人 '+pct+'%</span></div>'; }).join('');
+}
+
+// ===== NAVIGATION =====
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+  document.getElementById('nav-' + (name === 'registrations' ? 'reg' : name === 'members' ? 'mem' : name === 'stats' ? 'stats' : 'setup')).classList.add('active');
+}
+
+function closeModal() { document.getElementById('detailModal').classList.remove('show'); }
+document.getElementById('detailModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// ===== SETTINGS =====
+function saveSheetUrl() {
+  var url = document.getElementById('sheetUrl').value.trim();
+  localStorage.setItem('sheetUrl', url);
+  showToast('✅ Google Sheet URL 已保存');
+}
+function savePw() {
+  var pw = document.getElementById('newPw').value.trim();
+  if (!pw) { showToast('⚠️ 密码不能为空'); return; }
+  localStorage.setItem('adminPw', pw);
+  ADMIN_PW = pw;
+  showToast('✅ 密码已更新');
+}
+function syncFromSheet() {
+  var url = localStorage.getItem('sheetUrl');
+  if (!url) { showToast('⚠️ 请先设置 Google Sheet URL'); return; }
+  showToast('🔄 同步中...');
+  fetch(url).then(function(r){ return r.json(); }).then(function(data){
+    localStorage.setItem('lastSync', new Date().toLocaleTimeString('zh-CN'));
+    document.getElementById('lastSync').textContent = '上次同步: ' + new Date().toLocaleTimeString('zh-CN');
+    showToast('✅ 同步成功！共 ' + (data.length-1) + ' 条数据');
+  }).catch(function(){ showToast('❌ 同步失败，请检查URL设置'); });
+}
+
+// ===== HELPERS =====
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+function fallbackCopy(text) {
+  var el = document.createElement('textarea');
+  el.value = text; document.body.appendChild(el);
+  el.select(); document.execCommand('copy');
+  document.body.removeChild(el);
+}
+</script>
+</body>
+</html>

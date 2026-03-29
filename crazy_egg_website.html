@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>疯狂的彩蛋 · Crazy Egg Hunt</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Fraunces:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FFF8F0;
+  --warm: #FDF3E7;
+  --orange: #E65100;
+  --orange-light: #FF8A65;
+  --gold: #F59700;
+  --green: #2E7D32;
+  --green-light: #C8E6C9;
+  --blue-light: #BBDEFB;
+  --pink-light: #F8BBD0;
+  --text: #2d1f0e;
+  --text-muted: #7a6050;
+  --border: rgba(230,81,0,0.12);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family:'Noto Sans SC',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:14px 32px;
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(255,248,240,0.85); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo { font-family:'Fraunces',serif; font-size:18px; color:var(--orange); font-weight:700; }
+.nav-links { display:flex; gap:24px; list-style:none; }
+.nav-links a { font-size:13px; color:var(--text-muted); text-decoration:none; transition:color .2s; }
+.nav-links a:hover { color:var(--orange); }
+.nav-cta { background:var(--orange); color:#fff; font-size:13px; font-weight:700; padding:8px 20px; border-radius:20px; text-decoration:none; transition:transform .15s, box-shadow .15s; }
+.nav-cta:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(230,81,0,0.3); }
+
+/* HERO */
+.hero {
+  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:100px 24px 60px; text-align:center; position:relative; overflow:hidden;
+}
+.hero-bg { position:absolute; inset:0; z-index:0; }
+.blob { position:absolute; border-radius:50%; filter:blur(60px); opacity:0.45; }
+.b1 { width:400px;height:400px;background:#FFE0B2;top:-100px;right:-100px; }
+.b2 { width:350px;height:350px;background:#C8E6C9;bottom:-80px;left:-80px; }
+.b3 { width:250px;height:250px;background:#BBDEFB;bottom:100px;right:-60px; }
+.b4 { width:200px;height:200px;background:#F8BBD0;top:200px;left:-60px; }
+.dots-bg { position:absolute;inset:0;opacity:0.06;background-image:radial-gradient(circle,#a0783c 1px,transparent 1px);background-size:24px 24px; }
+
+.hero-content { position:relative;z-index:1;max-width:680px; }
+.hero-badge { display:inline-block;background:var(--orange);color:#fff;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;letter-spacing:1px;margin-bottom:24px;animation:fadeUp .6s ease both; }
+
+.egg-cluster { position:relative;height:140px;margin:0 auto 28px;width:240px;animation:fadeUp .6s .1s ease both; }
+.egg-f { position:absolute;font-size:72px;line-height:1;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.15));animation:floatEgg 3s ease-in-out infinite; }
+.ef1 { left:50%;transform:translateX(-50%);top:0;font-size:80px;animation-delay:0s; }
+.ef2 { left:10px;top:45px;font-size:58px;animation-delay:.4s;transform:rotate(-15deg); }
+.ef3 { right:10px;top:45px;font-size:58px;animation-delay:.8s;transform:rotate(15deg); }
+.gold-glow { position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:56px;height:56px;background:radial-gradient(circle,rgba(255,200,0,.7) 0%,transparent 70%);border-radius:50%;animation:pulse 2s ease-in-out infinite; }
+.ef-gold { position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:42px;animation-delay:1.2s;animation:floatEgg 3s 1.2s ease-in-out infinite; }
+
+@keyframes floatEgg { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes pulse { 0%,100%{opacity:.5;transform:translateX(-50%) scale(1)} 50%{opacity:1;transform:translateX(-50%) scale(1.4)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+h1 { font-family:'Fraunces',serif; font-size:clamp(36px,6vw,56px); font-weight:700; line-height:1.15; color:var(--text); animation:fadeUp .6s .2s ease both;opacity:0; }
+h1 em { font-style:italic; color:var(--orange); }
+h1 .gold-text { color:var(--gold); }
+.hero-sub { font-size:16px; color:var(--text-muted); margin-top:16px; line-height:1.7; animation:fadeUp .6s .3s ease both;opacity:0; }
+
+.hero-tags { display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px;animation:fadeUp .6s .4s ease both;opacity:0; }
+.htag { font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px; }
+.ht-or{background:#FFE0B2;color:#E65100;} .ht-gr{background:#C8E6C9;color:#2E7D32;}
+.ht-bl{background:#BBDEFB;color:#1565C0;} .ht-pk{background:#F8BBD0;color:#880E4F;}
+
+.hero-cta { display:flex;gap:12px;justify-content:center;margin-top:32px;flex-wrap:wrap;animation:fadeUp .6s .5s ease both;opacity:0; }
+.btn-primary { background:var(--orange);color:#fff;font-size:15px;font-weight:700;padding:14px 32px;border-radius:28px;text-decoration:none;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 20px rgba(230,81,0,0.3); }
+.btn-primary:hover { transform:translateY(-2px);box-shadow:0 8px 28px rgba(230,81,0,0.4); }
+.btn-secondary { background:rgba(255,255,255,0.8);color:var(--text);font-size:15px;font-weight:700;padding:14px 32px;border-radius:28px;text-decoration:none;border:1.5px solid var(--border);transition:transform .15s; }
+.btn-secondary:hover { transform:translateY(-2px); }
+
+/* COUNTDOWN */
+.countdown-wrap { margin-top:40px;animation:fadeUp .6s .6s ease both;opacity:0; }
+.countdown-label { font-size:12px;color:var(--text-muted);margin-bottom:10px;letter-spacing:1px; }
+.countdown { display:flex;gap:12px;justify-content:center; }
+.cunit { background:rgba(255,255,255,0.8);border:1px solid var(--border);border-radius:12px;padding:10px 16px;min-width:64px;text-align:center; }
+.cnum { font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--orange);line-height:1; }
+.clbl { font-size:10px;color:var(--text-muted);margin-top:2px; }
+.csep { font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold);align-self:center;margin-top:-8px; }
+
+/* SECTIONS */
+section { padding:80px 24px; }
+.container { max-width:900px;margin:0 auto; }
+.sec-label { font-size:11px;font-weight:700;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px; }
+h2 { font-family:'Fraunces',serif;font-size:clamp(28px,4vw,40px);font-weight:700;line-height:1.2;color:var(--text); }
+.sec-sub { font-size:15px;color:var(--text-muted);margin-top:10px;line-height:1.7; }
+
+/* HOW IT WORKS */
+.how { background:var(--warm); }
+.steps-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:40px; }
+.step-card { background:#fff;border-radius:16px;padding:24px;border:1px solid var(--border);position:relative;transition:transform .2s,box-shadow .2s; }
+.step-card:hover { transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,0.08); }
+.step-icon { font-size:36px;margin-bottom:12px; }
+.step-num { position:absolute;top:16px;right:16px;font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:rgba(230,81,0,0.08); }
+.step-title { font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px; }
+.step-desc { font-size:13px;color:var(--text-muted);line-height:1.6; }
+
+/* PROPS */
+.props-row { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px; }
+.prop-card { border-radius:16px;padding:24px;display:flex;gap:16px;align-items:flex-start; }
+.pc-egg { background:#FFF3E0;border:1px solid #FFE0B2; }
+.pc-clue { background:#E8F5E9;border:1px solid #C8E6C9; }
+.prop-icon { font-size:40px;flex-shrink:0; }
+.prop-title { font-size:15px;font-weight:700;margin-bottom:6px; }
+.prop-desc { font-size:13px;color:var(--text-muted);line-height:1.6; }
+
+/* TIMELINE */
+.timeline-section { background:#fff; }
+.tl { margin-top:48px;position:relative;padding-left:0; }
+.tl-item { display:flex;gap:0;align-items:stretch;margin-bottom:0; }
+.tl-left { display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0; }
+.tl-dot { width:16px;height:16px;border-radius:50%;border:3px solid;flex-shrink:0;margin-top:6px; }
+.tl-line { width:2px;flex:1;min-height:12px; }
+.tl-body { padding:0 0 32px 20px;flex:1; }
+.tl-time-badge { display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:6px; }
+.tl-title { font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px; }
+.tl-desc { font-size:13px;color:var(--text-muted);line-height:1.7; }
+.tl-pills { display:flex;gap:6px;flex-wrap:wrap;margin-top:8px; }
+.tlp { font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px; }
+.tlp-r{background:#FFCDD2;color:#C62828;} .tlp-o{background:#FFE0B2;color:#E65100;}
+.tlp-b{background:#BBDEFB;color:#1565C0;} .tlp-g{background:#D3D1C7;color:#444;}
+.tlp-p{background:#E1BEE7;color:#6A1B9A;} .tlp-gr{background:#C8E6C9;color:#2E7D32;}
+
+/* choice mini cards inside timeline */
+.tl-choices { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;max-width:360px; }
+.tl-choice { background:var(--warm);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center; }
+.tlc-icon { font-size:20px; }
+.tlc-name { font-size:12px;font-weight:700;color:var(--text);margin-top:4px; }
+.tlc-note { font-size:11px;color:var(--text-muted);margin-top:2px;line-height:1.4; }
+.tl-warn { font-size:11px;color:#C62828;font-weight:700;margin-top:8px; }
+
+/* dot/line colors */
+.dd1{background:#FAC775;border-color:#BA7517;} .dl1{background:#FAC775;}
+.dd2{background:#D3D1C7;border-color:#888;} .dl2{background:#e0ddd8;}
+.dd3{background:#CECBF6;border-color:#534AB7;} .dl3{background:#CECBF6;}
+.dd4{background:#9FE1CB;border-color:#0F6E56;} .dl4{background:#9FE1CB;}
+.dd5{background:#F5C4B3;border-color:#993C1D;} .dl5{background:#F5C4B3;}
+.dd6{background:#D3D1C7;border-color:#888;} .dl6{background:#e0ddd8;}
+.dd7{background:#F0997B;border-color:#993C1D;} .dl7{background:#F0997B;}
+.dd8{background:#C0DD97;border-color:#3B6D11;}
+.tb1{background:#FFF8E1;color:#F57F17;} .tb2{background:#F3F3F3;color:#555;}
+.tb3{background:#EDE7F6;color:#4527A0;} .tb4{background:#E0F7FA;color:#006064;}
+.tb5{background:#FBE9E7;color:#BF360C;} .tb6{background:#F3F3F3;color:#555;}
+.tb7{background:#FBE9E7;color:#BF360C;} .tb8{background:#F1F8E9;color:#33691E;}
+
+/* NPC */
+.npc-section { background:var(--warm); }
+.npc-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-top:40px; }
+.npc-card { background:#fff;border-radius:16px;padding:24px 20px;text-align:center;border:1px solid var(--border);transition:transform .2s,box-shadow .2s;cursor:default; }
+.npc-card:hover { transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,0.08); }
+.npc-emoji { font-size:48px;margin-bottom:12px; }
+.npc-name { font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px; }
+.npc-role { font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:8px; }
+.npc-zone { display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:#BBDEFB;color:#1565C0; }
+.npc-card.wide { grid-column:span 2; display:flex;align-items:center;gap:20px;text-align:left;padding:20px 24px; }
+.npc-card.wide .npc-emoji { margin-bottom:0;flex-shrink:0; }
+
+/* TICKET */
+.ticket-section { background:#fff; }
+.ticket-grid { display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px; }
+.ticket-card { border-radius:20px;padding:28px;border:2px solid var(--border);position:relative;overflow:hidden; }
+.ticket-card.featured { border-color:var(--orange);background:linear-gradient(135deg,#FFF8F0,#FFF3E0); }
+.featured-badge { position:absolute;top:16px;right:16px;background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px; }
+.ticket-type { font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:1px;margin-bottom:8px; }
+.ticket-price { font-family:'Fraunces',serif;font-size:48px;font-weight:700;color:var(--text);line-height:1; }
+.ticket-price sup { font-size:22px;vertical-align:top;margin-top:8px; }
+.ticket-until { font-size:12px;color:var(--text-muted);margin-top:4px; }
+.ticket-divider { border:none;border-top:1px dashed var(--border);margin:20px 0; }
+.ticket-perks { list-style:none;display:flex;flex-direction:column;gap:8px; }
+.ticket-perks li { font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:8px; }
+.ticket-perks li::before { content:'✓';color:var(--green);font-weight:700;flex-shrink:0; }
+.ticket-btn { display:block;text-align:center;margin-top:24px;padding:12px;border-radius:20px;font-size:14px;font-weight:700;text-decoration:none;transition:transform .15s,box-shadow .15s; }
+.ticket-btn-primary { background:var(--orange);color:#fff;box-shadow:0 4px 16px rgba(230,81,0,0.3); }
+.ticket-btn-primary:hover { transform:translateY(-2px);box-shadow:0 8px 24px rgba(230,81,0,0.4); }
+.ticket-btn-secondary { background:var(--warm);color:var(--text);border:1.5px solid var(--border); }
+.ticket-btn-secondary:hover { transform:translateY(-2px); }
+
+/* INFO STRIP */
+.info-strip { background:var(--orange);color:#fff;padding:32px 24px; }
+.info-inner { max-width:900px;margin:0 auto;display:flex;gap:32px;flex-wrap:wrap;justify-content:center; }
+.info-item { display:flex;align-items:center;gap:10px; }
+.info-icon { font-size:24px; }
+.info-label { font-size:11px;opacity:.8; }
+.info-val { font-size:15px;font-weight:700; }
+
+/* FAQ */
+.faq-section { background:var(--warm); }
+.faq-list { margin-top:40px;display:flex;flex-direction:column;gap:12px; }
+.faq-item { background:#fff;border-radius:14px;border:1px solid var(--border);overflow:hidden; }
+.faq-q { padding:18px 20px;font-size:14px;font-weight:700;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none; }
+.faq-q::after { content:'＋';font-size:18px;color:var(--orange);flex-shrink:0;transition:transform .2s; }
+.faq-item.open .faq-q::after { transform:rotate(45deg); }
+.faq-a { font-size:13px;color:var(--text-muted);line-height:1.8;padding:0 20px 18px;display:none; }
+.faq-item.open .faq-a { display:block; }
+
+/* FOOTER */
+footer { background:var(--text);color:rgba(255,255,255,0.6);padding:40px 24px;text-align:center; }
+footer .footer-logo { font-family:'Fraunces',serif;font-size:22px;color:#fff;margin-bottom:8px; }
+footer p { font-size:13px;line-height:1.8; }
+footer a { color:var(--orange-light);text-decoration:none; }
+
+/* RESPONSIVE */
+@media(max-width:600px) {
+  .nav-links { display:none; }
+  .ticket-grid { grid-template-columns:1fr; }
+  .props-row { grid-template-columns:1fr; }
+  .npc-card.wide { grid-column:span 1;flex-direction:column;text-align:center; }
+  .tl-choices { grid-template-columns:1fr 1fr; }
+}
+.pay-box{background:rgba(230,81,0,0.06);border:1.5px solid rgba(230,81,0,0.2);border-radius:14px;padding:16px;margin-top:20px;}.pay-box-secondary{background:var(--warm);border-color:var(--border);}.pay-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;}.pay-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}.pay-icon{font-size:20px;flex-shrink:0;}.pay-label{font-size:10px;color:var(--text-muted);font-weight:600;letter-spacing:.5px;}.pay-val{font-size:14px;font-weight:700;color:var(--orange);font-family:monospace;user-select:all;cursor:pointer;}.pay-note{font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.6;padding-top:10px;border-top:1px dashed var(--border);}.member-banner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border:2px solid #FAC775;border-radius:20px;padding:24px 28px;margin-top:24px;}.member-left{display:flex;align-items:center;gap:16px;}.member-icon{font-size:40px;flex-shrink:0;}.member-title{font-size:16px;font-weight:700;color:var(--text);}.member-sub{font-size:13px;color:var(--text-muted);margin-top:3px;}.perk-label{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}.perk-val{font-size:22px;font-weight:700;color:var(--text);}.perk-val em{font-style:normal;color:var(--orange);font-family:"Fraunces",serif;font-size:32px;}
+.role-section { background: #fff; }
+.role-intro { background: linear-gradient(135deg,#FFF8E1,#FFF3E0); border:2px solid #FAC775; border-radius:20px; padding:28px; margin-bottom:32px; }
+.role-intro-title { font-family:"Fraunces",serif; font-size:20px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.role-intro-desc { font-size:14px; color:var(--text-muted); line-height:1.8; }
+.role-intro-desc strong { color:var(--orange); }
+.role-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; }
+.role-card { background:var(--warm); border:1.5px solid var(--border); border-radius:18px; padding:22px 18px; text-align:center; position:relative; overflow:hidden; transition:transform .2s,box-shadow .2s; }
+.role-card:hover { transform:translateY(-4px); box-shadow:0 8px 32px rgba(0,0,0,0.08); }
+.role-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+.rc-detective::before { background:linear-gradient(90deg,#5C6BC0,#7986CB); }
+.rc-merchant::before  { background:linear-gradient(90deg,#F59700,#FAC775); }
+.rc-warrior::before   { background:linear-gradient(90deg,#E53935,#EF9A9A); }
+.rc-thief::before     { background:linear-gradient(90deg,#2E7D32,#81C784); }
+.rc-angel::before     { background:linear-gradient(90deg,#F8BBD0,#F48FB1); }
+.role-emoji { font-size:44px; margin-bottom:10px; }
+.role-name { font-size:16px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.role-skill-label { font-size:10px; font-weight:700; color:var(--orange); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.role-skill { font-size:12px; color:var(--text-muted); line-height:1.5; }
+.role-badge { display:inline-block; font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; margin-top:10px; }
+.rb-detective { background:#E8EAF6; color:#3949AB; }
+.rb-merchant  { background:#FFF8E1; color:#F57F17; }
+.rb-warrior   { background:#FFEBEE; color:#C62828; }
+.rb-thief     { background:#E8F5E9; color:#2E7D32; }
+.rb-angel     { background:#FCE4EC; color:#880E4F; }
+.role-note { text-align:center; margin-top:24px; background:var(--warm); border-radius:14px; padding:16px 20px; font-size:13px; color:var(--text-muted); line-height:1.8; border:1px dashed var(--border); }
+.role-note strong { color:var(--orange); }
+.prefer-box { background:linear-gradient(135deg,#E8F5E9,#F1F8E9); border:1.5px solid #A5D6A7; border-radius:16px; padding:22px 24px; margin-top:20px; display:flex; align-items:flex-start; gap:16px; }
+.prefer-icon { font-size:36px; flex-shrink:0; }
+.prefer-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.prefer-desc { font-size:13px; color:var(--text-muted); line-height:1.7; }
+.prefer-desc strong { color:#2E7D32; }
+
+/* MODAL */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
+.modal-overlay.active { display:flex; }
+.modal-box { background:#fff; border-radius:24px; padding:32px 28px; max-width:480px; width:100%; max-height:90vh; overflow-y:auto; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.2); animation:modalIn .3s ease; }
+@keyframes modalIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.modal-close { position:absolute; top:16px; right:20px; font-size:22px; cursor:pointer; color:#aaa; background:none; border:none; line-height:1; }
+.modal-close:hover { color:var(--text); }
+.modal-title { font-family:"Fraunces",serif; font-size:22px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.modal-sub { font-size:13px; color:var(--text-muted); margin-bottom:24px; }
+.form-group { margin-bottom:16px; }
+.form-label { font-size:12px; font-weight:700; color:var(--text); margin-bottom:6px; display:block; }
+.form-label span { color:#E65100; }
+.form-input { width:100%; padding:11px 14px; border:1.5px solid #e8e5df; border-radius:10px; font-size:14px; font-family:inherit; color:var(--text); background:#fff; transition:border-color .2s; outline:none; }
+.form-input:focus { border-color:var(--orange); }
+.form-select { width:100%; padding:11px 14px; border:1.5px solid #e8e5df; border-radius:10px; font-size:14px; font-family:inherit; color:var(--text); background:#fff; outline:none; cursor:pointer; }
+.form-select:focus { border-color:var(--orange); }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.disclaimer-box { background:#FFF8F0; border:1.5px solid #FAC775; border-radius:12px; padding:14px; margin-bottom:16px; font-size:11px; color:var(--text-muted); line-height:1.7; max-height:100px; overflow-y:auto; }
+.disclaimer-check { display:flex; align-items:flex-start; gap:10px; margin-bottom:20px; cursor:pointer; }
+.disclaimer-check input { margin-top:2px; accent-color:var(--orange); width:16px; height:16px; flex-shrink:0; cursor:pointer; }
+.disclaimer-check span { font-size:13px; color:var(--text); line-height:1.5; }
+.form-submit { width:100%; background:var(--orange); color:#fff; font-size:15px; font-weight:700; padding:14px; border:none; border-radius:20px; cursor:pointer; font-family:inherit; transition:transform .15s,box-shadow .15s; box-shadow:0 4px 16px rgba(230,81,0,0.3); }
+.form-submit:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(230,81,0,0.4); }
+.form-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+.form-note { font-size:11px; color:var(--text-muted); text-align:center; margin-top:12px; line-height:1.6; }
+.success-screen { display:none; text-align:center; padding:20px 0; }
+.success-screen.active { display:block; }
+.form-screen.hidden { display:none; }
+.success-icon { font-size:60px; margin-bottom:16px; }
+.success-title { font-family:"Fraunces",serif; font-size:22px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.success-desc { font-size:14px; color:var(--text-muted); line-height:1.8; }
+.ticket-tag { display:inline-block; background:var(--orange); color:#fff; font-size:12px; font-weight:700; padding:4px 14px; border-radius:20px; margin:12px 0; }
+.role-pill-select { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:6px; }
+.role-opt { display:none; }
+.role-opt-label { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 8px; border:1.5px solid #e8e5df; border-radius:10px; cursor:pointer; transition:border-color .15s,background .15s; font-size:11px; color:var(--text-muted); text-align:center; }
+.role-opt-label .re { font-size:24px; }
+.role-opt:checked + .role-opt-label { border-color:var(--orange); background:#FFF3E0; color:var(--orange); font-weight:700; }
+.wish-box { background:linear-gradient(135deg,#E8F5E9,#F1F8E9); border:1.5px solid #A5D6A7; border-radius:16px; padding:22px 24px; margin-top:20px; display:flex; align-items:flex-start; gap:16px; }
+.wish-icon { font-size:36px; flex-shrink:0; }
+.wish-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.wish-desc { font-size:13px; color:var(--text-muted); line-height:1.7; }
+.wish-desc strong { color:#2E7D32; }
+
+/* LANDING */
+.landing { position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; background:var(--cream); overflow:hidden; }
+.landing-bg { position:absolute; inset:0; }
+.landing-content { position:relative; z-index:1; text-align:center; display:flex; flex-direction:column; align-items:center; gap:0; padding:20px; }
+.land-badge { background:var(--orange); color:#fff; font-size:12px; font-weight:700; padding:5px 18px; border-radius:20px; letter-spacing:1px; margin-bottom:20px; }
+.land-title { font-family:"Fraunces",serif; font-size:clamp(42px,10vw,80px); font-weight:700; color:var(--text); line-height:1; margin-bottom:6px; animation:fadeUp .8s .3s ease both; opacity:0; }
+.land-sub { font-size:16px; color:var(--muted); letter-spacing:3px; margin-bottom:32px; animation:fadeUp .8s .45s ease both; opacity:0; }
+.land-countdown { margin-bottom:36px; animation:fadeUp .8s .6s ease both; opacity:0; }
+.cd-label { font-size:12px; color:var(--muted); margin-bottom:12px; letter-spacing:1px; }
+.countdown { display:flex; gap:10px; justify-content:center; align-items:center; }
+.cunit { background:#fff; border:1px solid var(--border); border-radius:14px; padding:12px 18px; min-width:72px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.cnum { font-family:"Fraunces",serif; font-size:36px; font-weight:700; color:var(--orange); line-height:1; }
+.clbl { font-size:11px; color:var(--muted); margin-top:2px; }
+.csep { font-family:"Fraunces",serif; font-size:32px; font-weight:700; color:var(--gold); margin-top:-8px; }
+.enter-btn { background:var(--orange); color:#fff; font-size:16px; font-weight:700; padding:16px 40px; border:none; border-radius:30px; cursor:pointer; font-family:inherit; display:flex; align-items:center; gap:10px; box-shadow:0 6px 24px rgba(230,81,0,0.35); transition:transform .2s,box-shadow .2s; animation:fadeUp .8s .75s ease both; opacity:0; }
+.enter-btn:hover { transform:translateY(-3px); box-shadow:0 10px 32px rgba(230,81,0,0.45); }
+.enter-arrow { font-size:20px; transition:transform .2s; }
+.enter-btn:hover .enter-arrow { transform:translateX(4px); }
+.land-date { font-size:12px; color:var(--muted); margin-top:20px; animation:fadeUp .8s .9s ease both; opacity:0; }
+/* FULLSITE hidden state */
+.fullsite { transition:opacity .4s ease; }
+.fullsite.hidden { display:none; }
+/* Egg cluster on landing */
+.egg-cluster { position:relative; height:150px; width:260px; margin-bottom:16px; animation:fadeUp .8s .15s ease both; opacity:0; }
+
+/* ===== HIDDEN EGG ===== */
+.hidden-egg {
+  position: absolute; font-size: 28px; cursor: pointer;
+  animation: eggWiggle 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 0px rgba(245,151,0,0));
+  transition: filter .3s; z-index: 10; user-select: none;
+  bottom: 18%; right: 8%;
+}
+.hidden-egg:hover { filter: drop-shadow(0 0 12px rgba(245,151,0,0.8)); transform: scale(1.15); }
+@keyframes eggWiggle {
+  0%,100%{ transform: rotate(-8deg) translateY(0); }
+  25%{ transform: rotate(8deg) translateY(-6px); }
+  50%{ transform: rotate(-5deg) translateY(-2px); }
+  75%{ transform: rotate(6deg) translateY(-8px); }
+}
+.egg-found-popup {
+  display: none; position: fixed; inset: 0; z-index: 9998;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+}
+.egg-found-popup.show { display: flex; }
+.egg-found-box {
+  background: #fff; border-radius: 24px; padding: 36px 32px;
+  text-align: center; max-width: 360px; width: 90%;
+  animation: popIn .4s cubic-bezier(0.175,0.885,0.32,1.275);
+  position: relative;
+}
+@keyframes popIn { from{opacity:0;transform:scale(.7)} to{opacity:1;transform:scale(1)} }
+.egg-found-icon { font-size: 64px; margin-bottom: 12px; animation: spin1 .6s ease; }
+@keyframes spin1 { from{transform:rotate(-20deg) scale(0)} to{transform:rotate(0) scale(1)} }
+.egg-found-title { font-family:'Fraunces',serif; font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.egg-found-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+.egg-code { background: var(--warm); border: 2px dashed var(--gold); border-radius: 12px; padding: 12px 20px; font-family: monospace; font-size: 22px; font-weight: 700; color: var(--orange); letter-spacing: 4px; margin-bottom: 8px; }
+.egg-code-note { font-size: 11px; color: var(--muted); margin-bottom: 20px; }
+.egg-close-btn { background: var(--orange); color: #fff; border: none; border-radius: 20px; padding: 10px 28px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.confetti-wrap { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 24px; }
+.confetti-piece { position: absolute; width: 8px; height: 8px; border-radius: 2px; animation: confettiFall 1.2s ease-out forwards; }
+@keyframes confettiFall { from{transform:translateY(-20px) rotate(0); opacity:1} to{transform:translateY(300px) rotate(720deg); opacity:0} }
+
+/* ===== SOCIAL PROOF ===== */
+.social-strip {
+  background: var(--text); color: #fff; padding: 14px 24px;
+  overflow: hidden; position: relative;
+}
+.social-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.signup-counter { display: flex; align-items: center; gap: 10px; }
+.counter-avatars { display: flex; }
+.avatar { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--text); display: flex; align-items: center; justify-content: center; font-size: 12px; margin-left: -8px; }
+.avatar:first-child { margin-left: 0; }
+.av1{background:#FAC775;} .av2{background:#9FE1CB;} .av3{background:#F5C4B3;} .av4{background:#CECBF6;} .av5{background:#C0DD97;}
+.counter-text { font-size: 13px; }
+.counter-num { font-family:'Fraunces',serif; font-size: 22px; font-weight: 700; color: var(--gold); }
+.counter-label { font-size: 12px; opacity: .7; }
+.role-leaderboard { display: flex; gap: 8px; flex-wrap: wrap; }
+.role-rank { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 4px 12px; font-size: 12px; }
+.role-rank-icon { font-size: 14px; }
+.role-rank-name { opacity: .8; }
+.role-rank-count { font-weight: 700; color: var(--gold); }
+
+/* ===== EARLY BIRD PROGRESS ===== */
+.earlybird-bar-wrap {
+  background: linear-gradient(135deg, #1a1208, #2d1f0e);
+  border-radius: 20px; padding: 24px; margin-top: 24px;
+  border: 1px solid rgba(245,151,0,0.3);
+}
+.eb-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.eb-title { font-size: 15px; font-weight: 700; color: #fff; }
+.eb-subtitle { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.eb-countdown { text-align: right; }
+.eb-cd-label { font-size: 10px; color: rgba(255,255,255,0.5); }
+.eb-cd-time { font-family:'Fraunces',serif; font-size: 18px; font-weight: 700; color: var(--gold); }
+.eb-progress-track { background: rgba(255,255,255,0.1); border-radius: 20px; height: 12px; overflow: hidden; margin-bottom: 10px; }
+.eb-progress-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--gold), var(--orange-light)); transition: width 1s ease; position: relative; }
+.eb-progress-fill::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 4px; background: #fff; border-radius: 2px; opacity: .8; animation: pulse2 1s ease-in-out infinite; }
+@keyframes pulse2 { 0%,100%{opacity:.4} 50%{opacity:1} }
+.eb-stats { display: flex; justify-content: space-between; font-size: 12px; }
+.eb-sold { color: var(--gold); font-weight: 700; }
+.eb-left { color: rgba(255,255,255,0.5); }
+.eb-spots-left { color: #fff; font-weight: 700; }
+.eb-warning { background: rgba(230,81,0,0.2); border: 1px solid rgba(230,81,0,0.4); border-radius: 10px; padding: 8px 14px; font-size: 12px; color: #FF8A65; margin-top: 12px; display: flex; align-items: center; gap: 6px; }
+
+/* ===== ACHIEVEMENT TOAST ===== */
+.achievement-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--text); color: #fff; border-radius: 20px; padding: 12px 20px;
+  display: flex; align-items: center; gap: 12px; z-index: 9997;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3); transition: transform .4s cubic-bezier(0.175,0.885,0.32,1.275);
+  min-width: 260px; max-width: 340px;
+}
+.achievement-toast.show { transform: translateX(-50%) translateY(0); }
+.ach-icon { font-size: 28px; flex-shrink: 0; }
+.ach-title { font-size: 13px; font-weight: 700; color: var(--gold); }
+.ach-desc { font-size: 12px; opacity: .7; margin-top: 2px; }
+
+/* ===== TICKER (scrolling social proof) ===== */
+.ticker-wrap { background: var(--orange); padding: 8px 0; overflow: hidden; }
+.ticker-inner { display: flex; gap: 0; white-space: nowrap; animation: ticker 20s linear infinite; }
+.ticker-item { font-size: 12px; font-weight: 700; color: #fff; padding: 0 32px; opacity: .9; }
+.ticker-sep { color: rgba(255,255,255,0.4); }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* MINI MEMBER CARD in modal */
+.mini-member-card {
+  background: linear-gradient(135deg,#1a0f05,#3d2810);
+  border-radius: 16px; padding: 20px; margin: 16px 0;
+  text-align: center; position: relative; overflow: hidden;
+}
+.mmc-shine { position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);animation:shimmer2 3s ease-in-out infinite; }
+@keyframes shimmer2{0%{left:-60%}100%{left:160%}}
+.mmc-top { display:flex;justify-content:space-between;align-items:center;margin-bottom:14px; }
+.mmc-logo { font-size:12px;color:rgba(255,255,255,0.5); }
+.mmc-badge { font-size:10px;font-weight:700;background:var(--gold);color:#1a0f05;padding:2px 8px;border-radius:10px; }
+.mmc-role { font-size:40px;margin-bottom:4px;animation:float2 3s ease-in-out infinite; }
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.mmc-role-name { font-size:14px;font-weight:700;color:#fff;margin-bottom:8px; }
+.mmc-name { font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:6px; }
+.mmc-id { font-family:monospace;font-size:18px;font-weight:700;color:var(--gold);letter-spacing:3px; }
+.member-center-btn { display:block;background:linear-gradient(135deg,var(--gold),var(--orange));color:#fff;font-size:14px;font-weight:700;padding:12px 24px;border-radius:20px;text-decoration:none;margin-top:16px;transition:transform .15s; }
+.member-center-btn:hover{transform:translateY(-2px);}
+</style>
+</head>
+<body>
+<script>
+// Define ALL functions immediately on window so they're available before DOM loads
+window.enterSite = function() {
+  var l = document.getElementById('landing');
+  var f = document.getElementById('fullsite');
+  if (!l || !f) return;
+  l.style.transition = 'opacity .5s ease, transform .5s ease';
+  l.style.opacity = '0';
+  l.style.transform = 'scale(1.04)';
+  setTimeout(function() {
+    l.style.display = 'none';
+    f.classList.remove('hidden');
+    f.style.opacity = '0';
+    f.style.transition = 'opacity .4s ease';
+    requestAnimationFrame(function() { f.style.opacity = '1'; });
+  }, 500);
+};
+window.openModal = function() {
+  var m = document.getElementById('signupModal');
+  if (m) { m.classList.add('active'); document.body.style.overflow = 'hidden'; }
+};
+window.closeModal = function() {
+  var m = document.getElementById('signupModal');
+  if (m) { m.classList.remove('active'); document.body.style.overflow = ''; }
+};
+window.foundEgg = function() {
+  if (window._eggFound) return;
+  window._eggFound = true;
+  var wrap = document.getElementById('confettiWrap');
+  if (wrap) {
+    var colors = ['#FAC775','#F59700','#E65100','#9FE1CB','#CECBF6','#F5C4B3'];
+    for (var i = 0; i < 30; i++) {
+      var c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.left = Math.random()*100 + '%';
+      c.style.top = Math.random()*30 + '%';
+      c.style.animationDelay = Math.random()*.8 + 's';
+      c.style.animationDuration = (.8+Math.random()*.8) + 's';
+      wrap.appendChild(c);
+    }
+  }
+  var popup = document.getElementById('eggFoundPopup');
+  if (popup) popup.classList.add('show');
+  var egg = document.getElementById('hiddenEgg');
+  if (egg) egg.style.display = 'none';
+  window.showAchievement('🥇','成就解锁！','你发现了隐藏金蛋 · 专属码已解锁');
+};
+window.closeEggPopup = function() {
+  var p = document.getElementById('eggFoundPopup');
+  if (p) p.classList.remove('show');
+};
+window.showAchievement = function(icon, title, desc) {
+  var i = document.getElementById('achIcon');
+  var t = document.getElementById('achTitle');
+  var d = document.getElementById('achDesc');
+  var toast = document.getElementById('achToast');
+  if (!toast) return;
+  if(i) i.textContent = icon;
+  if(t) t.textContent = title;
+  if(d) d.textContent = desc;
+  toast.classList.add('show');
+  setTimeout(function(){ toast.classList.remove('show'); }, 4000);
+};
+window.submitForm = function() {
+  var n = document.getElementById('f-name').value.trim();
+  var p = document.getElementById('f-phone').value.trim();
+  var a = document.getElementById('f-age').value.trim();
+  var w = document.getElementById('f-wechat').value.trim();
+  var e = document.getElementById('f-email').value.trim();
+  var t = document.getElementById('f-ticket').value;
+  var ok = document.getElementById('f-agree').checked;
+  if (!n||!p||!a||!w||!e||!t) { alert('请填写所有必填项 ⚠️'); return; }
+  if (parseInt(a) < 18) { alert('本活动仅限18岁以上参与 ⚠️'); return; }
+  if (!ok) { alert('请先同意免责声明 ⚠️'); return; }
+  // Generate member ID
+    // Generate sequential NEXT- member ID starting from 030501
+  var baseNum = 30501;
+  var seq = parseInt(sessionStorage.getItem('memberSeq') || baseNum);
+  seq = seq + Math.floor(Math.random()*3);
+  var memberId = 'NEXT-0' + String(Math.max(seq, baseNum)).padStart(5,'0');
+  // Get selected role
+  var roleVal = document.querySelector('input[name="role"]:checked');
+  roleVal = roleVal ? roleVal.value : 'none';
+  var roleMap = {
+    detective:{emoji:'🔍',name:'侦探'}, merchant:{emoji:'💰',name:'商人'},
+    warrior:{emoji:'⚔️',name:'战士'}, thief:{emoji:'🗝️',name:'盗贼'},
+    angel:{emoji:'😇',name:'天使'}, none:{emoji:'🎲',name:'角色待定'}
+  };
+  var role = roleMap[roleVal] || roleMap['none'];
+  // Fill mini card
+  var el = function(id){ return document.getElementById(id); };
+  if(el('mmc-name')) el('mmc-name').textContent = n;
+  if(el('mmc-id')) el('mmc-id').textContent = memberId;
+  if(el('mmc-role-emoji')) el('mmc-role-emoji').textContent = role.emoji;
+  if(el('mmc-role-name')) el('mmc-role-name').textContent = role.name;
+  if(el('confirm-name')) el('confirm-name').textContent = n;
+  // Update member center link with params
+  var memberBtn = document.querySelector('.member-center-btn');
+  if (memberBtn) {
+    var today = new Date().toLocaleDateString('zh-CN');
+    memberBtn.href = 'member.html?id='+encodeURIComponent(memberId)+'&name='+encodeURIComponent(n)+'&role='+roleVal+'&date='+encodeURIComponent(today)+'&count=1';
+  }
+  el('formScreen').classList.add('hidden');
+  el('successScreen').classList.add('active');
+};
+
+// Countdown - runs immediately and every second
+var _cdTarget = new Date('2026-04-11T14:00:00');
+function _updateCD() {
+  var diff = _cdTarget - new Date();
+  if (diff <= 0) return;
+  var el = function(id){ return document.getElementById(id); };
+  if(el('cd-d')) el('cd-d').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
+  if(el('cd-h')) el('cd-h').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  if(el('cd-m')) el('cd-m').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  if(el('cd-s')) el('cd-s').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+}
+_updateCD();
+setInterval(_updateCD, 1000);
+
+// Early bird timer
+var _ebTarget = new Date('2026-04-05T23:59:59');
+function _updateEB() {
+  var diff = _ebTarget - new Date();
+  var el = document.getElementById('eb-timer');
+  if (!el) return;
+  if (diff <= 0) { el.textContent = '已截止'; return; }
+  el.textContent = Math.floor(diff/86400000) + 'd ' + Math.floor((diff%86400000)/3600000) + 'h';
+}
+_updateEB();
+setInterval(_updateEB, 60000);
+
+// DOM ready handlers
+document.addEventListener('DOMContentLoaded', function() {
+  // FAQ
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = this.parentElement;
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+  // Modal click outside
+  var modal = document.getElementById('signupModal');
+  if (modal) modal.addEventListener('click', function(e){ if(e.target===this) window.closeModal(); });
+  // Social counter intersection
+  var socialEl = document.querySelector('.social-strip');
+  var counterDone = false;
+  if (socialEl && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting && !counterDone) {
+        counterDone = true;
+        var el = document.getElementById('signupCount');
+        if (!el) return;
+        var s=18, e=23, dur=1500, t0=null;
+        function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/dur,1); el.textContent=Math.floor(s+(e-s)*p); if(p<1)requestAnimationFrame(step); }
+        requestAnimationFrame(step);
+        setTimeout(function(){ window.showAchievement('👥','热门活动！','已有 23 位彩蛋猎人报名'); }, 800);
+      }
+    }).observe(socialEl);
+  }
+  // Egg hint glow after 5s
+  setTimeout(function() {
+    var egg = document.getElementById('hiddenEgg');
+    if (!egg) return;
+    egg.style.filter = 'drop-shadow(0 0 12px rgba(245,151,0,0.9))';
+    setTimeout(function(){ if(egg) egg.style.filter=''; }, 2000);
+  }, 5000);
+});
+</script>
+
+<!-- ===== LANDING ===== -->
+<div id="landing" class="landing">
+  <div class="landing-bg">
+    <div class="blob b1"></div><div class="blob b2"></div>
+    <div class="blob b3"></div><div class="blob b4"></div>
+    <div class="dots-bg"></div>
+  </div>
+  <div class="landing-content">
+    <div class="land-badge">🌿 Sunnyvale 公园 · 2026</div>
+    <div class="egg-cluster">
+      <div class="egg-f ef2">🥚</div>
+      <div class="egg-f ef3">🥚</div>
+      <div class="egg-f ef1">🥚</div>
+      <div class="gold-glow"></div>
+      <div class="egg-f ef-gold">🥇</div>
+    </div>
+    <div class="land-title">疯狂的彩蛋</div>
+    <div class="land-sub">CRAZY EGG HUNT</div>
+    <div class="land-countdown">
+      <div class="cd-label">距离活动开始还有</div>
+      <div class="countdown">
+        <div class="cunit"><div class="cnum" id="cd-d">--</div><div class="clbl">天</div></div>
+        <div class="csep">:</div>
+        <div class="cunit"><div class="cnum" id="cd-h">--</div><div class="clbl">时</div></div>
+        <div class="csep">:</div>
+        <div class="cunit"><div class="cnum" id="cd-m">--</div><div class="clbl">分</div></div>
+        <div class="csep">:</div>
+        <div class="cunit"><div class="cnum" id="cd-s">--</div><div class="clbl">秒</div></div>
+      </div>
+    </div>
+    
+  <!-- Hidden egg -->
+  <div class="hidden-egg" id="hiddenEgg" onclick="foundEgg()" title="psst...">🥚</div>
+
+    <button class="enter-btn" onclick="enterSite()">
+      <span>进入活动页面</span>
+      <span class="enter-arrow">→</span>
+    </button>
+    <div class="land-date">📅 4月11日 下午2:00–5:00 · 📍 Sunnyvale 公园</div>
+  </div>
+</div>
+
+<!-- ===== FULL SITE ===== -->
+<div id="fullsite" class="fullsite hidden">
+
+<nav>
+  <div class="nav-logo">🥚 疯狂的彩蛋</div>
+  <ul class="nav-links">
+    <li><a href="#how">玩法</a></li>
+    <li><a href="#timeline">流程</a></li>
+    <li><a href="#npc">NPC</a></li>
+    <li><a href="#roles">角色</a></li>
+    <li><a href="#ticket">票价</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="member.html">会员 🏅</a></li>
+  </ul>
+  <a href="#" onclick="openModal();return false;" class="nav-cta">立即报名 →</a>
+</nav>
+
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">🔍 有人许愿成为侦探</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥚 早鸟票剩余名额有限</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">⚔️ 战士角色已被预定</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🌟 有人的许愿实现了！</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🕵️ 神秘商人在等你</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">💰 黑市交易即将开始</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🔍 有人许愿成为侦探</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥚 早鸟票剩余名额有限</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">⚔️ 战士角色已被预定</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🌟 有人的许愿实现了！</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🕵️ 神秘商人在等你</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">💰 黑市交易即将开始</span><span class="ticker-sep">·</span>
+  </div>
+</div>
+
+<!-- SOCIAL STRIP -->
+<div class="social-strip">
+  <div class="social-inner">
+    <div class="signup-counter">
+      <div class="counter-avatars">
+        <div class="avatar av1">🔍</div>
+        <div class="avatar av2">⚔️</div>
+        <div class="avatar av3">💰</div>
+        <div class="avatar av4">🗝️</div>
+        <div class="avatar av5">😇</div>
+      </div>
+      <div>
+        <div class="counter-num" id="signupCount">23</div>
+        <div class="counter-label">人已报名 · 还有名额</div>
+      </div>
+    </div>
+    <div class="role-leaderboard">
+      <div class="role-rank"><span class="role-rank-icon">🔍</span><span class="role-rank-name">侦探</span><span class="role-rank-count">8人</span></div>
+      <div class="role-rank"><span class="role-rank-icon">⚔️</span><span class="role-rank-name">战士</span><span class="role-rank-count">6人</span></div>
+      <div class="role-rank"><span class="role-rank-icon">💰</span><span class="role-rank-name">商人</span><span class="role-rank-count">5人</span></div>
+      <div class="role-rank"><span class="role-rank-icon">😇</span><span class="role-rank-name">天使</span><span class="role-rank-count">3人</span></div>
+      <div class="role-rank"><span class="role-rank-icon">🗝️</span><span class="role-rank-name">盗贼</span><span class="role-rank-count">1人</span></div>
+    </div>
+  </div>
+</div>
+
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <div class="blob b1"></div><div class="blob b2"></div>
+    <div class="blob b3"></div><div class="blob b4"></div>
+    <div class="dots-bg"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🌿 Sunnyvale 公园 · 4月11日</div>
+    <div class="egg-cluster">
+      <div class="egg-f ef2">🥚</div><div class="egg-f ef3">🥚</div>
+      <div class="egg-f ef1">🥚</div>
+      <div class="gold-glow"></div>
+      <div class="egg-f ef-gold">🥇</div>
+    </div>
+    <h1><span class="gold-text">5颗金蛋</span><br>只有<em>1颗</em>是真的<br>你能找到吗？</h1>
+    <p class="hero-sub">户外实景解谜 × 角色扮演 × 团队互动<br>随机组队 · 抽取角色 · 抢蛋 · 黑市交易 · 推理真相</p>
+    <div class="hero-tags">
+      <span class="htag ht-or">⏱ 约115分钟</span>
+      <span class="htag ht-gr">👥 5人随机组队</span>
+      <span class="htag ht-bl">🏹 户外公园</span>
+      <span class="htag ht-pk">🎁 特别奖励</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#" onclick="openModal();return false;" class="btn-primary">立即抢票 🎟</a>
+      <a href="#how" class="btn-secondary">了解玩法 ↓</a>
+    </div>
+  </div>
+</section>
+
+<div class="info-strip">
+  <div class="info-inner">
+    <div class="info-item"><div class="info-icon">📅</div><div><div class="info-label">日期</div><div class="info-val">4月11日 下午2:00–5:00</div></div></div>
+    <div class="info-item"><div class="info-icon">📍</div><div><div class="info-label">地点</div><div class="info-val">Sunnyvale 公园</div></div></div>
+    <div class="info-item"><div class="info-icon">👥</div><div><div class="info-label">组队</div><div class="info-val">随机5人一组</div></div></div>
+    <div class="info-item"><div class="info-icon">🎟</div><div><div class="info-label">早鸟票</div><div class="info-val">$15 起</div></div></div>
+  </div>
+</div>
+
+<section class="how" id="how">
+  <div class="container">
+    <div class="sec-label">How to Play</div>
+    <h2>怎么玩？</h2>
+    <p class="sec-sub">不需要任何经验，上手即玩。第一次参加的人最多！</p>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">1</div><div class="step-icon">🥚</div><div class="step-title">抢蛋</div><div class="step-desc">游戏开始后限时45秒前往彩蛋区，每人至少拿1个彩蛋，这是你的任务门票！</div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-icon">🏹</div><div class="step-title">完成任务</div><div class="step-desc">用彩蛋向公园内的NPC发起挑战，完成任务获得推理线索。每个NPC每队限1次。</div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-icon">🕵️</div><div class="step-title">黑市交易</div><div class="step-desc">用彩蛋或线索和其他队谈判交换，情报就是筹码。只能谈判，不能强抢！</div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-icon">🏆</div><div class="step-title">推理金蛋</div><div class="step-desc">综合所有线索，推断出5颗金蛋中唯一真正的那一颗，提交答案赢得奖励！</div></div>
+    </div>
+    <div class="props-row" style="margin-top:32px;">
+      <div class="prop-card pc-egg"><div class="prop-icon">🥚</div><div><div class="prop-title">彩蛋（道具）</div><div class="prop-desc">完成NPC任务的门票，也可在黑市出价交换其他队的线索。</div></div></div>
+      <div class="prop-card pc-clue"><div class="prop-icon">🔍</div><div><div class="prop-title">线索</div><div class="prop-desc">完成任务后获得，用于最终推理出藏有真正金蛋的人！</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="timeline-section" id="timeline">
+  <div class="container">
+    <div class="sec-label">Game Timeline</div>
+    <h2>完整游戏流程</h2>
+    <p class="sec-sub">全程约115分钟，节奏紧凑，每个阶段各有不同挑战！</p>
+    <div class="tl">
+      <div class="tl-item"><div class="tl-left"><div class="tl-dot dd1"></div><div class="tl-line dl1"></div></div><div class="tl-body"><span class="tl-time-badge tb1">0 – 25 分钟</span><div class="tl-title">🥚 抢蛋 + NPC 任务</div><div class="tl-desc">组队后前往彩蛋区抢蛋，再用彩蛋挑战公园内NPC，完成任务获取线索。</div><div class="tl-pills"><span class="tlp tlp-r">⏱ 抢蛋限时 45秒</span><span class="tlp tlp-o">🥚 上限 10个</span><span class="tlp tlp-b">每人至少拿 1个</span></div></div></div>
+      <div class="tl-item"><div class="tl-left"><div class="tl-dot dd2"></div><div class="tl-line dl2"></div></div><div class="tl-body"><span class="tl-time-badge tb2">25 – 30 分钟</span><div class="tl-title">⏸ 第一次休整</div><div class="tl-desc">短暂休息，整理彩蛋与线索，准备黑市交易。</div><div class="tl-pills"><span class="tlp tlp-g">5 分钟</span></div></div></div>
+      <div class="tl-item"><div class="tl-left"><div class="tl-dot dd3"></div><div class="tl-line dl3"></div></div><div class="tl-body"><span class="tl-time-badge tb3">30 – 45 分钟</span><div class="tl-title">🕵️ 第一轮黑市</div><div class="tl-desc">神秘商人坐镇，各队用彩蛋或线索互相谈判交易，只能谈判不能强抢！</div><div class="tl-pills"><span class="tlp tlp-p">🕵️ 神秘商人主持</span><span class="tlp tlp-r">限时 15 分钟</span></div></div></div>
+      <div class="tl-item"><div class="tl-left"><div class="tl-dot dd4"></div><div class="tl-line dl4"></div></div><div class="tl-body"><span class="tl-time-badge tb4">45 – 50 分钟</span><div class="tl-title">🥚 补给时间（仅此一次）</div><div class="tl-desc">前往大本营，二选一：</div><div class="tl-choices"><div class="tl-choice"><div class="tlc-icon">🥚</div><div class="tlc-name">补给彩蛋</div><div class="tlc-note">最多补给 5 个蛋</div></div><div class="tl-choice"><div class="tlc-icon">🪄</div><div class="tlc-name">交易市场</div><div class="tlc-note">魔法师主持，用蛋换线索</div></div></div><div class="tl-warn">⚠️ 补给上限 5 个 · 全程仅此一次机会</div></div></div>
+      <div class="tl-item"><div class="tl-left"><div class="tl-dot dd5"></div><div class="tl-line dl5"></div></div><div class="tl-body"><span class="tl-time-badge tb5">50 – 75 分钟</span><div class="tl-title">🏹 继续 NPC 任务</div><div class="tl-desc">用补给后的彩蛋继续挑战剩余NPC，争取更多线索！每个NPC每队仍只能挑战一次。</div><div class="tl-pills"><span class="tlp tlp-gr">继续收集线索</span><span class="tlp tlp-o">每个 NPC 限 1 次</span></div></div></div>
+      <div class="tl-item"><div class="tl-left"><div class="tl-dot dd6"></div><div class="tl-line dl6"></div></div><div class="tl-body"><span class="tl-time-badge tb2">75 – 80 分钟</span><div class="tl-title">⏸ 第二次休整</div><div class="tl-desc">整理所有线索，制定最终推理策略，准备最后一轮黑市。</div><div class="tl-pills"><span class="tlp tlp-g">5 分钟</span></div></div></div>
+      <div class="tl-item"><div class="tl-left"><div class="tl-dot dd7"></div><div class="tl-line dl7"></div></div><div class="tl-body"><span class="tl-time-badge tb7">80 – 95 分钟</span><div class="tl-title">🕵️ 第二轮黑市</div><div class="tl-desc">最后一次情报交换！神秘商人再次坐镇，拿到关键线索的最后机会！</div><div class="tl-pills"><span class="tlp tlp-p">🕵️ 神秘商人主持</span><span class="tlp tlp-r">限时 15 分钟</span></div></div></div>
+      <div class="tl-item"><div class="tl-left"><div class="tl-dot dd8"></div></div><div class="tl-body"><span class="tl-time-badge tb8">95 – 115 分钟</span><div class="tl-title">🏆 回大本营 · 最终推理</div><div class="tl-desc">所有队伍回到大本营，最后一轮交易后各自推理提交答案——谁手里藏着真正的金蛋？</div><div class="tl-pills"><span class="tlp tlp-gr">🏆 提交最终答案</span><span class="tlp tlp-b">15–20 分钟</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="npc-section" id="npc">
+  <div class="container">
+    <div class="sec-label">Meet the NPCs</div>
+    <h2>公园里的神秘角色</h2>
+    <p class="sec-sub">5位NPC各守一方，各有秘密。想要线索？先完成他们的考验！</p>
+    <div class="npc-grid">
+      <div class="npc-card"><div class="npc-emoji">🕵️</div><div class="npc-name">神秘商人</div><div class="npc-role">黑市情报交易掌门人</div><span class="npc-zone">黑市区</span></div>
+      <div class="npc-card"><div class="npc-emoji">🧙‍♀️</div><div class="npc-name">巫婆</div><div class="npc-role">掌握最神秘的线索，完成考验才肯开口</div><span class="npc-zone">森林区</span></div>
+      <div class="npc-card"><div class="npc-emoji">🏹</div><div class="npc-name">猎人</div><div class="npc-role">发布最难的任务挑战，考验队伍实力</div><span class="npc-zone">任务区</span></div>
+      <div class="npc-card"><div class="npc-emoji">🧚</div><div class="npc-name">精灵</div><div class="npc-role">彩蛋区守护者，管理抢蛋环节</div><span class="npc-zone">彩蛋区</span></div>
+      <div class="npc-card wide"><div class="npc-emoji">🪄</div><div><div class="npc-name">魔法师</div><div class="npc-role">交易市场操盘手，掌控彩蛋与线索的一切交换</div><span class="npc-zone">交易市场</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="role-section" id="roles">
+  <div class="container">
+    <div class="sec-label">Your Role</div>
+    <h2>你是谁？🎭</h2>
+    <p class="sec-sub">每位玩家随机获得一个专属角色，不同角色拥有不同技能——运气和策略同样重要！</p>
+    <div class="role-intro">
+      <div class="role-intro-title">📜 故事背景</div>
+      <div class="role-intro-desc">传说 Sunnyvale 公园里藏着一颗<strong>真正的金蛋</strong>，价值连城。5位神秘 NPC 各持一颗金蛋，但只有一颗是真的。一群来自不同背景的冒险者闻风而至——<strong>侦探、商人、战士、盗贼、天使</strong>，各怀绝技，各有目的。你，会是找到真相的那个人吗？</div>
+    </div>
+    <div class="role-grid">
+      <div class="role-card rc-detective"><div class="role-emoji">🔍</div><div class="role-name">侦探</div><div class="role-skill-label">专属技能</div><div class="role-skill">完成NPC任务后，可额外获得 1 条隐藏提示线索</div><span class="role-badge rb-detective">洞察力 +1</span></div>
+      <div class="role-card rc-merchant"><div class="role-emoji">💰</div><div class="role-name">商人</div><div class="role-skill-label">专属技能</div><div class="role-skill">黑市交易时可以还价，少付 1 个彩蛋</div><span class="role-badge rb-merchant">议价能力 +1</span></div>
+      <div class="role-card rc-warrior"><div class="role-emoji">⚔️</div><div class="role-name">战士</div><div class="role-skill-label">专属技能</div><div class="role-skill">抢蛋阶段结束时，可额外多抢 2 个彩蛋</div><span class="role-badge rb-warrior">体力 +2</span></div>
+      <div class="role-card rc-thief"><div class="role-emoji">🗝️</div><div class="role-name">盗贼</div><div class="role-skill-label">专属技能</div><div class="role-skill">可偷看另一队的 1 条线索（全场限用 1 次）</div><span class="role-badge rb-thief">潜行 +1</span></div>
+      <div class="role-card rc-angel"><div class="role-emoji">😇</div><div class="role-name">天使</div><div class="role-skill-label">专属技能</div><div class="role-skill">补给阶段额外多补给 2 个彩蛋</div><span class="role-badge rb-angel">幸运 +2</span></div>
+    </div>
+    <div class="role-note">⚠️ 角色<strong>完全随机分配</strong>，同一队可能出现重复角色，也可能没有某个角色。信息不对称，才是游戏最刺激的地方！</div>
+    <div class="wish-box">
+      <div class="wish-icon">🌟</div>
+      <div>
+        <div class="wish-title">许愿池 · Make a Wish ✨</div>
+        <div class="wish-desc">报名时填写你最想扮演的角色，投入你的「愿望」。<br>如果该角色<strong>只有你一个人许愿</strong>，系统会提前通知你：<br><strong>「恭喜！你的愿望实现了，这个角色是你的了 🎉」</strong><br>愿望实现，也许还会增加你找到真正金蛋的机会……<strong>否则命运自有安排。</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ticket-section" id="ticket">
+  <div class="container">
+    <div class="sec-label">Get Your Ticket</div>
+    <h2>立即报名</h2>
+    <p class="sec-sub">名额有限，早鸟票截止 4月5日！参加即自动升级会员 🎉</p>
+    
+    <!-- Early bird progress -->
+    <div class="earlybird-bar-wrap">
+      <div class="eb-header">
+        <div>
+          <div class="eb-title">🔥 早鸟票进度</div>
+          <div class="eb-subtitle">售完即恢复原价 $25</div>
+        </div>
+        <div class="eb-countdown">
+          <div class="eb-cd-label">早鸟截止</div>
+          <div class="eb-cd-time" id="eb-timer">--d --h</div>
+        </div>
+      </div>
+      <div class="eb-progress-track">
+        <div class="eb-progress-fill" id="ebFill" style="width:46%"></div>
+      </div>
+      <div class="eb-stats">
+        <span class="eb-sold">已售 23 张</span>
+        <span><span class="eb-spots-left">剩余 27 个名额</span> <span class="eb-left">/ 共50张</span></span>
+      </div>
+      <div class="eb-warning">⚡ 按照目前速度，早鸟票将在 <strong>3天内</strong> 售完</div>
+    </div>
+
+    <div class="ticket-grid">
+      <div class="ticket-card featured">
+        <div class="featured-badge">🔥 推荐</div>
+        <div class="ticket-type">早鸟票 EARLY BIRD</div>
+        <div class="ticket-price"><sup>$</sup>25</div>
+        <div class="ticket-until">📅 截止 4月5日 · 售完即止</div>
+        <hr class="ticket-divider">
+        <ul class="ticket-perks">
+          <li>完整115分钟游戏体验</li><li>随机组队认识新朋友</li>
+          <li>获胜队伍特别奖励资格</li><li>参加即免费升级会员 🏅</li>
+          <li>下次活动 <strong>8折优惠</strong></li>
+        </ul>
+        <div class="pay-box">
+          <div class="pay-title">转账即报名 💸</div>
+          <div class="pay-row"><span class="pay-icon">🏦</span><div><div class="pay-label">Zelle</div><div class="pay-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afd5d7ccd9c5dac2efc6ccc3c0dacb81ccc0c2">[email&#160;protected]</a></div></div></div>
+          <div class="pay-row"><span class="pay-icon">💜</span><div><div class="pay-label">Venmo</div><div class="pay-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="453f3d26332f3028052c26292a30216b262a28">[email&#160;protected]</a></div></div></div>
+          <div class="pay-note">转账后请备注「彩蛋+姓名」，收到即确认报名成功！</div>
+        </div>
+      </div>
+      <div class="ticket-card">
+        <div class="ticket-type">正常票 REGULAR</div>
+        <div class="ticket-price"><sup>$</sup>20</div>
+        <div class="ticket-until">4月5日后 · 活动当天可购</div>
+        <hr class="ticket-divider">
+        <ul class="ticket-perks">
+          <li>完整115分钟游戏体验</li><li>随机组队认识新朋友</li>
+          <li>获胜队伍特别奖励资格</li><li>参加即免费升级会员 🏅</li>
+          <li>下次活动 <strong>8折优惠</strong></li>
+        </ul>
+        <div class="pay-box pay-box-secondary">
+          <div class="pay-title">转账即报名 💸</div>
+          <div class="pay-row"><span class="pay-icon">🏦</span><div><div class="pay-label">Zelle</div><div class="pay-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9fe5e7fce9f5eaf2dff6fcf3f0eafbb1fcf0f2">[email&#160;protected]</a></div></div></div>
+          <div class="pay-row"><span class="pay-icon">💜</span><div><div class="pay-label">Venmo</div><div class="pay-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6c16140f1a0619012c050f00031908420f0301">[email&#160;protected]</a></div></div></div>
+          <div class="pay-note">转账后请备注「彩蛋+姓名」，收到即确认报名成功！</div>
+        </div>
+      </div>
+    </div>
+    <div class="member-banner">
+      <div class="member-left">
+        <div class="member-icon">🏅</div>
+        <div><div class="member-title">参加活动 · 自动成为免费会员</div><div class="member-sub">无需额外付费，报名参加即自动升级！</div></div>
+      </div>
+      <div class="member-perk">
+        <div class="perk-label">会员专属福利</div>
+        <div class="perk-val">下次活动 <em>8折</em> 优惠</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="sec-label">FAQ</div>
+    <h2>常见问题</h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">需要提前组队吗？</div><div class="faq-a">不需要！到场后系统会随机分组，每组5人。一个人来也完全没问题，反而是认识新朋友的好机会！</div></div>
+      <div class="faq-item"><div class="faq-q">需要什么经验吗？</div><div class="faq-a">完全不需要！这个游戏上手即玩，第一次参加的人最多。只要你会走路、会说话，就能参加！</div></div>
+      <div class="faq-item"><div class="faq-q">适合几岁参加？</div><div class="faq-a">建议18岁以上参加，因为涉及策略推理和团队谈判。游戏全程在户外公园进行，请穿着舒适的运动鞋。</div></div>
+      <div class="faq-item"><div class="faq-q">一队最多拿几个彩蛋？</div><div class="faq-a">抢蛋阶段彩蛋区上限10个，5人队每人至少拿1个。中途有一次补给机会，最多额外补给5个蛋。</div></div>
+      <div class="faq-item"><div class="faq-q">如果彩蛋用完了怎么办？</div><div class="faq-a">45–50分钟有一次补给机会，可以前往大本营补给最多5个蛋，或去交易市场用线索换取资源。</div></div>
+      <div class="faq-item"><div class="faq-q">怎么知道谁手里有真正的金蛋？</div><div class="faq-a">通过完成NPC任务获得线索，再结合黑市上交换来的情报，最终推理出5位NPC中谁持有真正的金蛋。线索越多，推理越准确！</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">🥚 疯狂的彩蛋</div>
+  <p>📅 4月11日 下午2:00–5:00 &nbsp;|&nbsp; 📍 Sunnyvale 公园</p>
+  <p style="margin-top:8px;"><a href="waiver.html">签署免责声明 Waiver →</a> &nbsp;|&nbsp; <a href="member.html">会员中心 🏅</a></p>
+</footer>
+
+
+<!-- EGG FOUND POPUP -->
+<div class="egg-found-popup" id="eggFoundPopup">
+  <div class="egg-found-box">
+    <div class="confetti-wrap" id="confettiWrap"></div>
+    <div class="egg-found-icon">🥇</div>
+    <div class="egg-found-title">你找到了隐藏金蛋！</div>
+    <div class="egg-found-desc">
+      恭喜你发现了这颗神秘彩蛋！<br>
+      这是给你的专属优惠码，报名时使用：
+    </div>
+    <div class="egg-code">EGG-2026</div>
+    <div class="egg-code-note">💡 截图保存，报名时备注此码可获得神秘惊喜</div>
+    <button class="egg-close-btn" onclick="closeEggPopup()">我知道了，去报名！🥚</button>
+  </div>
+</div>
+
+<!-- ACHIEVEMENT TOAST -->
+<div class="achievement-toast" id="achToast">
+  <div class="ach-icon" id="achIcon">🏆</div>
+  <div>
+    <div class="ach-title" id="achTitle">成就解锁！</div>
+    <div class="ach-desc" id="achDesc">你发现了隐藏彩蛋</div>
+  </div>
+</div>
+
+</div><!-- end fullsite -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="signupModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="form-screen" id="formScreen">
+      <div class="modal-title">🥚 立即报名</div>
+      <div class="modal-sub">填写信息后通过 Zelle / Venmo 完成付款，收到后即确认报名！</div>
+      <div class="form-group"><label class="form-label">姓名 <span>*</span> <small style="font-weight:400;color:#aaa;">（需与付款信息一致）</small></label><input class="form-input" type="text" id="f-name" placeholder="请输入真实姓名"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">电话 <span>*</span></label><input class="form-input" type="tel" id="f-phone" placeholder="手机号码"></div>
+        <div class="form-group"><label class="form-label">年龄 <span>*</span></label><input class="form-input" type="number" id="f-age" placeholder="18+" min="18"></div>
+      </div>
+      <div class="form-group"><label class="form-label">微信 ID <span>*</span></label><input class="form-input" type="text" id="f-wechat" placeholder="微信号"></div>
+      <div class="form-group"><label class="form-label">邮箱 <span>*</span></label><input class="form-input" type="email" id="f-email" placeholder="your@email.com"></div>
+      <div class="form-group"><label class="form-label">票种 <span>*</span></label><select class="form-select" id="f-ticket"><option value="">请选择票种</option><option value="early">早鸟票 $20（截止4月5日）</option><option value="regular">正常票 $20</option></select></div>
+      <div class="form-group">
+        <label class="form-label">🌟 许愿池 · 偏好角色 <small style="font-weight:400;color:#aaa;">（可不选）</small></label>
+        <div class="role-pill-select">
+          <input class="role-opt" type="radio" name="role" id="r0" value="none" checked><label class="role-opt-label" for="r0"><span class="re">🎲</span>随机</label>
+          <input class="role-opt" type="radio" name="role" id="r1" value="detective"><label class="role-opt-label" for="r1"><span class="re">🔍</span>侦探</label>
+          <input class="role-opt" type="radio" name="role" id="r2" value="merchant"><label class="role-opt-label" for="r2"><span class="re">💰</span>商人</label>
+          <input class="role-opt" type="radio" name="role" id="r3" value="warrior"><label class="role-opt-label" for="r3"><span class="re">⚔️</span>战士</label>
+          <input class="role-opt" type="radio" name="role" id="r4" value="thief"><label class="role-opt-label" for="r4"><span class="re">🗝️</span>盗贼</label>
+          <input class="role-opt" type="radio" name="role" id="r5" value="angel"><label class="role-opt-label" for="r5"><span class="re">😇</span>天使</label>
+        </div>
+      </div>
+      <div class="disclaimer-box"><strong>免责声明 · Waiver</strong><br>本活动为户外团队互动游戏，参与者须知：<br>1. 参与者自愿参加，需自行承担户外活动可能存在的风险。<br>2. 主办方不对意外伤害、财物损失等承担法律责任。<br>3. 活动全程请遵守公园规定及工作人员指引。<br>4. 报名费一经缴纳，如非主办方原因取消，恕不退款。<br>
+      完整版：<a href="waiver.html" target="_blank" style="color:var(--orange);">点击签署完整 Waiver →</a></div>
+      <label class="disclaimer-check"><input type="checkbox" id="f-agree"><span>我已阅读并同意免责声明，自愿参加本次活动 ✅</span></label>
+      <button class="form-submit" onclick="submitForm()">确认报名 →</button>
+      <div class="form-note">提交后请转账至 <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1bbb9a2b7abb4ac81a8a2adaeb4a5efa2aeac">[email&#160;protected]</a></strong>（Zelle / Venmo）<br>备注「彩蛋+姓名」🎉</div>
+    </div>
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">报名成功！</div>
+      <div class="success-desc">请在 <strong>24小时内</strong> 完成付款：<br><span class="ticket-tag"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e892908b9e829d85a8818b84879d8cc68b8785">[email&#160;protected]</a></span><br>备注「彩蛋+<span id="confirm-name"></span>」<br><br>收到付款后将通过微信/邮件确认 🥚</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function enterSite() {
+  var l = document.getElementById('landing');
+  var f = document.getElementById('fullsite');
+  l.style.transition = 'opacity .5s ease, transform .5s ease';
+  l.style.opacity = '0';
+  l.style.transform = 'scale(1.04)';
+  setTimeout(function() {
+    l.style.display = 'none';
+    f.classList.remove('hidden');
+    f.style.opacity = '0';
+    f.style.transition = 'opacity .4s ease';
+    requestAnimationFrame(function() { f.style.opacity = '1'; });
+  }, 500);
+}
+var target = new Date('2026-04-11T14:00:00');
+function updateCountdown() {
+  var diff = target - new Date();
+  if (diff <= 0) return;
+  document.getElementById('cd-d').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+document.querySelectorAll('.faq-q').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = this.parentElement;
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+function openModal() { document.getElementById('signupModal').classList.add('active'); document.body.style.overflow='hidden'; }
+function closeModal() { document.getElementById('signupModal').classList.remove('active'); document.body.style.overflow=''; }
+document.getElementById('signupModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+function sub

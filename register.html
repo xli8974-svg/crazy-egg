@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>报名 · 疯狂的彩蛋</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Fraunces:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#E65100;--gold:#F59700;--cream:#FFF8F0;--warm:#FDF3E7;--text:#2d1f0e;--muted:#7a6050;--border:rgba(230,81,0,0.15);--green:#2E7D32;--red:#C62828;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans SC',sans-serif;background:#f5f1eb;min-height:100vh;color:var(--text);}
+.header{background:var(--orange);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.header-logo{font-family:'Fraunces',serif;font-size:18px;color:#fff;}
+.header-back{font-size:13px;color:rgba(255,255,255,.8);text-decoration:none;}
+.main{max-width:520px;margin:0 auto;padding:24px 16px 80px;}
+
+/* Progress */
+.progress-bar{display:flex;align-items:center;gap:0;margin-bottom:28px;padding:0 8px;}
+.pb-step{display:flex;align-items:center;gap:8px;flex:1;}
+.pb-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all .3s;}
+.pb-dot.active{background:var(--orange);color:#fff;}
+.pb-dot.done{background:var(--green);color:#fff;}
+.pb-dot.pending{background:#e8e5df;color:#aaa;}
+.pb-label{font-size:11px;font-weight:500;}
+.pb-label.active{color:var(--orange);}
+.pb-label.done{color:var(--green);}
+.pb-label.pending{color:#aaa;}
+.pb-line{flex:1;height:2px;background:#e8e5df;margin:0 4px;transition:background .3s;}
+.pb-line.done{background:var(--green);}
+
+/* Cards */
+.card{background:#fff;border-radius:20px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.05);}
+.card-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.card-sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+
+/* Form fields */
+.field{margin-bottom:14px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.field label{font-size:12px;font-weight:700;color:var(--text);display:block;margin-bottom:5px;}
+.field label .req{color:var(--orange);}
+.field input,.field select,.field textarea{width:100%;padding:11px 14px;border:1.5px solid #e8e5df;border-radius:10px;font-size:14px;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .2s;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--orange);}
+.field input.err{border-color:var(--red);}
+.field textarea{resize:none;height:72px;}
+
+/* Role selector */
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px;}
+.role-opt{display:none;}
+.role-lbl{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border:1.5px solid #e8e5df;border-radius:10px;cursor:pointer;font-size:11px;color:var(--muted);text-align:center;transition:all .15s;}
+.role-lbl .re{font-size:26px;}
+.role-opt:checked + .role-lbl{border-color:var(--orange);background:#FFF3E0;color:var(--orange);font-weight:700;}
+
+/* Pay method */
+.pay-method-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+.pay-opt{display:none;}
+.pay-lbl{display:flex;align-items:center;gap:8px;padding:12px 14px;border:1.5px solid #e8e5df;border-radius:10px;cursor:pointer;font-size:13px;color:var(--text);transition:all .15s;}
+.pay-lbl .pi{font-size:20px;}
+.pay-opt:checked + .pay-lbl{border-color:var(--orange);background:#FFF3E0;color:var(--orange);font-weight:700;}
+
+/* Upload zone */
+.upload-zone{border:2px dashed #e8e5df;border-radius:14px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:var(--cream);}
+.upload-zone:hover{border-color:var(--orange);background:#FFF3E0;}
+.upload-zone.dragover{border-color:var(--orange);background:#FFF3E0;transform:scale(1.01);}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.uz-icon{font-size:40px;margin-bottom:8px;}
+.uz-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.uz-sub{font-size:12px;color:var(--muted);}
+.upload-preview{display:none;margin-top:12px;}
+.upload-preview img{width:100%;border-radius:10px;max-height:220px;object-fit:contain;border:1px solid var(--border);}
+.upload-preview-name{font-size:12px;color:var(--muted);margin-top:6px;}
+.upload-change{font-size:12px;color:var(--orange);cursor:pointer;font-weight:700;}
+
+/* AI Verification */
+.ai-verify-box{background:var(--warm);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-top:14px;display:none;}
+.ai-verify-box.show{display:block;}
+.avb-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.avb-icon{font-size:22px;}
+.avb-title{font-size:14px;font-weight:700;color:var(--text);}
+.avb-status{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sd-loading{background:var(--gold);animation:blink 1s ease-in-out infinite;}
+.sd-success{background:var(--green);}
+.sd-warn{background:#F57F17;}
+.sd-error{background:var(--red);}
+@keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
+.avb-result{font-size:13px;color:var(--text);line-height:1.7;background:#fff;border-radius:10px;padding:12px;margin-top:8px;border:1px solid var(--border);}
+.avb-result.success{border-color:#A5D6A7;background:#F1F8E9;}
+.avb-result.warn{border-color:#FFE082;background:#FFFDE7;}
+.avb-result.error{border-color:#FFCDD2;background:#FFEBEE;}
+
+/* Pay info box */
+.pay-info-box{background:linear-gradient(135deg,#1a0f05,#3d2810);border-radius:14px;padding:18px;margin-bottom:14px;}
+.pib-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:12px;}
+.pib-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.pib-icon{font-size:18px;}
+.pib-label{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;}
+.pib-val{font-size:14px;font-weight:700;color:#fff;cursor:pointer;}
+.pib-amount{text-align:center;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);}
+.pib-amount-num{font-family:'Fraunces',serif;font-size:36px;font-weight:700;color:var(--gold);}
+.pib-amount-lbl{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px;}
+.pib-note{font-size:11px;color:rgba(255,255,255,.5);margin-top:10px;text-align:center;line-height:1.6;}
+
+/* Ticket selector */
+.ticket-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+.tkt-opt{display:none;}
+.tkt-lbl{display:block;border:1.5px solid #e8e5df;border-radius:12px;padding:14px;cursor:pointer;transition:all .15s;}
+.tkt-lbl:hover{border-color:var(--orange);}
+.tkt-opt:checked + .tkt-lbl{border-color:var(--orange);background:#FFF3E0;}
+.tkt-type{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.tkt-price{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--text);}
+.tkt-price sup{font-size:14px;vertical-align:top;margin-top:5px;}
+.tkt-until{font-size:10px;color:var(--muted);margin-top:3px;}
+.tkt-opt:checked + .tkt-lbl .tkt-price{color:var(--orange);}
+
+/* Waiver */
+.waiver-scroll{background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:14px;max-height:160px;overflow-y:auto;font-size:11px;color:var(--muted);line-height:1.8;margin-bottom:12px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--warm);border-radius:10px;margin-bottom:8px;cursor:pointer;border:1.5px solid transparent;transition:border-color .15s;}
+.check-item:has(input:checked){border-color:var(--green);background:#F1F8E9;}
+.check-item input{accent-color:var(--green);width:16px;height:16px;margin-top:1px;flex-shrink:0;cursor:pointer;}
+.check-item span{font-size:13px;color:var(--text);line-height:1.5;}
+
+/* Submit */
+.submit-btn{width:100%;background:var(--orange);color:#fff;font-size:16px;font-weight:700;padding:16px;border:none;border-radius:20px;cursor:pointer;font-family:inherit;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 20px rgba(230,81,0,.3);}
+.submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(230,81,0,.4);}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.back-btn{width:100%;background:var(--warm);color:var(--text);font-size:14px;font-weight:700;padding:12px;border:1.5px solid var(--border);border-radius:20px;cursor:pointer;font-family:inherit;margin-bottom:10px;}
+
+/* Step screens */
+.step-screen{display:none;}
+.step-screen.active{display:block;}
+
+/* Success */
+.success-wrap{text-align:center;padding:40px 0;}
+.success-icon{font-size:72px;margin-bottom:16px;animation:popIn .5s cubic-bezier(0.175,.885,.32,1.275);}
+@keyframes popIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.success-title{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.success-sub{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:20px;}
+.success-id{background:linear-gradient(135deg,#1a0f05,#3d2810);border-radius:14px;padding:16px;margin-bottom:16px;text-align:center;}
+.sid-label{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.sid-num{font-family:monospace;font-size:22px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.sid-status{display:inline-block;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-top:8px;background:rgba(255,200,0,.15);color:var(--gold);}
+.success-steps{background:var(--warm);border-radius:14px;padding:16px;text-align:left;}
+.ss-step{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.ss-step:last-child{border-bottom:none;}
+.ss-num{width:20px;height:20px;border-radius:50%;background:var(--orange);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.ss-text{font-size:13px;color:var(--text);line-height:1.6;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a0f05;color:#fff;border-radius:20px;padding:12px 20px;font-size:13px;font-weight:700;transition:transform .35s cubic-bezier(0.175,.885,.32,1.275);z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.25);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.err-msg{font-size:12px;color:var(--red);margin-top:6px;display:none;}
+.err-msg.show{display:block;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">🥚 疯狂的彩蛋</div>
+  <a href="crazy_egg_website.html" class="header-back">← 返回</a>
+</div>
+
+<div class="main">
+
+  <!-- Progress -->
+  <div class="progress-bar">
+    <div class="pb-step">
+      <div class="pb-dot active" id="dot1">1</div>
+      <div class="pb-label active" id="lbl1">基本信息</div>
+    </div>
+    <div class="pb-line" id="line1"></div>
+    <div class="pb-step">
+      <div class="pb-dot pending" id="dot2">2</div>
+      <div class="pb-label pending" id="lbl2">选票 & 角色</div>
+    </div>
+    <div class="pb-line" id="line2"></div>
+    <div class="pb-step">
+      <div class="pb-dot pending" id="dot3">3</div>
+      <div class="pb-label pending" id="lbl3">付款</div>
+    </div>
+    <div class="pb-line" id="line3"></div>
+    <div class="pb-step">
+      <div class="pb-dot pending" id="dot4">✓</div>
+      <div class="pb-label pending" id="lbl4">完成</div>
+    </div>
+  </div>
+
+  <!-- STEP 1: Basic Info -->
+  <div class="step-screen active" id="screen1">
+    <div class="card">
+      <div class="card-title">👤 基本信息</div>
+      <div class="card-sub">请填写真实信息，付款备注需与姓名一致</div>
+      <div class="field-row">
+        <div class="field"><label>姓名 <span class="req">*</span></label><input type="text" id="f-name" placeholder="真实姓名"></div>
+        <div class="field"><label>年龄 <span class="req">*</span></label><input type="number" id="f-age" placeholder="18+" min="18"></div>
+      </div>
+      <div class="field"><label>微信 ID <span class="req">*</span></label><input type="text" id="f-wechat" placeholder="微信号"></div>
+      <div class="field-row">
+        <div class="field"><label>电话 <span class="req">*</span></label><input type="tel" id="f-phone" placeholder="手机号码"></div>
+        <div class="field"><label>邮箱 <span class="req">*</span></label><input type="email" id="f-email" placeholder="Email"></div>
+      </div>
+      <div id="err1" class="err-msg">⚠️ 请填写所有必填项，年龄须满18岁</div>
+    </div>
+    <button class="submit-btn" onclick="goStep(2)">下一步 →</button>
+  </div>
+
+  <!-- STEP 2: Ticket & Role -->
+  <div class="step-screen" id="screen2">
+    <div class="card">
+      <div class="card-title">🎟 选择票种</div>
+      <div class="card-sub">早鸟票截止 4月5日</div>
+      <div class="ticket-row">
+        <div>
+          <input class="tkt-opt" type="radio" name="ticket" id="t1" value="early" checked>
+          <label class="tkt-lbl" for="t1">
+            <div class="tkt-type">早鸟票</div>
+            <div class="tkt-price"><sup>$</sup>20</div>
+            <div class="tkt-until">截止 4月5日</div>
+          </label>
+        </div>
+        <div>
+          <input class="tkt-opt" type="radio" name="ticket" id="t2" value="regular">
+          <label class="tkt-lbl" for="t2">
+            <div class="tkt-type">正常票</div>
+            <div class="tkt-price"><sup>$</sup>25</div>
+            <div class="tkt-until">4月5日后</div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🌟 许愿池 · 角色偏好</div>
+      <div class="card-sub">选择你最想扮演的角色，只有你一人选择时提前通知你！</div>
+      <div class="role-grid">
+        <div><input class="role-opt" type="radio" name="role" id="r0" value="none" checked><label class="role-lbl" for="r0"><span class="re">🎲</span>随机</label></div>
+        <div><input class="role-opt" type="radio" name="role" id="r1" value="detective"><label class="role-lbl" for="r1"><span class="re">🔍</span>侦探</label></div>
+        <div><input class="role-opt" type="radio" name="role" id="r2" value="merchant"><label class="role-lbl" for="r2"><span class="re">💰</span>商人</label></div>
+        <div><input class="role-opt" type="radio" name="role" id="r3" value="warrior"><label class="role-lbl" for="r3"><span class="re">⚔️</span>战士</label></div>
+        <div><input class="role-opt" type="radio" name="role" id="r4" value="thief"><label class="role-lbl" for="r4"><span class="re">🗝️</span>盗贼</label></div>
+        <div><input class="role-opt" type="radio" name="role" id="r5" value="angel"><label class="role-lbl" for="r5"><span class="re">😇</span>天使</label></div>
+      </div>
+    </div>
+    <button class="back-btn" onclick="goStep(1)">← 返回</button>
+    <button class="submit-btn" onclick="goStep(3)">下一步 →</button>
+  </div>
+
+  <!-- STEP 3: Payment -->
+  <div class="step-screen" id="screen3">
+    <div class="card">
+      <div class="card-title">💸 完成付款</div>
+      <div class="card-sub">选择付款方式，转账后上传截图确认</div>
+
+      <div class="field">
+        <label>付款方式 <span class="req">*</span></label>
+        <div class="pay-method-row">
+          <div><input class="pay-opt" type="radio" name="paymethod" id="pm1" value="zelle" checked><label class="pay-lbl" for="pm1"><span class="pi">🏦</span>Zelle</label></div>
+          <div><input class="pay-opt" type="radio" name="paymethod" id="pm2" value="venmo"><label class="pay-lbl" for="pm2"><span class="pi">💜</span>Venmo</label></div>
+        </div>
+      </div>
+
+      <div class="pay-info-box">
+        <div class="pib-title">转账信息</div>
+        <div class="pib-row"><span class="pib-icon">📧</span><div><div class="pib-label">账号</div><div class="pib-val" onclick="copyPayAccount()"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2f55574c59455a426f464c43405a4b014c4042">[email&#160;protected]</a></div></div></div>
+        <div class="pib-amount">
+          <div class="pib-amount-num" id="payAmount">$20</div>
+          <div class="pib-amount-lbl">早鸟票金额</div>
+        </div>
+        <div class="pib-note">⚠️ 备注请填写：「彩蛋+<span id="payName">你的姓名</span>」</div>
+      </div>
+
+      <div class="field">
+        <label>上传付款截图 <span class="req">*</span></label>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="screenshotInput" accept="image/*" onchange="handleFileSelect(event)">
+          <div class="uz-icon">📸</div>
+          <div class="uz-title">点击上传或拖拽截图</div>
+          <div class="uz-sub">支持 JPG、PNG · Zelle 或 Venmo 转账成功截图</div>
+        </div>
+        <div class="upload-preview" id="uploadPreview">
+          <img id="previewImg" src="" alt="付款截图">
+          <div class="upload-preview-name" id="previewName"></div>
+          <span class="upload-change" onclick="clearUpload()">重新上传</span>
+        </div>
+      </div>
+
+      <!-- AI Verify Result -->
+      <div class="ai-verify-box" id="aiVerifyBox">
+        <div class="avb-header">
+          <span class="avb-icon">🤖</span>
+          <div>
+            <div class="avb-title">AI 截图验证</div>
+            <div class="avb-status"><div class="status-dot sd-loading" id="statusDot"></div><span id="statusText">正在分析截图...</span></div>
+          </div>
+        </div>
+        <div class="avb-result" id="aiResult">请稍候...</div>
+      </div>
+
+      <div id="err3" class="err-msg">⚠️ 请上传付款截图</div>
+    </div>
+
+    <!-- Waiver -->
+    <div class="card">
+      <div class="card-title">📋 免责声明</div>
+      <div class="waiver-scroll">本活动为户外团队互动游戏。参与者自愿参加，需自行承担户外活动风险。主办方不对意外伤害、财物损失等承担法律责任。活动全程请遵守公园规定。如遇极端天气主办方有权取消活动，报名费全额退还。本人同意主办方拍摄照片视频用于活动宣传。报名费一经缴纳，如非主办方原因取消恕不退款。</div>
+      <label class="check-item"><input type="checkbox" id="agree1"><span>我已阅读并同意免责声明，自愿参加本次活动</span></label>
+      <label class="check-item"><input type="checkbox" id="agree2"><span>我确认付款截图真实有效，付款金额与票种一致</span></label>
+    </div>
+
+    <button class="back-btn" onclick="goStep(2)">← 返回</button>
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()" disabled>提交报名 →</button>
+    <div id="err-final" class="err-msg">⚠️ 请上传截图并勾选所有声明</div>
+  </div>
+
+  <!-- STEP 4: Success -->
+  <div class="step-screen" id="screen4">
+    <div class="success-wrap">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">报名提交成功！</div>
+      <div class="success-sub">你的信息已收到，主办方正在审核付款截图<br>审核通过后将通过微信发送会员编号</div>
+      <div class="success-id">
+        <div class="sid-label">提交编号</div>
+        <div class="sid-num" id="submissionId">REG-??????</div>
+        <div class="sid-status">⏳ 待主办方确认</div>
+      </div>
+      <!-- Auto member notice -->
+      <div style="background:linear-gradient(135deg,#1a0f05,#3d2810);border-radius:14px;padding:16px;margin-bottom:16px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:6px;">🏅</div>
+        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">恭喜！你已自动成为会员</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">报名活动即自动获得会员资格<br>票价已包含会员费，无需额外付费</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;background:rgba(245,151,0,.15);border-radius:10px;padding:8px;">
+          <span style="font-size:12px;color:rgba(255,255,255,.5);">会员等级</span>
+          <span style="font-size:13px;font-weight:700;color:var(--gold);">🏅 彩蛋猎人 · 与直接入会完全相同</span>
+        </div>
+      </div>
+      <div class="success-steps">
+        <div class="ss-step"><div class="ss-num">1</div><div class="ss-text">✅ 报名信息已提交，付款截图已上传</div></div>
+        <div class="ss-step"><div class="ss-num">2</div><div class="ss-text">⏳ 主办方确认付款（通常24小时内）</div></div>
+        <div class="ss-step"><div class="ss-num">3</div><div class="ss-text">📱 确认后微信发送你的专属会员编号 NEXT-030XXX</div></div>
+        <div class="ss-step"><div class="ss-num">4</div><div class="ss-text">🏅 凭编号登录会员中心，享受全部专属福利！</div></div>
+      </div>
+      <a href="member.html" style="display:block;background:var(--orange);color:#fff;font-size:14px;font-weight:700;padding:14px;border-radius:20px;text-decoration:none;text-align:center;margin-top:20px;">提前逛逛会员中心 →</a>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<div class="toast" id="toast"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var currentStep = 1;
+var uploadedFile = null;
+var aiVerified = false;
+var aiVerifyResult = null;
+
+// ===== STEP NAVIGATION =====
+function goStep(n) {
+  if (n === 2) {
+    var name = document.getElementById('f-name').value.trim();
+    var age = parseInt(document.getElementById('f-age').value);
+    var wechat = document.getElementById('f-wechat').value.trim();
+    var phone = document.getElementById('f-phone').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    if (!name || !age || !wechat || !phone || !email || age < 18) {
+      document.getElementById('err1').classList.add('show'); return;
+    }
+    document.getElementById('err1').classList.remove('show');
+    document.getElementById('payName').textContent = name;
+  }
+  if (n === 3) {
+    updatePayAmount();
+  }
+  document.getElementById('screen' + currentStep).classList.remove('active');
+  document.getElementById('screen' + n).classList.add('active');
+  updateProgress(n);
+  currentStep = n;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function updateProgress(n) {
+  for (var i = 1; i <= 4; i++) {
+    var dot = document.getElementById('dot' + i);
+    var lbl = document.getElementById('lbl' + i);
+    if (!dot) continue;
+    if (i < n) { dot.className='pb-dot done'; lbl.className='pb-label done'; dot.textContent='✓'; }
+    else if (i === n) { dot.className='pb-dot active'; lbl.className='pb-label active'; }
+    else { dot.className='pb-dot pending'; lbl.className='pb-label pending'; }
+    var line = document.getElementById('line' + i);
+    if (line) line.className = i < n ? 'pb-line done' : 'pb-line';
+  }
+}
+
+function updatePayAmount() {
+  var ticket = document.querySelector('input[name="ticket"]:checked');
+  var val = ticket ? ticket.value : 'early';
+  var amount = val === 'early' ? '$20' : '$25';
+  var lbl = val === 'early' ? '早鸟票金额' : '正常票金额';
+  document.getElementById('payAmount').textContent = amount;
+  document.querySelector('.pib-amount-lbl').textContent = lbl;
+}
+
+// ===== FILE UPLOAD =====
+function handleFileSelect(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  processFile(file);
+}
+
+var dropZone = document.getElementById('uploadZone');
+dropZone.addEventListener('dragover', function(e){ e.preventDefault(); this.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', function(){ this.classList.remove('dragover'); });
+dropZone.addEventListener('drop', function(e){ e.preventDefault(); this.classList.remove('dragover'); var f=e.dataTransfer.files[0]; if(f) processFile(f); });
+
+function processFile(file) {
+  if (!file.type.startsWith('image/')) { showToast('⚠️ 请上传图片文件'); return; }
+  uploadedFile = file;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('previewImg').src = e.target.result;
+    document.getElementById('previewName').textContent = file.name;
+    document.getElementById('uploadZone').style.display = 'none';
+    document.getElementById('uploadPreview').style.display = 'block';
+    // Auto-run AI verification
+    runAiVerify(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearUpload() {
+  uploadedFile = null;
+  aiVerified = false;
+  document.getElementById('uploadZone').style.display = 'block';
+  document.getElementById('uploadPreview').style.display = 'none';
+  document.getElementById('screenshotInput').value = '';
+  document.getElementById('aiVerifyBox').classList.remove('show');
+  document.getElementById('submitBtn').disabled = true;
+}
+
+// ===== AI VERIFICATION =====
+async function runAiVerify(base64DataUrl) {
+  document.getElementById('aiVerifyBox').classList.add('show');
+  document.getElementById('statusDot').className = 'status-dot sd-loading';
+  document.getElementById('statusText').textContent = '正在分析截图...';
+  document.getElementById('aiResult').className = 'avb-result';
+  document.getElementById('aiResult').textContent = 'Claude AI 正在读取付款截图，请稍候...';
+
+  var ticket = document.querySelector('input[name="ticket"]:checked');
+  var ticketType = ticket ? ticket.value : 'early';
+  var expectedAmount = ticketType === 'early' ? 20 : 25;
+  var name = document.getElementById('f-name').value.trim();
+
+  // Extract base64 data
+  var base64Data = base64DataUrl.split(',')[1];
+  var mimeType = base64DataUrl.split(';')[0].split(':')[1];
+
+  var prompt = '这是一张付款截图（Zelle 或 Venmo 转账记录）。请分析：\n1. 这是否是一张有效的付款截图？\n2. 转账金额是多少？（预期金额：$' + expectedAmount + '）\n3. 备注/memo 中是否包含「彩蛋」和姓名「' + name + '」？\n4. 付款状态是否为「已完成/Delivered/Sent」？\n\n请用以下格式回复：\n状态：[✅ 验证通过 / ⚠️ 需人工确认 / ❌ 验证失败]\n金额：[识别到的金额]\n备注：[识别到的备注内容]\n说明：[简短说明，不超过2句话]';
+
+  try {
+    var response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: mimeType, data: base64Data } },
+            { type: 'text', text: prompt }
+          ]
+        }]
+      })
+    });
+
+    var data = await response.json();
+    var resultText = data.content && data.content[0] ? data.content[0].text : '无法读取截图';
+
+    aiVerifyResult = resultText;
+
+    // Parse result
+    if (resultText.includes('✅')) {
+      document.getElementById('statusDot').className = 'status-dot sd-success';
+      document.getElementById('statusText').textContent = '验证通过';
+      document.getElementById('aiResult').className = 'avb-result success';
+      aiVerified = true;
+    } else if (resultText.includes('⚠️')) {
+      document.getElementById('statusDot').className = 'status-dot sd-warn';
+      document.getElementById('statusText').textContent = '需人工确认';
+      document.getElementById('aiResult').className = 'avb-result warn';
+      aiVerified = true; // Allow submit but flag for manual review
+    } else {
+      document.getElementById('statusDot').className = 'status-dot sd-error';
+      document.getElementById('statusText').textContent = '验证失败，请检查截图';
+      document.getElementById('aiResult').className = 'avb-result error';
+      aiVerified = false;
+    }
+    document.getElementById('aiResult').textContent = resultText;
+    checkSubmitReady();
+  } catch(err) {
+    document.getElementById('statusDot').className = 'status-dot sd-warn';
+    document.getElementById('statusText').textContent = '网络错误，将提交人工审核';
+    document.getElementById('aiResult').className = 'avb-result warn';
+    document.getElementById('aiResult').textContent = '⚠️ AI验证暂时不可用，你的截图将由主办方人工审核。';
+    aiVerified = true;
+    checkSubmitReady();
+  }
+}
+
+function checkSubmitReady() {
+  var agree1 = document.getElementById('agree1').checked;
+  var agree2 = document.getElementById('agree2').checked;
+  document.getElementById('submitBtn').disabled = !(uploadedFile && aiVerified && agree1 && agree2);
+}
+
+document.getElementById('agree1').addEventListener('change', checkSubmitReady);
+document.getElementById('agree2').addEventListener('change', checkSubmitReady);
+
+// ===== SUBMIT =====
+function submitForm() {
+  var name = document.getElementById('f-name').value.trim();
+  var age = document.getElementById('f-age').value;
+  var wechat = document.getElementById('f-wechat').value.trim();
+  var phone = document.getElementById('f-phone').value.trim();
+  var email = document.getElementById('f-email').value.trim();
+  var ticket = document.querySelector('input[name="ticket"]:checked').value;
+  var role = document.querySelector('input[name="role"]:checked').value;
+  var payMethod = document.querySelector('input[name="paymethod"]:checked').value;
+
+  // Generate submission ID
+  var subId = 'REG-' + Date.now().toString(36).toUpperCase().slice(-6);
+  document.getElementById('submissionId').textContent = subId;
+
+  // Build Google Sheet submission data
+  var sheetData = {
+    timestamp: new Date().toLocaleString('zh-CN'),
+    submissionId: subId,
+    name: name,
+    age: age,
+    wechat: wechat,
+    phone: phone,
+    email: email,
+    ticket: ticket === 'early' ? '早鸟票 $20' : '正常票 $25',
+    role: role,
+    payMethod: payMethod,
+    aiVerifyResult: aiVerifyResult || '未验证',
+    status: aiVerifyResult && aiVerifyResult.includes('✅') ? '待确认-AI通过' : '待确认-需人工'
+  };
+
+  // Submit to Google Sheet via Apps Script
+  // REPLACE THIS URL with your Google Apps Script Web App URL
+  var SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+  if (SHEET_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(sheetData)
+    }).catch(function(){});
+  }
+
+  // Show success screen
+  goStep(4);
+  updateProgress(4);
+}
+
+// ===== HELPERS =====
+function copyPayAccount() {
+  var text = 'zxcvjum@icloud.com';
+  navigator.clipboard ? navigator.clipboard.writeText(text) : fallbackCopy(text);
+  showToast('✅ 账号已复制！');
+}
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+function fallbackCopy(text) {
+  var el = document.createElement('textarea');
+  el.value = text; document.body.appendChild(el);
+  el.select(); document.execCommand('copy');
+  document.body.removeChild(el);
+}
+
+// Upda

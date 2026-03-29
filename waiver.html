@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>参与者免责声明 · Waiver | 疯狂的彩蛋</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Fraunces:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #E65100; --orange-light: #FF8A65; --gold: #F59700;
+  --cream: #FFF8F0; --warm: #FDF3E7; --text: #2d1f0e; --muted: #7a6050;
+  --border: rgba(230,81,0,0.15); --green: #2E7D32; --red: #C62828;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans SC', sans-serif; background: #f5f1eb; color: var(--text); min-height: 100vh; }
+
+/* Header */
+.header { background: var(--orange); padding: 20px 24px; text-align: center; }
+.header-logo { font-family: 'Fraunces', serif; font-size: 20px; color: #fff; }
+.header-sub { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 2px; }
+
+/* Progress bar */
+.progress-wrap { background: #fff; border-bottom: 1px solid var(--border); padding: 16px 24px; }
+.progress-inner { max-width: 680px; margin: 0 auto; }
+.progress-steps { display: flex; align-items: center; gap: 0; }
+.pstep { display: flex; align-items: center; gap: 8px; flex: 1; }
+.pstep-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; transition: all .3s; }
+.pstep-dot.done { background: var(--green); color: #fff; }
+.pstep-dot.active { background: var(--orange); color: #fff; }
+.pstep-dot.pending { background: #e8e5df; color: #aaa; }
+.pstep-label { font-size: 11px; font-weight: 500; }
+.pstep-label.active { color: var(--orange); }
+.pstep-label.done { color: var(--green); }
+.pstep-label.pending { color: #aaa; }
+.pline { flex: 1; height: 2px; background: #e8e5df; margin: 0 8px; max-width: 40px; transition: background .3s; }
+.pline.done { background: var(--green); }
+
+/* Main */
+.main { max-width: 680px; margin: 0 auto; padding: 28px 20px 60px; }
+
+/* Card */
+.card { background: #fff; border-radius: 20px; padding: 28px 24px; margin-bottom: 16px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.card-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.card-sub { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+
+/* Info fields */
+.field-group { display: flex; flex-direction: column; gap: 14px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 12px; font-weight: 700; color: var(--text); }
+.field label .req { color: var(--orange); }
+.field input, .field select { padding: 11px 14px; border: 1.5px solid #e8e5df; border-radius: 10px; font-size: 14px; font-family: inherit; color: var(--text); background: #fff; outline: none; transition: border-color .2s; }
+.field input:focus, .field select:focus { border-color: var(--orange); }
+.field input.error, .field select.error { border-color: var(--red); }
+
+/* Waiver text */
+.waiver-scroll { background: var(--cream); border: 1.5px solid var(--border); border-radius: 14px; padding: 20px; max-height: 320px; overflow-y: auto; margin-bottom: 20px; }
+.waiver-lang-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+.lang-btn { font-size: 12px; font-weight: 700; padding: 5px 16px; border-radius: 20px; border: 1.5px solid var(--border); background: #fff; color: var(--muted); cursor: pointer; transition: all .15s; }
+.lang-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+.waiver-cn, .waiver-en { display: none; }
+.waiver-cn.show, .waiver-en.show { display: block; }
+.waiver-section { margin-bottom: 18px; }
+.waiver-section h3 { font-size: 13px; font-weight: 700; color: var(--orange); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.waiver-section p, .waiver-section li { font-size: 12px; color: var(--muted); line-height: 1.8; }
+.waiver-section ul { padding-left: 16px; }
+.waiver-section li { margin-bottom: 4px; }
+.waiver-highlight { background: #FFF3E0; border-left: 3px solid var(--orange); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 12px; color: var(--text); font-weight: 500; margin-top: 12px; line-height: 1.7; }
+
+/* Checklist */
+.check-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.check-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; background: var(--warm); border-radius: 10px; border: 1.5px solid transparent; cursor: pointer; transition: border-color .15s; }
+.check-item:has(input:checked) { border-color: var(--green); background: #F1F8E9; }
+.check-item input { width: 18px; height: 18px; accent-color: var(--green); cursor: pointer; flex-shrink: 0; margin-top: 1px; }
+.check-item span { font-size: 13px; color: var(--text); line-height: 1.6; }
+.check-item span strong { color: var(--orange); }
+
+/* Signature pad */
+.sig-wrap { border: 2px dashed var(--border); border-radius: 14px; background: var(--cream); position: relative; overflow: hidden; }
+.sig-hint { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 13px; color: #ccc; pointer-events: none; text-align: center; line-height: 1.6; transition: opacity .3s; }
+canvas#sigPad { display: block; width: 100%; height: 160px; cursor: crosshair; touch-action: none; }
+.sig-actions { display: flex; justify-content: flex-end; padding: 8px 12px; border-top: 1px solid var(--border); }
+.sig-clear { font-size: 12px; color: var(--muted); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: color .15s; }
+.sig-clear:hover { color: var(--red); }
+.sig-note { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+/* Date/time display */
+.datetime-box { background: var(--warm); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
+.datetime-label { font-size: 11px; color: var(--muted); }
+
+/* Submit button */
+.submit-btn { width: 100%; background: var(--orange); color: #fff; font-size: 16px; font-weight: 700; padding: 16px; border: none; border-radius: 20px; cursor: pointer; font-family: inherit; transition: transform .15s, box-shadow .15s; box-shadow: 0 4px 20px rgba(230,81,0,0.3); margin-top: 8px; }
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(230,81,0,0.4); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.error-msg { font-size: 12px; color: var(--red); margin-top: 8px; display: none; }
+.error-msg.show { display: block; }
+
+/* Success screen */
+.success-screen { display: none; text-align: center; padding: 48px 24px; }
+.success-screen.show { display: block; }
+.form-screens.hidden { display: none; }
+.s-icon { font-size: 72px; margin-bottom: 20px; animation: bounce .6s ease; }
+@keyframes bounce { 0%{transform:scale(0)} 60%{transform:scale(1.1)} 100%{transform:scale(1)} }
+.s-title { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+.s-desc { font-size: 14px; color: var(--muted); line-height: 1.9; margin-bottom: 24px; }
+.s-ref { display: inline-block; background: var(--orange); color: #fff; font-size: 13px; font-weight: 700; padding: 8px 20px; border-radius: 20px; margin: 8px 0; letter-spacing: 1px; }
+.s-box { background: var(--cream); border: 1.5px solid var(--border); border-radius: 14px; padding: 20px; margin-top: 20px; text-align: left; }
+.s-box-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+.s-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.s-row:last-child { border-bottom: none; }
+.s-row-label { color: var(--muted); }
+.s-row-val { font-weight: 700; color: var(--text); }
+.print-btn { display: inline-block; margin-top: 20px; padding: 10px 24px; border: 1.5px solid var(--border); border-radius: 20px; font-size: 13px; font-weight: 700; color: var(--muted); cursor: pointer; background: #fff; font-family: inherit; }
+.print-btn:hover { border-color: var(--orange); color: var(--orange); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">🥚 疯狂的彩蛋 · Crazy Egg Hunt</div>
+  <div class="header-sub">参与者免责声明 · Participant Waiver & Release Form</div>
+</div>
+
+<!-- Progress -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-steps">
+      <div class="pstep">
+        <div class="pstep-dot active" id="dot1">1</div>
+        <div class="pstep-label active" id="lbl1">填写信息</div>
+      </div>
+      <div class="pline" id="line1"></div>
+      <div class="pstep">
+        <div class="pstep-dot pending" id="dot2">2</div>
+        <div class="pstep-label pending" id="lbl2">阅读条款</div>
+      </div>
+      <div class="pline" id="line2"></div>
+      <div class="pstep">
+        <div class="pstep-dot pending" id="dot3">3</div>
+        <div class="pstep-label pending" id="lbl3">签名确认</div>
+      </div>
+      <div class="pline" id="line3"></div>
+      <div class="pstep">
+        <div class="pstep-dot pending" id="dot4">✓</div>
+        <div class="pstep-label pending" id="lbl4">完成</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+<div class="form-screens" id="formScreens">
+
+<!-- STEP 1: Info -->
+<div id="step1">
+  <div class="card">
+    <div class="card-title">👤 参与者信息 · Participant Information</div>
+    <div class="card-sub">请填写真实信息，需与付款信息一致 · Please provide accurate information matching your payment</div>
+    <div class="field-group">
+      <div class="field-row">
+        <div class="field">
+          <label>姓名 Full Name <span class="req">*</span></label>
+          <input type="text" id="i-name" placeholder="请输入真实姓名">
+        </div>
+        <div class="field">
+          <label>年龄 Age <span class="req">*</span></label>
+          <input type="number" id="i-age" placeholder="18+" min="18">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>电话 Phone <span class="req">*</span></label>
+          <input type="tel" id="i-phone" placeholder="手机号码">
+        </div>
+        <div class="field">
+          <label>微信 WeChat ID <span class="req">*</span></label>
+          <input type="text" id="i-wechat" placeholder="微信号">
+        </div>
+      </div>
+      <div class="field">
+        <label>邮箱 Email <span class="req">*</span></label>
+        <input type="email" id="i-email" placeholder="your@email.com">
+      </div>
+      <div class="field">
+        <label>紧急联系人 Emergency Contact <span class="req">*</span></label>
+        <input type="text" id="i-emergency" placeholder="姓名 + 电话">
+      </div>
+      <div class="field">
+        <label>健康状况 Health Condition</label>
+        <input type="text" id="i-health" placeholder="如有过敏、心脏病、残疾等请注明，无则填「无」None">
+      </div>
+    </div>
+    <div id="err1" class="error-msg">⚠️ 请填写所有必填项，且年龄须满18岁</div>
+    <button class="submit-btn" style="margin-top:20px;" onclick="goStep(2)">下一步 · Next →</button>
+  </div>
+</div>
+
+<!-- STEP 2: Waiver -->
+<div id="step2" style="display:none;">
+  <div class="card">
+    <div class="card-title">📋 免责声明全文 · Full Waiver & Release</div>
+    <div class="card-sub">请仔细阅读以下条款 · Please read all terms carefully before proceeding</div>
+
+    <div class="waiver-lang-toggle">
+      <button class="lang-btn active" onclick="setLang('cn',this)">中文</button>
+      <button class="lang-btn" onclick="setLang('en',this)">English</button>
+    </div>
+
+    <div class="waiver-scroll">
+      <!-- CHINESE -->
+      <div class="waiver-cn show" id="wcn">
+        <div class="waiver-section">
+          <h3>活动信息</h3>
+          <p>活动名称：疯狂的彩蛋 · Crazy Egg Hunt<br>
+          活动日期：2026年4月11日 下午2:00–5:00<br>
+          活动地点：Sunnyvale 公园，加利福尼亚州<br>
+          主办方：疯狂的彩蛋活动组织团队</p>
+        </div>
+        <div class="waiver-section">
+          <h3>一、人身安全与伤害免责</h3>
+          <ul>
+            <li>本人了解并接受户外活动存在一定的人身安全风险，包括但不限于跌倒、碰撞、扭伤等意外伤害。</li>
+            <li>本人自愿参加本次活动，主动承担参与过程中可能发生的一切人身伤害风险。</li>
+            <li>本人在此免除主办方及其工作人员、志愿者因本次活动造成的人身伤害的一切法律责任（因主办方故意或重大过失造成的损害除外）。</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>二、财物损失免责</h3>
+          <ul>
+            <li>本人了解户外活动场地不设保管服务，请自行妥善保管随身财物。</li>
+            <li>主办方不对参与者在活动期间发生的任何财物丢失、损坏或被盗承担责任。</li>
+            <li>建议参与者不携带贵重物品参加活动。</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>三、健康状况确认</h3>
+          <ul>
+            <li>本人确认自身身体状况良好，适合参加户外活动。</li>
+            <li>本人已在报名表中如实填写健康状况，如有食物过敏、心脏病、哮喘等慢性疾病，已提前告知主办方。</li>
+            <li>如在活动中出现身体不适，本人将立即通知工作人员。</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>四、食物相关责任</h3>
+          <ul>
+            <li>如活动涉及食物或饮品，参与者须自行确认是否存在过敏风险。</li>
+            <li>主办方不对因食物过敏或个人饮食限制引起的不适承担责任。</li>
+            <li>本人已告知主办方所有已知的食物过敏情况。</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>五、天气原因取消政策</h3>
+          <ul>
+            <li>若遭遇极端天气（如暴雨、雷电、高温预警等），主办方有权取消或延期活动。</li>
+            <li>因天气原因取消活动，报名费将全额退还或可转至下次活动使用。</li>
+            <li>活动当天如遇轻微天气变化，活动将照常进行，请参与者自备雨具或防晒用品。</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>六、照片及视频拍摄授权</h3>
+          <ul>
+            <li>本人同意主办方在活动期间拍摄照片及视频，并授权主办方将相关内容用于活动宣传、社交媒体发布及未来活动推广。</li>
+            <li>相关内容不会用于商业销售。</li>
+            <li>如不希望出现在宣传材料中，请在签署前告知工作人员。</li>
+          </ul>
+        </div>
+        <div class="waiver-highlight">
+          本人已仔细阅读并完全理解以上所有条款，自愿签署本免责声明，并确认以上填写信息真实有效。
+        </div>
+      </div>
+
+      <!-- ENGLISH -->
+      <div class="waiver-en" id="wen">
+        <div class="waiver-section">
+          <h3>Event Information</h3>
+          <p>Event: Crazy Egg Hunt (疯狂的彩蛋)<br>
+          Date: April 11, 2026, 2:00 PM – 5:00 PM<br>
+          Location: Sunnyvale Park, California<br>
+          Organizer: Crazy Egg Hunt Event Team</p>
+        </div>
+        <div class="waiver-section">
+          <h3>1. Personal Injury Release</h3>
+          <ul>
+            <li>I acknowledge that outdoor activities involve inherent risks including but not limited to falls, collisions, sprains, and other accidental injuries.</li>
+            <li>I voluntarily assume all risks of personal injury arising from my participation in this event.</li>
+            <li>I hereby release and discharge the organizers, staff, and volunteers from any and all liability for personal injury arising from this event, except in cases of gross negligence or willful misconduct.</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>2. Property Loss Release</h3>
+          <ul>
+            <li>I understand that no storage or security services are provided at the venue.</li>
+            <li>The organizers are not responsible for any loss, damage, or theft of personal property during the event.</li>
+            <li>I am advised not to bring valuables to the event.</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>3. Health Condition Confirmation</h3>
+          <ul>
+            <li>I confirm that I am in good physical health and fit to participate in outdoor activities.</li>
+            <li>I have accurately disclosed any relevant health conditions (allergies, heart conditions, asthma, etc.) in my registration form.</li>
+            <li>I will immediately notify event staff if I feel unwell during the event.</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>4. Food Responsibility</h3>
+          <ul>
+            <li>If food or beverages are provided at the event, I am responsible for confirming whether any items pose an allergy risk to me.</li>
+            <li>The organizers are not liable for any adverse reactions due to food allergies or dietary restrictions.</li>
+            <li>I have disclosed all known food allergies to the organizers.</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>5. Weather Cancellation Policy</h3>
+          <ul>
+            <li>The organizers reserve the right to cancel or postpone the event in the event of extreme weather conditions (heavy rain, lightning, extreme heat warnings, etc.).</li>
+            <li>If cancelled due to weather, registration fees will be fully refunded or transferred to the next event.</li>
+            <li>In the case of mild weather changes, the event will proceed as planned. Participants are advised to bring rain gear or sun protection.</li>
+          </ul>
+        </div>
+        <div class="waiver-section">
+          <h3>6. Photo & Video Authorization</h3>
+          <ul>
+            <li>I grant the organizers permission to photograph and record video during the event, and to use such content for event promotion, social media, and future event marketing.</li>
+            <li>Such content will not be used for commercial sale.</li>
+            <li>If you do not wish to appear in promotional materials, please notify event staff before signing.</li>
+          </ul>
+        </div>
+        <div class="waiver-highlight">
+          I have read and fully understood all terms above and voluntarily sign this waiver, confirming that all information provided is true and accurate.
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="check-list">
+      <label class="check-item">
+        <input type="checkbox" id="c1">
+        <span>我已阅读并理解<strong>人身伤害免责条款</strong> · I have read and understood the personal injury release</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="c2">
+        <span>我已阅读并理解<strong>财物损失免责条款</strong> · I have read and understood the property loss release</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="c3">
+        <span>我确认自身健康状况良好，已如实填写健康信息 · I confirm my health condition and accurate disclosure</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="c4">
+        <span>我了解并接受<strong>食物相关责任条款</strong> · I acknowledge the food responsibility terms</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="c5">
+        <span>我了解并接受<strong>天气取消政策</strong> · I understand the weather cancellation policy</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="c6">
+        <span>我授权主办方使用活动期间拍摄的<strong>照片及视频</strong>用于宣传 · I authorize the use of photos/videos for promotion</span>
+      </label>
+    </div>
+
+    <div id="err2" class="error-msg">⚠️ 请勾选所有条款后继续 · Please check all items to continue</div>
+    <div style="display:flex;gap:12px;">
+      <button class="submit-btn" style="background:#f5f1eb;color:var(--text);box-shadow:none;flex:0 0 80px;font-size:14px;" onclick="goStep(1)">← 返回</button>
+      <button class="submit-btn" onclick="goStep(3)">下一步 · Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3: Signature -->
+<div id="step3" style="display:none;">
+  <div class="card">
+    <div class="card-title">✍️ 电子签名 · Electronic Signature</div>
+    <div class="card-sub">请在下方框内用鼠标或手指签名 · Sign below using mouse or finger</div>
+
+    <div class="sig-wrap">
+      <div class="sig-hint" id="sigHint">请在此处签名<br>Sign here</div>
+      <canvas id="sigPad"></canvas>
+      <div class="sig-actions">
+        <button class="sig-clear" onclick="clearSig()">清除重签 Clear</button>
+      </div>
+    </div>
+    <div class="sig-note">签名即表示您已阅读、理解并同意本免责声明的所有条款<br>By signing, you confirm you have read, understood, and agreed to all terms of this waiver</div>
+
+    <div style="margin-top:20px;">
+      <div class="card-title" style="font-size:14px;margin-bottom:8px;">📅 签署时间 · Signed At</div>
+      <div class="datetime-box">
+        <div><div class="datetime-label">日期 Date</div><div id="sign-date" style="font-weight:700;font-size:14px;"></div></div>
+        <div style="text-align:right"><div class="datetime-label">时间 Time</div><div id="sign-time" style="font-weight:700;font-size:14px;"></div></div>
+      </div>
+    </div>
+
+    <div id="err3" class="error-msg">⚠️ 请完成签名后提交 · Please complete your signature</div>
+    <div style="display:flex;gap:12px;margin-top:20px;">
+      <button class="submit-btn" style="background:#f5f1eb;color:var(--text);box-shadow:none;flex:0 0 80px;font-size:14px;" onclick="goStep(2)">← 返回</button>
+      <button class="submit-btn" onclick="submitWaiver()">提交签名 · Submit ✓</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end form-screens -->
+
+<!-- SUCCESS -->
+<div class="success-screen" id="successScreen">
+  <div class="s-icon">🎉</div>
+  <div class="s-title">签署完成！</div>
+  <div class="s-desc">
+    感谢您完成免责声明签署<br>
+    Thank you for completing the waiver<br><br>
+    您的参考编号 · Your Reference Number:<br>
+    <span class="s-ref" id="refNum"></span>
+  </div>
+  <div class="s-box">
+    <div class="s-box-title">📋 签署信息摘要 · Summary</div>
+    <div class="s-row"><span class="s-row-label">姓名 Name</span><span class="s-row-val" id="s-name"></span></div>
+    <div class="s-row"><span class="s-row-label">邮箱 Email</span><span class="s-row-val" id="s-email"></span></div>
+    <div class="s-row"><span class="s-row-label">微信 WeChat</span><span class="s-row-val" id="s-wechat"></span></div>
+    <div class="s-row"><span class="s-row-label">签署时间 Signed At</span><span class="s-row-val" id="s-time"></span></div>
+    <div class="s-row"><span class="s-row-label">活动日期 Event Date</span><span class="s-row-val">2026年4月11日</span></div>
+  </div>
+  <div style="margin-top:16px;font-size:13px;color:var(--muted);line-height:1.8;">
+    请截图保存本页面作为签署凭证<br>
+    Please screenshot this page as your signing record<br><br>
+    📩 确认邮件将发送至您的邮箱<br>
+    💬 如有问题请通过微信联系主办方
+  </div>
+  <button class="print-btn" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+
+</div><!-- end main -->
+
+<script>
+// Step navigation
+var currentStep = 1;
+function goStep(n) {
+  if (n === 2) {
+    var name = document.getElementById('i-name').value.trim();
+    var age = parseInt(document.getElementById('i-age').value);
+    var phone = document.getElementById('i-phone').value.trim();
+    var wechat = document.getElementById('i-wechat').value.trim();
+    var email = document.getElementById('i-email').value.trim();
+    var emerg = document.getElementById('i-emergency').value.trim();
+    if (!name || !age || !phone || !wechat || !email || !emerg || age < 18) {
+      document.getElementById('err1').classList.add('show'); return;
+    }
+    document.getElementById('err1').classList.remove('show');
+  }
+  if (n === 3) {
+    var all = ['c1','c2','c3','c4','c5','c6'].every(function(id){ return document.getElementById(id).checked; });
+    if (!all) { document.getElementById('err2').classList.add('show'); return; }
+    document.getElementById('err2').classList.remove('show');
+    updateDateTime();
+  }
+  document.getElementById('step' + currentStep).style.display = 'none';
+  document.getElementById('step' + n).style.display = 'block';
+  updateProgress(n);
+  currentStep = n;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateProgress(n) {
+  for (var i = 1; i <= 4; i++) {
+    var dot = document.getElementById('dot' + i);
+    var lbl = document.getElementById('lbl' + i);
+    if (!dot) continue;
+    if (i < n) { dot.className = 'pstep-dot done'; lbl.className = 'pstep-label done'; }
+    else if (i === n) { dot.className = 'pstep-dot active'; lbl.className = 'pstep-label active'; }
+    else { dot.className = 'pstep-dot pending'; lbl.className = 'pstep-label pending'; }
+    var line = document.getElementById('line' + i);
+    if (line) line.className = i < n ? 'pline done' : 'pline';
+  }
+}
+
+// Language toggle
+function setLang(lang, btn) {
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('wcn').classList.toggle('show', lang === 'cn');
+  document.getElementById('wen').classList.toggle('show', lang === 'en');
+}
+
+// Signature pad
+var canvas = document.getElementById('sigPad');
+var ctx = canvas.getContext('2d');
+var drawing = false;
+var hasSig = false;
+
+function resizeCanvas() {
+  var rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = 160;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e) {
+  var rect = canvas.getBoundingClientRect();
+  var scaleX = canvas.width / rect.width;
+  var scaleY = canvas.height / rect.height;
+  if (e.touches) {
+    return { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY };
+  }
+  return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
+}
+
+canvas.addEventListener('mousedown', function(e){ drawing = true; var p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+canvas.addEventListener('mousemove', function(e){ if (!drawing) return; var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.strokeStyle = '#2d1f0e'; ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke(); hasSig = true; document.getElementById('sigHint').style.opacity = '0'; });
+canvas.addEventListener('mouseup', function(){ drawing = false; });
+canvas.addEventListener('mouseleave', function(){ drawing = false; });
+canvas.addEventListener('touchstart', function(e){ e.preventDefault(); drawing = true; var p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+canvas.addEventListener('touchmove', function(e){ e.preventDefault(); if (!drawing) return; var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.strokeStyle = '#2d1f0e'; ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke(); hasSig = true; document.getElementById('sigHint').style.opacity = '0'; });
+canvas.addEventListener('touchend', function(){ drawing = false; });
+
+function clearSig() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  hasSig = false;
+  document.getElementById('sigHint').style.opacity = '1';
+}
+
+function updateDateTime() {
+  var now = new Date();
+  var dateStr = now.getFullYear() + '年' + (now.getMonth()+1) + '月' + now.getDate() + '日';
+  var timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ':' + now.getSeconds().toString().padStart(2,'0');
+  document.getElementById('sign-date').textContent = dateStr;
+  document.getElementById('sign-time').textContent = timeStr;
+}
+
+function submitWaiver() {
+  if (!hasSig) { document.getElementById('err3').classList.add('show'); return; }
+  document.getElementById('err3').classList.remove('show');
+  // Generate ref number
+  var ref = 'EGG-' + Date.now().toString(36).toUpperCase().slice(-6);
+  var now = new Date();
+  var timeStr = now.getFullYear() + '/' + (now.getMonth()+1) + '/' + now.getDate() + ' ' + now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  // Fill success
+  document.getElementById('refNum').textContent = ref;
+  document.getElementById('s-name').textContent = document.getElementById('i-name').value;
+  document.getElementById('s-email').textContent = document.getElementById('i-email').value;
+  document.getElementById('s-wechat').textContent = document.getElementById('i-wechat').value;
+  document.getElementById('s-time').textContent = timeStr;
+  // Update progress to 4
+  updateProgress(4);
+  // Show success
+  document.getElementById('formScreens').classList.add('hidden');
+  document.getElementById('successScreen').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Init datetime
+updateDateTime();
+setInterval(function(){
+  if (currentStep === 3) updateDateTime();
+}, 1000);
+</script>
+</body>
+</html>

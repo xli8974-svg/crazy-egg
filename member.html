@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>会员中心 · 疯狂的彩蛋</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Fraunces:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange:#E65100; --orange-light:#FF8A65; --gold:#F59700;
+  --cream:#FFF8F0; --warm:#FDF3E7; --text:#2d1f0e; --muted:#7a6050;
+  --border:rgba(230,81,0,0.15); --green:#2E7D32; --blue:#1565C0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans SC',sans-serif;background:#f5f1eb;min-height:100vh;color:var(--text);}
+
+/* HEADER */
+.header{background:var(--orange);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.header-logo{font-family:'Fraunces',serif;font-size:18px;color:#fff;display:flex;align-items:center;gap:8px;}
+.header-back{font-size:13px;color:rgba(255,255,255,0.8);text-decoration:none;}
+.header-back:hover{color:#fff;}
+
+.main{max-width:520px;margin:0 auto;padding:0 16px 80px;}
+
+/* ===== HERO BANNER ===== */
+.hero-banner{background:linear-gradient(135deg,#1a0f05 0%,#3d2810 50%,#1a0f05 100%);padding:40px 28px 32px;text-align:center;position:relative;overflow:hidden;margin-bottom:0;}
+.hb-dots{position:absolute;inset:0;opacity:.05;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;}
+.hb-glow1{position:absolute;width:250px;height:250px;background:radial-gradient(circle,rgba(245,151,0,.25) 0%,transparent 70%);top:-80px;right:-60px;border-radius:50%;}
+.hb-glow2{position:absolute;width:180px;height:180px;background:radial-gradient(circle,rgba(230,81,0,.2) 0%,transparent 70%);bottom:-60px;left:-40px;border-radius:50%;}
+.hb-icon{font-size:56px;margin-bottom:12px;animation:float 3s ease-in-out infinite;position:relative;z-index:1;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hb-slogan{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px;position:relative;z-index:1;}
+.hb-slogan em{font-style:normal;color:var(--gold);}
+.hb-sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;position:relative;z-index:1;}
+.hb-badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1;}
+.hb-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+.hb-b1{background:var(--gold);color:#1a0f05;}
+.hb-b2{background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);}
+
+/* JOIN STRIP */
+.join-strip{background:linear-gradient(90deg,var(--orange),#FF6D00);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
+.js-left{color:#fff;}
+.js-price{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:#fff;}
+.js-price sup{font-size:16px;vertical-align:top;margin-top:6px;}
+.js-label{font-size:12px;color:rgba(255,255,255,.8);}
+.js-desc{font-size:12px;color:rgba(255,255,255,.7);margin-top:4px;}
+.join-btn{background:#fff;color:var(--orange);font-size:14px;font-weight:700;padding:12px 24px;border-radius:20px;text-decoration:none;white-space:nowrap;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 16px rgba(0,0,0,.2);}
+.join-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.25);}
+.share-link-box{background:rgba(255,255,255,.15);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;width:100%;}
+.share-link-url{font-size:12px;color:rgba(255,255,255,.8);flex:1;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.share-link-copy{font-size:11px;font-weight:700;color:#fff;background:rgba(255,255,255,.2);border:none;border-radius:8px;padding:4px 10px;cursor:pointer;font-family:inherit;white-space:nowrap;}
+
+/* SECTION CARD */
+.sec-card{background:#fff;border-radius:20px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.04);}
+.sec-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.sec-label{font-size:10px;font-weight:700;color:var(--orange);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+
+/* MEMBER CARD */
+.member-card{background:linear-gradient(135deg,#1a0f05,#3d2810);border-radius:18px;padding:24px;margin-bottom:16px;position:relative;overflow:hidden;}
+.mc-shine{position:absolute;top:0;left:-80%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent);animation:shine 4s ease-in-out infinite;}
+@keyframes shine{0%{left:-80%}100%{left:160%}}
+.mc-dots{position:absolute;inset:0;opacity:.04;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:18px 18px;}
+.mc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;position:relative;}
+.mc-logo-txt{font-size:12px;color:rgba(255,255,255,.5);}
+.mc-type-badge{font-size:10px;font-weight:700;background:var(--gold);color:#1a0f05;padding:3px 10px;border-radius:20px;}
+.mc-center{text-align:center;margin-bottom:18px;position:relative;}
+.mc-emoji{font-size:48px;animation:float 3s ease-in-out infinite;}
+.mc-role-name{font-size:15px;font-weight:700;color:#fff;margin-top:6px;}
+.mc-role-skill{font-size:11px;color:rgba(255,255,255,.4);margin-top:3px;}
+.mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;position:relative;}
+.mc-field{background:rgba(255,255,255,.07);border-radius:10px;padding:10px 12px;}
+.mc-fl{font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.mc-fv{font-size:14px;font-weight:700;color:#fff;}
+.mc-fv.gold{color:var(--gold);}
+.mc-bottom{text-align:center;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);position:relative;}
+.mc-id-num{font-family:monospace;font-size:24px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.mc-id-lbl{font-size:9px;color:rgba(255,255,255,.25);margin-top:2px;}
+.mc-share-btn{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:12px;font-weight:700;padding:10px;border-radius:10px;cursor:pointer;font-family:inherit;margin-top:14px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.mc-share-btn:hover{background:rgba(255,255,255,.14);color:#fff;}
+
+/* DISCOUNT */
+.discount-box{background:var(--warm);border:2px dashed var(--gold);border-radius:14px;padding:18px;margin-bottom:16px;position:relative;overflow:hidden;}
+.db-corner{position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-size:56px;opacity:.07;}
+.db-label{font-size:10px;font-weight:700;color:var(--orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.db-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;}
+.db-code-row{display:flex;align-items:center;gap:10px;}
+.db-code{font-family:monospace;font-size:22px;font-weight:700;color:var(--orange);background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;flex:1;text-align:center;letter-spacing:3px;}
+.db-copy{background:var(--orange);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.db-note{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7;}
+
+/* BENEFITS */
+.benefit-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid #f5f1eb;}
+.benefit-item:last-child{border-bottom:none;}
+.bi-icon{font-size:28px;width:44px;text-align:center;flex-shrink:0;}
+.bi-name{font-size:14px;font-weight:700;color:var(--text);}
+.bi-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.6;}
+.bi-status{margin-left:auto;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0;margin-top:2px;}
+.bs-on{background:#E8F5E9;color:#2E7D32;}
+.bs-lock{background:#F3F3F3;color:#888;}
+.bs-soon{background:#FFF3E0;color:#E65100;}
+
+/* ACTIVITY TYPES */
+.activity-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
+.activity-card{border-radius:14px;padding:16px;text-align:center;transition:transform .2s;}
+.activity-card:hover{transform:translateY(-2px);}
+.ac-1{background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border:1.5px solid #FAC775;}
+.ac-2{background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border:1.5px solid #A5D6A7;}
+.ac-3{background:linear-gradient(135deg,#E8EAF6,#EDE7F6);border:1.5px solid #B39DDB;}
+.ac-4{background:linear-gradient(135deg,#E3F2FD,#E1F5FE);border:1.5px solid #90CAF9;}
+.ac-icon{font-size:32px;margin-bottom:8px;}
+.ac-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.ac-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* MERCHANT BENEFITS */
+.merchant-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--warm);border-radius:12px;margin-bottom:8px;}
+.mi-logo{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.mi-name{font-size:13px;font-weight:700;color:var(--text);}
+.mi-deal{font-size:12px;color:var(--orange);font-weight:700;margin-top:2px;}
+.mi-note{font-size:11px;color:var(--muted);margin-top:1px;}
+.coming-soon-tag{font-size:10px;font-weight:700;background:#F3F3F3;color:#888;padding:2px 8px;border-radius:10px;margin-left:auto;flex-shrink:0;}
+
+/* HISTORY */
+.history-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--warm);border-radius:12px;margin-bottom:8px;}
+.hi-icon{font-size:24px;}
+.hi-name{font-size:13px;font-weight:700;color:var(--text);}
+.hi-date{font-size:11px;color:var(--muted);margin-top:2px;}
+.hi-badge{margin-left:auto;font-size:10px;font-weight:700;background:var(--gold);color:#1a0f05;padding:3px 8px;border-radius:20px;flex-shrink:0;}
+.hi-badge.done{background:#E8F5E9;color:#2E7D32;}
+
+/* LOOKUP */
+.lookup-wrap{padding:32px 0 20px;text-align:center;}
+.lookup-card{background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;}
+.lookup-input{width:100%;padding:12px 16px;border:1.5px solid #e8e5df;border-radius:12px;font-size:15px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:2px;transition:border-color .2s;}
+.lookup-input:focus{border-color:var(--orange);}
+.lookup-btn{width:100%;background:var(--orange);color:#fff;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .15s;}
+.lookup-btn:hover{transform:translateY(-1px);}
+.or-divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px;margin:16px 0;}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:#e8e5df;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a0f05;color:#fff;border-radius:20px;padding:12px 20px;font-size:13px;font-weight:700;transition:transform .35s cubic-bezier(0.175,0.885,0.32,1.275);z-index:999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.25);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* hidden/show */
+.member-display{display:none;}
+.member-display.show{display:block;}
+.lookup-section.hidden{display:none;}
+
+/* URGENT BANNER */
+.urgent-banner {
+  background: linear-gradient(135deg, #B71C1C, #E53935);
+  padding: 20px 24px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.ub-glow { position:absolute; width:200px; height:200px; background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 70%); top:-80px; right:-40px; border-radius:50%; }
+.ub-label { font-size:11px; font-weight:700; color:rgba(255,255,255,.8); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+.ub-title { font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:#fff; margin-bottom:4px; }
+.ub-title em { font-style:normal; color:#FFD54F; }
+.ub-sub { font-size:12px; color:rgba(255,255,255,.75); margin-bottom:14px; }
+.ub-countdown { display:flex; gap:8px; justify-content:center; align-items:center; margin-bottom:14px; }
+.ub-unit { background:rgba(0,0,0,.25); border-radius:10px; padding:8px 12px; min-width:52px; text-align:center; }
+.ub-num { font-family:'Fraunces',serif; font-size:24px; font-weight:700; color:#FFD54F; line-height:1; }
+.ub-lbl { font-size:9px; color:rgba(255,255,255,.6); margin-top:2px; }
+.ub-sep { font-family:'Fraunces',serif; font-size:20px; color:rgba(255,255,255,.4); margin-top:-6px; }
+.ub-btn { display:inline-block; background:#FFD54F; color:#B71C1C; font-size:14px; font-weight:700; padding:11px 28px; border-radius:20px; text-decoration:none; cursor:pointer; border:none; font-family:inherit; transition:transform .15s, box-shadow .15s; box-shadow:0 4px 16px rgba(0,0,0,.2); }
+.ub-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.3); }
+.ub-note { font-size:11px; color:rgba(255,255,255,.55); margin-top:8px; }
+.ub-ended { font-size:14px; color:rgba(255,255,255,.8); padding:8px 0; }
+
+/* JOIN FORM MODAL */
+.join-modal-overlay {
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,.55);
+  z-index:500; align-items:center; justify-content:center;
+  padding:20px; backdrop-filter:blur(6px);
+}
+.join-modal-overlay.show { display:flex; }
+.join-modal-box {
+  background:#fff; border-radius:24px; padding:32px 28px;
+  max-width:420px; width:100%; position:relative;
+  animation:jmIn .35s cubic-bezier(0.175,.885,.32,1.275);
+  max-height:90vh; overflow-y:auto;
+}
+@keyframes jmIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+.jm-close { position:absolute;top:16px;right:18px;font-size:22px;cursor:pointer;color:#aaa;background:none;border:none;line-height:1; }
+.jm-header { text-align:center; margin-bottom:24px; }
+.jm-icon { font-size:48px; margin-bottom:10px; animation:float 3s ease-in-out infinite; }
+.jm-title { font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.jm-sub { font-size:13px; color:var(--muted); line-height:1.6; }
+.jm-price-row { display:flex; align-items:center; justify-content:center; gap:12px; margin:16px 0; }
+.jm-price { font-family:'Fraunces',serif; font-size:40px; font-weight:700; color:var(--orange); }
+.jm-price sup { font-size:18px; vertical-align:top; margin-top:8px; }
+.jm-price-note { font-size:12px; color:var(--muted); line-height:1.5; }
+.jm-field { margin-bottom:14px; }
+.jm-field label { font-size:12px; font-weight:700; color:var(--text); display:block; margin-bottom:5px; }
+.jm-field label .req { color:var(--orange); }
+.jm-field input { width:100%; padding:11px 14px; border:1.5px solid #e8e5df; border-radius:10px; font-size:14px; font-family:inherit; color:var(--text); outline:none; transition:border-color .2s; }
+.jm-field input:focus { border-color:var(--orange); }
+
+/* Pay info inside modal */
+.jm-pay-box { background:linear-gradient(135deg,#1a0f05,#3d2810); border-radius:14px; padding:18px; margin-bottom:16px; }
+.jm-pay-title { font-size:12px; color:rgba(255,255,255,.5); margin-bottom:10px; }
+.jm-pay-row { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.jm-pay-icon { font-size:16px; }
+.jm-pay-label { font-size:10px; color:rgba(255,255,255,.4); }
+.jm-pay-val { font-size:13px; font-weight:700; color:#fff; cursor:pointer; font-family:monospace; }
+.jm-pay-amount { text-align:center; padding-top:10px; margin-top:8px; border-top:1px solid rgba(255,255,255,.08); }
+.jm-pay-num { font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:var(--gold); }
+.jm-pay-hint { font-size:11px; color:rgba(255,255,255,.4); margin-top:4px; }
+.jm-pay-note { font-size:11px; color:rgba(255,255,255,.4); margin-top:8px; text-align:center; line-height:1.6; }
+
+/* Upload inside modal */
+.jm-upload-zone { border:2px dashed #e8e5df; border-radius:12px; padding:20px; text-align:center; cursor:pointer; transition:all .2s; background:var(--cream); position:relative; }
+.jm-upload-zone:hover { border-color:var(--orange); background:#FFF3E0; }
+.jm-upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.jm-upload-preview { display:none; }
+.jm-upload-preview img { width:100%; border-radius:10px; max-height:180px; object-fit:contain; border:1px solid var(--border); }
+.jm-upload-change { font-size:12px; color:var(--orange); cursor:pointer; font-weight:700; margin-top:6px; display:inline-block; }
+
+/* AI verify inside modal */
+.jm-ai-box { background:var(--warm); border:1.5px solid var(--border); border-radius:12px; padding:14px; margin-top:12px; display:none; }
+.jm-ai-box.show { display:block; }
+.jm-ai-status { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.jm-ai-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.jm-ai-dot.loading { background:var(--gold); animation:blink2 1s ease-in-out infinite; }
+.jm-ai-dot.ok { background:var(--green); }
+.jm-ai-dot.warn { background:#F57F17; }
+.jm-ai-dot.err { background:var(--red); }
+@keyframes blink2 { 0%,100%{opacity:.3}50%{opacity:1} }
+.jm-ai-result { font-size:12px; color:var(--muted); line-height:1.7; background:#fff; border-radius:8px; padding:10px; }
+
+.jm-submit { width:100%; background:var(--orange); color:#fff; font-size:15px; font-weight:700; padding:14px; border:none; border-radius:16px; cursor:pointer; font-family:inherit; margin-top:16px; transition:transform .15s,box-shadow .15s; box-shadow:0 4px 16px rgba(230,81,0,.3); }
+.jm-submit:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 24px rgba(230,81,0,.4); }
+.jm-submit:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+
+/* Success state inside modal */
+.jm-success { display:none; text-align:center; padding:8px 0; }
+.jm-success.show { display:block; }
+.jm-form-body.hidden { display:none; }
+.jm-s-icon { font-size:56px; margin-bottom:12px; animation:popIn2 .5s cubic-bezier(.175,.885,.32,1.275); }
+@keyframes popIn2 { from{opacity:0;transform:scale(.6)} to{opacity:1;transform:scale(1)} }
+.jm-s-title { font-family:'Fraunces',serif; font-size:20px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.jm-s-id { background:linear-gradient(135deg,#1a0f05,#3d2810); border-radius:12px; padding:14px; margin:14px 0; }
+.jm-s-id-num { font-family:monospace; font-size:20px; font-weight:700; color:var(--gold); letter-spacing:3px; }
+.jm-s-id-lbl { font-size:10px; color:rgba(255,255,255,.3); margin-top:2px; }
+.jm-s-status { display:inline-block; font-size:11px; font-weight:700; background:rgba(245,151,0,.15); color:var(--gold); padding:4px 12px; border-radius:20px; margin-top:6px; }
+.jm-s-desc { font-size:13px; color:var(--muted); line-height:1.8; }
+
+/* UPCOMING EVENT CARD */
+.upcoming-event {
+  background: linear-gradient(135deg, #1a0f05, #3d2810);
+  border-radius: 20px; overflow: hidden; margin-bottom: 16px;
+  position: relative; box-shadow: 0 8px 32px rgba(0,0,0,.15);
+}
+.ue-top-tag {
+  background: var(--orange); color: #fff;
+  font-size: 11px; font-weight: 700; padding: 8px 20px;
+  letter-spacing: 1px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.ue-member-tag {
+  background: var(--gold); color: #1a0f05;
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: 20px; margin-left: auto;
+}
+.ue-body { padding: 22px 22px 20px; position: relative; }
+.ue-glow { position:absolute; width:180px; height:180px; background:radial-gradient(circle,rgba(245,151,0,.15) 0%,transparent 70%); top:-40px; right:-40px; border-radius:50%; pointer-events:none; }
+.ue-date-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.ue-date-box { background: var(--gold); border-radius: 10px; padding: 8px 12px; text-align: center; flex-shrink: 0; }
+.ue-date-month { font-size: 10px; font-weight: 700; color: #1a0f05; text-transform: uppercase; }
+.ue-date-day { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: #1a0f05; line-height: 1; }
+.ue-date-info { }
+.ue-event-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: #fff; line-height: 1.2; }
+.ue-event-sub { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 4px; }
+.ue-details { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+.ue-detail-row { display: flex; align-items: flex-start; gap: 8px; }
+.ue-detail-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.ue-detail-text { font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.5; }
+.ue-spots-row { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.06); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; }
+.ue-spots-left { }
+.ue-spots-num { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--gold); line-height: 1; }
+.ue-spots-lbl { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 2px; }
+.ue-spots-bar { flex: 1; }
+.ue-spots-track { background: rgba(255,255,255,.1); border-radius: 20px; height: 8px; overflow: hidden; margin-bottom: 4px; }
+.ue-spots-fill { background: linear-gradient(90deg, var(--gold), var(--orange-light)); height: 8px; border-radius: 20px; width: 20%; transition: width 1s ease; }
+.ue-spots-desc { font-size: 11px; color: rgba(255,255,255,.4); }
+.ue-member-spots { background: rgba(245,151,0,.12); border: 1px solid rgba(245,151,0,.25); border-radius: 10px; padding: 8px 12px; font-size: 12px; color: var(--gold); font-weight: 700; text-align: center; margin-bottom: 14px; }
+.ue-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.ue-price { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: #fff; }
+.ue-price-mystery { background: rgba(255,255,255,.08); border: 1.5px dashed rgba(255,255,255,.2); border-radius: 12px; padding: 8px 16px; font-size: 14px; color: rgba(255,255,255,.5); }
+.ue-price-note { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 4px; }
+.ue-cta { display: flex; gap: 10px; }
+.ue-btn-primary { flex: 1; background: var(--gold); color: #1a0f05; font-size: 14px; font-weight: 700; padding: 13px; border: none; border-radius: 14px; cursor: pointer; font-family: inherit; transition: transform .15s, box-shadow .15s; box-shadow: 0 4px 16px rgba(245,151,0,.3); }
+.ue-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,151,0,.4); }
+.ue-btn-notify { background: rgba(255,255,255,.08); color: rgba(255,255,255,.7); font-size: 13px; font-weight: 700; padding: 13px 16px; border: 1px solid rgba(255,255,255,.15); border-radius: 14px; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.ue-btn-notify:hover { background: rgba(255,255,255,.14); color: #fff; }
+.ue-locked-overlay { display:none; position:absolute; inset:0; background:rgba(26,15,5,.85); backdrop-filter:blur(2px); align-items:center; justify-content:center; text-align:center; padding:24px; }
+.ue-locked-overlay.show { display:flex; flex-direction:column; gap:8px; }
+.ue-lock-icon { font-size:40px; }
+.ue-lock-text { font-size:14px; font-weight:700; color:#fff; }
+.ue-lock-sub { font-size:12px; color:rgba(255,255,255,.5); }
+</style>
+</head>
+<body>
+<script>
+(function() {
+
+var roles = {
+  detective: {emoji:'🔍', name:'侦探', skill:'完成任务后额外获得1条隐藏线索'},
+  merchant:  {emoji:'💰', name:'商人', skill:'黑市交易时可少付1个彩蛋'},
+  warrior:   {emoji:'⚔️', name:'战士', skill:'抢蛋阶段可额外多抢2个彩蛋'},
+  thief:     {emoji:'🗝️', name:'盗贼', skill:'可偷看另一队1条线索（限1次）'},
+  angel:     {emoji:'😇', name:'天使', skill:'补给阶段额外多补给2个彩蛋'},
+  none:      {emoji:'🎲', name:'角色待定', skill:'活动当天随机分配'}
+};
+
+function el(id) { return document.getElementById(id); }
+
+function showToast(msg) {
+  var t = el('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+function copyText(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).catch(function() { fallback(text); });
+  } else {
+    fallback(text);
+  }
+}
+
+function fallback(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+}
+
+function showMember(data) {
+  var r = roles[data.role] || roles['none'];
+  if(el('mc-name'))      el('mc-name').textContent      = data.name  || '彩蛋猎人';
+  if(el('mc-date'))      el('mc-date').textContent      = data.date  || new Date().toLocaleDateString('zh-CN');
+  if(el('mc-count'))     el('mc-count').textContent     = (data.count || 0) + ' 次';
+  if(el('mc-id'))        el('mc-id').textContent        = data.id    || '????';
+  if(el('mc-role-emoji'))el('mc-role-emoji').textContent= r.emoji;
+  if(el('mc-role-name')) el('mc-role-name').textContent = r.name;
+  if(el('mc-role-skill'))el('mc-role-skill').textContent= r.skill;
+  var ls = el('lookupSection');
+  var md = el('memberDisplay');
+  if(ls) ls.classList.add('hidden');
+  if(md) md.classList.add('show');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ---- PUBLIC FUNCTIONS ----
+
+window.lookupMember = function() {
+  var inp = el('lookupInput');
+  if (!inp) return;
+  var v = inp.value.trim();
+  if (!v) { showToast('⚠️ 请输入会员编号或邮箱'); return; }
+  if (v.toUpperCase().indexOf('NEXT-') === 0 || v.indexOf('@') > -1) {
+    var newId = v.toUpperCase().indexOf('NEXT-') === 0 ? v.toUpperCase() :
+      'NEXT-0' + String(30501 + Math.floor(Math.random()*50)).padStart(5,'0');
+    showMember({ id: newId, name: '彩蛋猎人',
+      date: new Date().toLocaleDateString('zh-CN'), count: 1, role: 'none' });
+  } else {
+    showToast('⚠️ 未找到该会员，请检查编号或邮箱');
+  }
+};
+
+window.joinMember = function() {
+  var m = el('joinModal');
+  if (m) { m.classList.add('show'); document.body.style.overflow = 'hidden'; }
+};
+
+window.closeJoinModal = function() {
+  var m = el('joinModal');
+  if (m) { m.classList.remove('show'); document.body.style.overflow = ''; }
+};
+
+window.copyAcc = function() {
+  copyText('zxcvjum@icloud.com');
+  showToast('✅ 账号已复制！');
+};
+
+window.copyCode = function() {
+  var code = el('discountCode') ? el('discountCode').textContent : 'NEXT-VIP-80';
+  copyText(code);
+  showToast('✅ 优惠码已复制：' + code);
+};
+
+window.shareCard = function() {
+  var name = el('mc-name') ? el('mc-name').textContent : '彩蛋猎人';
+  var id   = el('mc-id')   ? el('mc-id').textContent   : '';
+  var role = el('mc-role-name') ? el('mc-role-name').textContent : '';
+  var lines = [
+    '🥚 我加入了「疯狂的彩蛋」会员！',
+    '🎭 角色：' + role,
+    '🏅 编号：' + id,
+    '👤 ' + name,
+    '',
+    '4月11日 Sunnyvale 公园见！',
+    '下次见面，预备役！'
+  ];
+  var text = lines.join('\n');
+  if (navigator.share) {
+    navigator.share({title:'疯狂的彩蛋会员卡', text: text});
+  } else {
+    copyText(text);
+    showToast('✅ 会员信息已复制，截图分享给朋友！');
+  }
+};
+
+window.shareJoinLink = function() {
+  var lines = [
+    '🥚 疯狂的彩蛋会员招募！',
+    '只需 $2 成为会员，享受：',
+    '🎟 活动门票8折',
+    '🗓 定期活动优先报名',
+    '🏪 合作商家专属优惠',
+    '',
+    '转账 $2 至 zxcvjum@icloud.com（Zelle/Venmo）',
+    '备注「会员+姓名」即可！'
+  ];
+  var text = lines.join('\n');
+  if (navigator.share) {
+    navigator.share({title:'疯狂的彩蛋', text: text});
+  } else {
+    copyText(text);
+    showToast('✅ 邀请文案已复制，去群里发吧 🚀');
+  }
+};
+
+window.copyShareLink = function() {
+  copyText(window.location.href.split('?')[0] + '?join=1');
+  showToast('✅ 邀请链接已复制！');
+};
+
+window.copyPayInfo = function() {
+  var lines = [
+    '🥚 疯狂的彩蛋会员招募！4月11日前只需 $2！',
+    '💜 Venmo: zxcvjum@icloud.com',
+    '🏦 Zelle: zxcvjum@icloud.com',
+    '备注「会员+姓名」即可！'
+  ];
+  copyText(lines.join('\n'));
+  showToast('✅ 招募文案已复制！去群里发吧 🚀');
+};
+
+window.reserveSpot = function() {
+  var name = el('mc-name') ? el('mc-name').textContent : '';
+  if (!name || name === '---') name = prompt('请输入你的姓名：') || '';
+  if (!name.trim()) return;
+  var lines = [
+    '🎂 蛋糕杀预约申请',
+    '姓名：' + name,
+    '活动：2026年4月19日 蛋糕杀',
+    '地点：4949 Stevens Creek Blvd, Santa Clara',
+    '我要预付锁定会员名额！',
+    '转账至 zxcvjum@icloud.com 备注：蛋糕杀+' + name
+  ];
+  copyText(lines.join('\n'));
+  showToast('✅ 预约信息已复制！发给主办方微信锁定名额 🎂');
+};
+
+window.notifyMe = function() {
+  var w = prompt('输入你的微信号，价格公布时第一时间通知你：');
+  if (!w || !w.trim()) return;
+  showToast('✅ 已记录！价格公布时会通知 ' + w.trim());
+};
+
+// ---- FILE UPLOAD FOR JOIN MODAL ----
+var jmFile = null;
+
+window.handleJmFile = function(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  jmFile = file;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = el('jmPreviewImg');
+    if (img) img.src = e.target.result;
+    var zone    = el('jmUploadZone');
+    var preview = el('jmUploadPreview');
+    if (zone)    zone.style.display    = 'none';
+    if (preview) preview.style.display = 'block';
+    runJmAiVerify(e.target.result);
+  };
+  reader.readAsDataURL(file);
+};
+
+window.clearJmUpload = function() {
+  jmFile = null;
+  var zone    = el('jmUploadZone');
+  var preview = el('jmUploadPreview');
+  var input   = el('jmFileInput');
+  var aiBox   = el('jmAiBox');
+  var btn     = el('jmSubmitBtn');
+  if (zone)    zone.style.display    = 'block';
+  if (preview) preview.style.display = 'none';
+  if (input)   input.value           = '';
+  if (aiBox)   aiBox.classList.remove('show');
+  if (btn)     btn.disabled          = true;
+};
+
+async function runJmAiVerify(dataUrl) {
+  var dot    = el('jmAiDot');
+  var status = el('jmAiStatusText');
+  var result = el('jmAiResult');
+  var btn    = el('jmSubmitBtn');
+  var aiBox  = el('jmAiBox');
+  if (aiBox)  aiBox.classList.add('show');
+  if (dot)    dot.className   = 'jm-ai-dot loading';
+  if (status) status.textContent = 'AI 正在分析截图...';
+  if (result) result.textContent = '请稍候...';
+  var name   = el('jm-name')   ? el('jm-name').value.trim()   : '未填写';
+  var base64 = dataUrl.split(',')[1];
+  var mime   = dataUrl.split(';')[0].split(':')[1];
+  var prompt = [
+    '这是一张 Zelle 或 Venmo 付款截图。请分析：',
+    '1. 是否是有效付款截图？',
+    '2. 转账金额是多少？（预期：$2）',
+    '3. 备注是否包含「会员」和姓名「' + name + '」？',
+    '4. 付款状态是否完成？',
+    '',
+    '格式：',
+    '状态：[✅验证通过 / ⚠️需人工确认 / ❌验证失败]',
+    '金额：[金额]',
+    '备注：[备注内容]',
+    '说明：[1-2句话]'
+  ].join('\n');
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        messages: [{role:'user', content:[
+          {type:'image', source:{type:'base64', media_type:mime, data:base64}},
+          {type:'text',  text: prompt}
+        ]}]
+      })
+    });
+    var data = await res.json();
+    var txt = (data.content && data.content[0]) ? data.content[0].text : '无法识别';
+    if (result) result.textContent = txt;
+    if (txt.indexOf('✅') > -1) {
+      if (dot)    dot.className      = 'jm-ai-dot ok';
+      if (status) status.textContent = '✅ 验证通过';
+    } else if (txt.indexOf('⚠️') > -1) {
+      if (dot)    dot.className      = 'jm-ai-dot warn';
+      if (status) status.textContent = '⚠️ 需人工确认';
+    } else {
+      if (dot)    dot.className      = 'jm-ai-dot err';
+      if (status) status.textContent = '❌ 验证失败，请重新截图';
+    }
+    if (btn) btn.disabled = false;
+  } catch(e) {
+    if (dot)    dot.className      = 'jm-ai-dot warn';
+    if (status) status.textContent = '⚠️ 将提交人工审核';
+    if (result) result.textContent = 'AI验证暂不可用，截图将由主办方人工审核。';
+    if (btn)    btn.disabled       = false;
+  }
+}
+
+window.submitJoinForm = function() {
+  var name   = el('jm-name')   ? el('jm-name').value.trim()   : '';
+  var wechat = el('jm-wechat') ? el('jm-wechat').value.trim() : '';
+  if (!name || !wechat) { showToast('⚠️ 请填写姓名和微信号'); return; }
+  if (!jmFile)          { showToast('⚠️ 请上传付款截图');     return; }
+  var subId = 'REG-' + Date.now().toString(36).toUpperCase().slice(-6);
+  if (el('jmSubId')) el('jmSubId').textContent = subId;
+  var form    = el('jmFormBody');
+  var success = el('jmSuccess');
+  if (form)    form.classList.add('hidden');
+  if (success) success.classList.add('show');
+};
+
+// ---- COUNTDOWN ----
+var ubTarget = new Date('2026-04-11T14:00:00');
+function updateUbTimer() {
+  var diff = ubTarget - new Date();
+  if (diff <= 0) {
+    var banner = el('urgentBanner');
+    if (banner) banner.innerHTML = '<div style="text-align:center;padding:12px;font-size:14px;color:rgba(255,255,255,.8);">限时优惠已结束，感谢所有早期会员！</div>';
+    return;
+  }
+  var d = Math.floor(diff / 86400000);
+  var h = Math.floor((diff % 86400000) / 3600000);
+  var m = Math.floor((diff % 3600000)  / 60000);
+  var s = Math.floor((diff % 60000)    / 1000);
+  function set(id, v) { var e = el(id); if (e) e.textContent = String(v).padStart(2,'0'); }
+  set('ub-d', d); set('ub-h', h); set('ub-m', m); set('ub-s', s);
+  var mini = el('ub-mini-timer');
+  if (mini) mini.textContent = d + '天 ' + String(h).padStart(2,'0') + '时 ' + String(m).padStart(2,'0') + '分';
+}
+updateUbTimer();
+setInterval(updateUbTimer, 1000);
+
+// ---- DOM READY ----
+document.addEventListener('DOMContentLoaded', function() {
+  // Modal close on backdrop click
+  var jm = el('joinModal');
+  if (jm) jm.addEventListener('click', function(e) {
+    if (e.target === this) window.closeJoinModal();
+  });
+
+  // Enter key on lookup input
+  var inp = el('lookupInput');
+  if (inp) inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') window.lookupMember();
+  });
+
+  // Spots bar animation
+  setTimeout(function() {
+    var fill = el('spotsFill');
+    if (fill) fill.style.width = '20%';
+  }, 600);
+
+  // URL params auto-display
+  var p = new URLSearchParams(window.location.search);
+  if (p.get('id')) {
+    showMember({
+      id:    p.get('id'),
+      name:  p.get('name')  || '彩蛋猎人',
+      date:  p.get('date')  || new Date().toLocaleDateString('zh-CN'),
+      count: parseInt(p.get('count')) || 1,
+      role:  p.get('role')  || 'none'
+    });
+  }
+});
+
+})();
+</script>
+
+
+<div class="header">
+  <div class="header-logo">下次见面，预备役！</div>
+  <a href="crazy_egg_website.html" class="header-back">← 返回活动页</a>
+</div>
+
+<!-- URGENT BANNER -->
+<div class="urgent-banner" id="urgentBanner">
+  <div class="ub-glow"></div>
+  <div class="ub-label">⚡ 限时优惠</div>
+  <div class="ub-title">4月11日前 <em>$2</em> 成为会员！</div>
+  <div class="ub-sub">活动结束后恢复原价 · 现在加入锁定会员资格</div>
+  <div class="ub-countdown">
+    <div class="ub-unit"><div class="ub-num" id="ub-d">--</div><div class="ub-lbl">天</div></div>
+    <div class="ub-sep">:</div>
+    <div class="ub-unit"><div class="ub-num" id="ub-h">--</div><div class="ub-lbl">时</div></div>
+    <div class="ub-sep">:</div>
+    <div class="ub-unit"><div class="ub-num" id="ub-m">--</div><div class="ub-lbl">分</div></div>
+    <div class="ub-sep">:</div>
+    <div class="ub-unit"><div class="ub-num" id="ub-s">--</div><div class="ub-lbl">秒</div></div>
+  </div>
+  <button class="ub-btn" onclick="joinMember()">立即 $2 入会 →</button>
+  <div class="ub-note">转账至 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a6062796c706f775a737976756f7e34797577">[email&#160;protected]</a>（Zelle/Venmo）备注「会员」</div>
+</div>
+
+<!-- ===== LOOKUP SECTION ===== -->
+<div class="lookup-section" id="lookupSection">
+  <div class="main">
+    <div class="lookup-wrap">
+      <div style="font-size:52px;margin-bottom:12px;">🏅</div>
+      <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--text);margin-bottom:6px;">会员中心</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;">下次见面，预备役！<br>查询你的会员信息和专属福利</div>
+    </div>
+
+    <div class="lookup-card">
+      <div class="sec-label">已有会员编号</div>
+      <input class="lookup-input" id="lookupInput" placeholder="输入 NEXT-XXXXXX 或邮箱">
+      <button class="lookup-btn" onclick="lookupMember()">查询我的会员 →</button>
+      <div class="or-divider">或</div>
+      <div class="sec-label">还不是会员？</div>
+      <a href="#" onclick="joinMember()" style="display:block;background:var(--warm);border:2px solid var(--gold);border-radius:12px;padding:14px;text-align:center;text-decoration:none;">
+        <div style="font-size:24px;margin-bottom:6px;">✨</div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);">$2 成为会员</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">解锁全部会员福利 · 定期活动 · 商家优惠</div>
+      </a>
+    </div>
+
+    <!-- Join strip -->
+    <div class="join-strip" style="border-radius:16px;margin-bottom:16px;">
+      <div class="js-left">
+        <div style="font-size:11px;color:rgba(255,255,255,.7);margin-bottom:4px;">📢 分享给群友</div>
+        <div style="font-size:14px;font-weight:700;color:#fff;">发链接，$2 入会</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:2px;">让更多朋友加入彩蛋猎人联盟！</div>
+      </div>
+      <button class="join-btn" onclick="shareJoinLink()">复制邀请链接 🔗</button>
+    </div>
+
+    <!-- Preview benefits -->
+    <div class="sec-card">
+      <div class="sec-title">🎁 会员能得到什么？</div>
+      <div class="benefit-item">
+        <div class="bi-icon">🎟</div>
+        <div><div class="bi-name">活动门票折扣</div><div class="bi-desc">每次活动享会员专属折扣价</div></div>
+        <div class="bi-status bs-on">已激活</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">🗓</div>
+        <div><div class="bi-name">定期活动优先报名</div><div class="bi-desc">每月社群活动，会员提前48小时开放</div></div>
+        <div class="bi-status bs-on">已激活</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">🤝</div>
+        <div><div class="bi-name">联合活动专属席位</div><div class="bi-desc">与其他社群联合举办活动，会员专属名额</div></div>
+        <div class="bi-status bs-on">已激活</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">🏪</div>
+        <div><div class="bi-name">商家专属福利</div><div class="bi-desc">合作商家优惠、折扣、赠品</div></div>
+        <div class="bi-status bs-soon">陆续上线</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MEMBER DISPLAY ===== -->
+<div class="member-display" id="memberDisplay">
+
+
+  <!-- Urgent strip inside member view -->
+  <div id="urgentMini" style="background:linear-gradient(90deg,#B71C1C,#E53935);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+    <div style="color:#fff;">
+      <div style="font-size:11px;color:rgba(255,255,255,.7);">⚡ 限时</div>
+      <div style="font-size:14px;font-weight:700;">4月11日前 <span style="color:#FFD54F;">$2</span> 入会</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-family:monospace;font-size:13px;color:#FFD54F;font-weight:700;" id="ub-mini-timer">--d --h --m</span>
+      <button onclick="copyPayInfo()" style="background:#FFD54F;color:#B71C1C;border:none;border-radius:12px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">分享给群友</button>
+    </div>
+  </div>
+
+  <!-- Hero banner -->
+  <div class="hero-banner">
+    <div class="hb-dots"></div><div class="hb-glow1"></div><div class="hb-glow2"></div>
+    <div class="hb-icon">🥚</div>
+    <div class="hb-slogan">下次见面<br><em>预备役！</em></div>
+    <div class="hb-sub">你已正式加入疯狂的彩蛋猎人联盟<br>专属福利已全部解锁，等你来战</div>
+    <div class="hb-badge-row">
+      <span class="hb-badge hb-b1">🏅 彩蛋猎人会员</span>
+      <span class="hb-badge hb-b2">下次见面 预备役</span>
+    </div>
+  </div>
+
+  <!-- Join strip (share) -->
+  <div class="join-strip">
+    <div class="js-left">
+      <div class="js-price"><sup>$</sup>2</div>
+      <div class="js-label">邀请群友入会</div>
+      <div class="js-desc">分享链接，让朋友也加入！</div>
+    </div>
+    <button class="join-btn" onclick="shareJoinLink()">复制邀请链接 🔗</button>
+    <div class="share-link-box">
+      <span class="share-link-url" id="shareUrl">crazy-egg.com/member?join=1</span>
+      <button class="share-link-copy" onclick="copyShareLink()">复制</button>
+    </div>
+  </div>
+
+  <div class="main" style="padding-top:20px;">
+
+    <!-- Member Card -->
+    <div class="member-card">
+      <div class="mc-shine"></div><div class="mc-dots"></div>
+      <div class="mc-header">
+        <div class="mc-logo-txt">🥚 疯狂的彩蛋</div>
+        <div class="mc-type-badge">MEMBER</div>
+      </div>
+      <div class="mc-center">
+        <div class="mc-emoji" id="mc-role-emoji">🎲</div>
+        <div class="mc-role-name" id="mc-role-name">角色待定</div>
+        <div class="mc-role-skill" id="mc-role-skill">活动当天揭晓</div>
+      </div>
+      <div class="mc-grid">
+        <div class="mc-field"><div class="mc-fl">会员姓名</div><div class="mc-fv" id="mc-name">---</div></div>
+        <div class="mc-field"><div class="mc-fl">加入日期</div><div class="mc-fv" id="mc-date">---</div></div>
+        <div class="mc-field"><div class="mc-fl">参加活动</div><div class="mc-fv gold" id="mc-count">0 次</div></div>
+        <div class="mc-field"><div class="mc-fl">会员等级</div><div class="mc-fv gold">🏅 猎人</div></div>
+      </div>
+      <div class="mc-bottom">
+        <div class="mc-id-num" id="mc-id">NEXT-??????</div>
+        <div class="mc-id-lbl">MEMBER ID</div>
+      </div>
+      <button class="mc-share-btn" onclick="shareCard()">📸 截图分享会员卡 · 邀请好友</button>
+    </div>
+
+    <!-- Discount Code -->
+    <div class="discount-box">
+      <div class="db-corner">🎟</div>
+      <div class="db-label">会员专属福利</div>
+      <div class="db-title">下次活动 8折 优惠码</div>
+      <div class="db-code-row">
+        <div class="db-code" id="discountCode">NEXT-VIP-80</div>
+        <button class="db-copy" onclick="copyCode()">复制</button>
+      </div>
+      <div class="db-note">📌 下次活动报名时备注此码，自动享受8折优惠<br>💡 优惠码与会员绑定，不可转让</div>
+    </div>
+
+    <!-- All Benefits -->
+    <div class="sec-card">
+      <div class="sec-title">🎁 全部会员福利</div>
+
+      <div class="benefit-item">
+        <div class="bi-icon">🎟</div>
+        <div><div class="bi-name">活动门票 8折优惠</div><div class="bi-desc">每次疯狂的彩蛋活动享专属折扣，使用优惠码自动生效</div></div>
+        <div class="bi-status bs-on">已激活</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">🌟</div>
+        <div><div class="bi-name">许愿池优先权</div><div class="bi-desc">报名时角色许愿优先级更高，愿望实现机率更大</div></div>
+        <div class="bi-status bs-on">已激活</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">📢</div>
+        <div><div class="bi-name">新活动提前通知</div><div class="bi-desc">比普通用户提前48小时收到活动信息和报名通道</div></div>
+        <div class="bi-status bs-on">已激活</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">🤝</div>
+        <div><div class="bi-name">联合活动专属席位</div><div class="bi-desc">与湾区其他社群联合举办活动，会员享专属名额优先权</div></div>
+        <div class="bi-status bs-on">已激活</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">🏪</div>
+        <div><div class="bi-name">合作商家专属优惠</div><div class="bi-desc">湾区合作商家折扣、赠品、会员专属价，陆续上线</div></div>
+        <div class="bi-status bs-soon">陆续上线</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">🏆</div>
+        <div><div class="bi-name">老会员隐藏任务线</div><div class="bi-desc">参加3次后解锁专属隐藏任务，更多线索，更大奖励</div></div>
+        <div class="bi-status bs-lock">参加3次解锁</div>
+      </div>
+      <div class="benefit-item">
+        <div class="bi-icon">🥇</div>
+        <div><div class="bi-name">金蛋猎人荣誉称号</div><div class="bi-desc">成功找到金蛋后解锁，会员卡永久展示</div></div>
+        <div class="bi-status bs-lock">待解锁</div>
+      </div>
+    </div>
+
+    <!-- Activity Types -->
+
+    <!-- UPCOMING EVENT: 蛋糕杀 -->
+    <div class="upcoming-event">
+      <div class="ue-top-tag">
+        🎉 即将开始
+        <span class="ue-member-tag">🏅 会员专属名额</span>
+      </div>
+      <div class="ue-body">
+        <div class="ue-glow"></div>
+
+        <div class="ue-date-row">
+          <div class="ue-date-box">
+            <div class="ue-date-month">APR</div>
+            <div class="ue-date-day">19</div>
+          </div>
+          <div class="ue-date-info">
+            <div class="ue-event-name">蛋糕杀 🎂</div>
+            <div class="ue-event-sub">下次见面，预备役！同步活动</div>
+          </div>
+        </div>
+
+        <div class="ue-details">
+          <div class="ue-detail-row">
+            <span class="ue-detail-icon">🕑</span>
+            <span class="ue-detail-text">2026年4月19日 · 下午 2:00 – 5:00</span>
+          </div>
+          <div class="ue-detail-row">
+            <span class="ue-detail-icon">📍</span>
+            <span class="ue-detail-text">4949 Stevens Creek Blvd, Santa Clara, CA 95051</span>
+          </div>
+          <div class="ue-detail-row">
+            <span class="ue-detail-icon">👥</span>
+            <span class="ue-detail-text">总人数 50 人 · 会员专属保留 10 个名额</span>
+          </div>
+        </div>
+
+        <!-- Spots bar -->
+        <div class="ue-spots-row">
+          <div class="ue-spots-left">
+            <div class="ue-spots-num">10</div>
+            <div class="ue-spots-lbl">会员名额</div>
+          </div>
+          <div class="ue-spots-bar">
+            <div class="ue-spots-track">
+              <div class="ue-spots-fill" id="spotsFill"></div>
+            </div>
+            <div class="ue-spots-desc">名额有限 · 预付锁定</div>
+          </div>
+        </div>
+
+        <div class="ue-member-spots">🏅 会员专属 10 个席位 · 优先于普通报名开放</div>
+
+        <!-- Price mystery -->
+        <div class="ue-price-row">
+          <div>
+            <div class="ue-price-mystery">💰 价格即将公布</div>
+            <div class="ue-price-note">预付即锁定名额 · 价格公布前先占位</div>
+          </div>
+        </div>
+
+        <div class="ue-cta">
+          <button class="ue-btn-primary" onclick="reserveSpot()">🔒 预付锁定名额</button>
+          <button class="ue-btn-notify" onclick="notifyMe()">🔔 价格公布提醒</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-title">🗓 会员专属活动类型</div>
+      <div class="activity-grid">
+        <div class="activity-card ac-1">
+          <div class="ac-icon">🥚</div>
+          <div class="ac-name">定期彩蛋活动</div>
+          <div class="ac-desc">每季度举办，会员提前报名</div>
+        </div>
+        <div class="activity-card ac-2">
+          <div class="ac-icon">🤝</div>
+          <div class="ac-name">联合社群活动</div>
+          <div class="ac-desc">跨社群合办，认识更多朋友</div>
+        </div>
+        <div class="activity-card ac-3">
+          <div class="ac-icon">🎭</div>
+          <div class="ac-name">角色扮演特别场</div>
+          <div class="ac-desc">会员专属剧情活动</div>
+        </div>
+        <div class="activity-card ac-4">
+          <div class="ac-icon">🌙</div>
+          <div class="ac-name">会员专属聚会</div>
+          <div class="ac-desc">不定期线下交流活动</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Merchant Benefits -->
+    <div class="sec-card">
+      <div class="sec-title">🏪 合作商家福利 <span style="font-size:11px;font-weight:400;color:var(--muted);">（陆续上线）</span></div>
+      <div class="merchant-item">
+        <div class="mi-logo" style="background:#FFF3E0;">🧋</div>
+        <div>
+          <div class="mi-name">湾区奶茶合作店</div>
+          <div class="mi-deal">会员购买享9折优惠</div>
+          <div class="mi-note">凭会员编号享受折扣</div>
+        </div>
+        <div class="coming-soon-tag">即将上线</div>
+      </div>
+      <div class="merchant-item">
+        <div class="mi-logo" style="background:#E8F5E9;">🍜</div>
+        <div>
+          <div class="mi-name">湾区中餐合作餐厅</div>
+          <div class="mi-deal">会员聚餐85折</div>
+          <div class="mi-note">4人以上聚餐适用</div>
+        </div>
+        <div class="coming-soon-tag">即将上线</div>
+      </div>
+      <div class="merchant-item">
+        <div class="mi-logo" style="background:#E8EAF6;">🎮</div>
+        <div>
+          <div class="mi-name">娱乐场所合作伙伴</div>
+          <div class="mi-deal">密室/桌游/KTV 会员价</div>
+          <div class="mi-note">更多合作洽谈中</div>
+        </div>
+        <div class="coming-soon-tag">洽谈中</div>
+      </div>
+      <div style="text-align:center;padding:16px 0 4px;font-size:12px;color:var(--muted);">
+        想成为合作商家？<a href="#" style="color:var(--orange);font-weight:700;">联系我们 →</a>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="sec-card">
+      <div class="sec-title">📅 参与记录</div>
+      <div id="historyList">
+        <div class="history-item" style="border:1.5px solid #FAC775;background:linear-gradient(135deg,#FFF8E1,#FFF3E0);">
+          <div class="hi-icon">🎂</div>
+          <div>
+            <div class="hi-name" style="color:var(--orange);">蛋糕杀 · 即将开始</div>
+            <div class="hi-date">2026年4月19日 · Santa Clara · 会员专属</div>
+          </div>
+          <div class="hi-badge" style="background:var(--orange);color:#fff;">🔒 锁定</div>
+        </div>
+        <div class="history-item">
+          <div class="hi-icon">🥚</div>
+          <div>
+            <div class="hi-name">疯狂的彩蛋 · 第一季</div>
+            <div class="hi-date">2026年4月11日 · Sunnyvale 公园</div>
+          </div>
+          <div class="hi-badge done">已报名</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;font-size:12px;color:var(--muted);line-height:2;padding-bottom:20px;">
+      有问题？通过微信联系主办方<br>
+      <a href="crazy_egg_website.html" style="color:var(--orange);font-weight:700;">← 返回活动页面</a>
+    </div>
+
+  </div>
+</div><!-- end member-display -->
+
+<div class="toast" id="toast">✅ 已复制！</div>
+
+<script>
+// Sequential member ID starting from NEXT-030501
+function generateMemberId() {
+  var base = 30501; // 030501 internally stored as 30501
+  var stored = localStorage ? (parseInt(localStorage.getItem('nextMemberSeq') || base)) : base;
+  // In demo mode, just increment randomly in range 030501–030999
+  var num = stored + Math.floor(Math.random() * 3);
+  var formatted = '0' + String(Math.max(num, 30501)).padStart(5, '0');
+  return 'NEXT-' + formatted;
+}
+
+var roles = {
+  detective:{emoji:'🔍',name:'侦探',skill:'完成任务后额外获得1条隐藏线索'},
+  merchant:{emoji:'💰',name:'商人',skill:'黑市交易时可少付1个彩蛋'},
+  warrior:{emoji:'⚔️',name:'战士',skill:'抢蛋阶段可额外多抢2个彩蛋'},
+  thief:{emoji:'🗝️',name:'盗贼',skill:'可偷看另一队1条线索（限1次）'},
+  angel:{emoji:'😇',name:'天使',skill:'补给阶段额外多补给2个彩蛋'},
+  none:{emoji:'🎲',name:'角色待定',skill:'活动当天随机分配'}
+};
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+function lookupMember() {
+  var v = document.getElementById('lookupInput').value.trim();
+  if (!v) { showToast('⚠️ 请输入会员编号或邮箱'); return; }
+  // Demo: accept any EGG- or email format
+  if (v.toUpperCase().startsWith('NEXT-') || v.includes('@')) {
+    showMember({
+      id: v.toUpperCase().startsWith('NEXT-') ? v.toUpperCase() : generateMemberId(),
+      name: '彩蛋猎人',
+      date: new Date().toLocaleDateString('zh-CN'),
+      count: 1, role: 'none'
+    });
+  } else {
+    showToast('⚠️ 未找到该会员，请检查编号或邮箱');
+  }
+}
+
+function joinMember() {
+  var name = prompt('请输入你的姓名（将显示在会员卡上）：');
+  if (!name || !name.trim()) return;
+  showMember({
+    id: generateMemberId(),
+    name: name.trim(),
+    date: new Date().toLocaleDateString('zh-CN'),
+    count: 0, role: 'none'
+  });
+}
+
+function showMember(data) {
+  var r = roles[data.role] || roles['none'];
+  document.getElementById('mc-name').textContent = data.name || '彩蛋猎人';
+  document.getElementById('mc-date').textContent = data.date || new Date().toLocaleDateString('zh-CN');
+  document.getElementById('mc-count').textContent = (data.count || 0) + ' 次';
+  document.getElementById('mc-id').textContent = data.id || 'NEXT-??????';
+  document.getElementById('mc-role-emoji').textContent = r.emoji;
+  document.getElementById('mc-role-name').textContent = r.name;
+  document.getElementById('mc-role-skill').textContent = r.skill;
+  document.getElementById('lookupSection').classList.add('hidden');
+  document.getElementById('memberDisplay').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// URL params auto-display
+(function(){
+  var p = new URLSearchParams(window.location.search);
+  if (p.get('id')) {
+    showMember({
+      id: p.get('id'), name: p.get('name') || '彩蛋猎人',
+      date: p.get('date') || new Date().toLocaleDateString('zh-CN'),
+      count: parseInt(p.get('count'))||1, role: p.get('role')||'none'
+    });
+  }
+})();
+
+function copyCode() {
+  var code = document.getElementById('discountCode').textContent;
+  navigator.clipboard ? navigator.clipboard.writeText(code) : fallbackCopy(code);
+  showToast('✅ 优惠码已复制：' + code);
+}
+
+function copyShareLink() {
+  var url = document.getElementById('shareUrl').textContent;
+  navigator.clipboard ? navigator.clipboard.writeText(url) : fallbackCopy(url);
+  showToast('✅ 邀请链接已复制！');
+}
+
+function shareJoinLink() {
+  var url = window.location.origin + window.location.pathname + '?join=1';
+  var text = '🥚 疯狂的彩蛋会员招募中！\n只需 $2 成为会员，享受：\n🎟 活动门票8折\n🗓 定期活动优先报名\n🏪 合作商家专属优惠\n\n点击加入：' + url;
+  if (navigator.share) {
+    navigator.share({title:'疯狂的彩蛋会员招募', text:text});
+  } else {
+    navigator.clipboard ? navigator.clipboard.writeText(text) : fallbackCopy(text);
+    showToast('✅ 邀请文案已复制，快去群里发！');
+  }
+}
+
+function shareCard() {
+  var name = document.getElementById('mc-name').textContent;
+  var id = document.getElementById('mc-id').textContent;
+  var role = document.getElementById('mc-role-name').textContent;
+  var text = '🥚 我加入了「疯狂的彩蛋」会员！\n🎭 角色：' + role + '\n🏅 编号：' + id + '\n👤 ' + name + '\n\n4月11日 Sunnyvale 公园见！\n下次见面，预备役！';
+  if (navigator.share) {
+    navigator.share({title:'疯狂的彩蛋会员卡', text:text});
+  } else {
+    navigator.clipboard ? navigator.clipboard.writeText(text) : fallbackCopy(text);
+    showToast('✅ 会员信息已复制，截图分享给朋友！');
+  }
+}
+
+function fallbackCopy(text) {
+  var el = document.createElement('textarea');
+  el.value = text; document.body.appendChild(el);
+  el.select(); document.execCommand('copy');
+  document.body.removeChild(el);
+}
+
+document.getElementById('lookupInput').addEventListener('keydown', function(e){
+  if(e.key==='Enter') lookupMember();
+});
+
+// ===== URGENT COUNTDOWN =====
+var ubTarget = new Date('2026-04-11T14:00:00');
+function updateUbTimer() {
+  var diff = ubTarget - new Date();
+  var banner = document.getElementById('urgentBanner');
+  if (diff <= 0) {
+    if (banner) banner.innerHTML = '<div class="ub-ended">限时优惠已结束，感谢所有早期会员的支持！</div>';
+    var mini = document.getElementById('urgentMini');
+    if (mini) mini.style.display = 'none';
+    return;
+  }
+  var d = Math.floor(diff/86400000);
+  var h = Math.floor((diff%86400000)/3600000);
+  var m = Math.floor((diff%3600000)/60000);
+  var s = Math.floor((diff%60000)/1000);
+  function set(id, val) { var el=document.getElementById(id); if(el) el.textContent=String(val).padStart(2,'0'); }
+  set('ub-d', d); set('ub-h', h); set('ub-m', m); set('ub-s', s);
+  var mini = document.getElementById('ub-mini-timer');
+  if (mini) mini.textContent = d+'天 '+String(h).padStart(2,'0')+'时 '+String(m).padStart(2,'0')+'分';
+}
+updateUbTimer();
+setInterval(updateUbTimer, 1000);
+
+function copyPayInfo() {
+  var text = '🥚 疯狂的彩蛋会员招募！\n4月11日前只需 $2 成为会员！\n\n会员福利：\n🎟 活动门票8折\n🗓 定期活动优先报名\n🤝 联合活动专属席位\n🏪 合作商家专属优惠\n\n转账 $2 至：\n💜 Venmo: zxcvjum@icloud.com\n🏦 Zelle: zxcv
+
+<!-- JOIN MEMBER MODAL -->
+<div class="join-modal-overlay" id="joinModal">
+  <div class="join-modal-box">
+    <button class="jm-close" onclick="closeJoinModal()">&#x2715;</button>
+    <div class="jm-form-body" id="jmFormBody">
+      <div class="jm-header">
+        <div class="jm-icon">&#x1F3C5;</div>
+        <div class="jm-title">&#x52A0;&#x5165;&#x4F1A;&#x5458;</div>
+        <div class="jm-sub">&#x586B;&#x5199;&#x4FE1;&#x606F; + &#x4E0A;&#x4F20;&#x622A;&#x56FE; &#x5BA1;&#x6838;&#x540E;&#x53D1;&#x9001;&#x7F16;&#x53F7;</div>
+      </div>
+      <div class="jm-price-row">
+        <div class="jm-price"><sup>$</sup>2</div>
+        <div class="jm-price-note">&#x4E00;&#x6B21;&#x6027;&#x5165;&#x4F1A;&#x8D39;<br>&#x540C;&#x7B49;&#x4F1A;&#x5458;&#x798F;&#x5229;</div>
+      </div>
+      <div class="jm-pay-box">
+        <div class="jm-pay-title">&#x8F6C;&#x8D26;&#x4FE1;&#x606F;</div>
+        <div class="jm-pay-row"><span class="jm-pay-icon">&#x1F3E6;</span><div><div class="jm-pay-label">Zelle</div><div class="jm-pay-val" onclick="copyAcc()">zxcvjum@icloud.com</div></div></div>
+        <div class="jm-pay-row"><span class="jm-pay-icon">&#x1F49C;</span><div><div class="jm-pay-label">Venmo</div><div class="jm-pay-val" onclick="copyAcc()">zxcvjum@icloud.com</div></div></div>
+        <div class="jm-pay-amount">
+          <div class="jm-pay-num">$2</div>
+          <div class="jm-pay-hint">&#x5165;&#x4F1A;&#x8D39;</div>
+        </div>
+        <div class="jm-pay-note">&#x5907;&#x6CE8;&#xFF1A;&#x300C;&#x4F1A;&#x5458;+<span id="jmPayName">&#x4F60;&#x7684;&#x59D3;&#x540D;</span>&#x300D;</div>
+      </div>
+      <div class="jm-field">
+        <label>&#x59D3;&#x540D; <span class="req">*</span></label>
+        <input type="text" id="jm-name" placeholder="&#x771F;&#x5B9E;&#x59D3;&#x540D;">
+      </div>
+      <div class="jm-field">
+        <label>&#x5FAE;&#x4FE1; ID <span class="req">*</span></label>
+        <input type="text" id="jm-wechat" placeholder="&#x5FAE;&#x4FE1;&#x53F7;">
+      </div>
+      <div class="jm-field">
+        <label>&#x4E0A;&#x4F20;&#x4ED8;&#x6B3E;&#x622A;&#x56FE; <span class="req">*</span></label>
+        <div class="jm-upload-zone" id="jmUploadZone">
+          <input type="file" id="jmFileInput" accept="image/*" onchange="handleJmFile(event)">
+          <div style="font-size:28px;margin-bottom:6px;">&#x1F4F8;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);">&#x70B9;&#x51FB;&#x4E0A;&#x4F20;&#x622A;&#x56FE;</div>
+          <div style="font-size:11px;color:var(--muted);">Zelle / Venmo &#x8F6C;&#x8D26;&#x6210;&#x529F;&#x622A;&#x56FE;</div>
+        </div>
+        <div class="jm-upload-preview" id="jmUploadPreview" style="display:none;">
+          <img id="jmPreviewImg" src="" alt="" style="width:100%;border-radius:10px;max-height:180px;object-fit:contain;">
+          <span class="jm-upload-change" onclick="clearJmUpload()">&#x91CD;&#x65B0;&#x4E0A;&#x4F20;</span>
+        </div>
+      </div>
+      <div class="jm-ai-box" id="jmAiBox" style="display:none;">
+        <div class="jm-ai-status">
+          <div class="jm-ai-dot loading" id="jmAiDot"></div>
+          <span id="jmAiStatusText">AI &#x5206;&#x6790;&#x4E2D;...</span>
+        </div>
+        <div class="jm-ai-result" id="jmAiResult">&#x8BF7;&#x7A0D;&#x5019;...</div>
+      </div>
+      <button class="jm-submit" id="jmSubmitBtn" onclick="submitJoinForm()" disabled>&#x63D0;&#x4EA4;&#x7533;&#x8BF7; &#x2192;</button>
+    </div>
+    <div class="jm-success" id="jmSuccess">
+      <div class="jm-s-icon">&#x1F389;</div>
+      <div class="jm-s-title">&#x7533;&#x8BF7;&#x5DF2;&#x63D0;&#x4EA4;&#xFF01;</div>
+      <div class="jm-s-id">
+        <div class="jm-s-id-num" id="jmSubId">REG-??????</div>
+        <div class="jm-s-id-lbl">&#x63D0;&#x4EA4;&#x7F16;&#x53F7;</div>
+        <div class="jm-s-status">&#x23F3; &#x5F85;&#x5BA1;&#x6838;</div>
+      </div>
+      <div class="jm-s-desc">24&#x5C0F;&#x65F6;&#x5185;&#x5FAE;&#x4FE1;&#x53D1;&#x9001;&#x4F1A;&#x5458;&#x7F16;&#x53F7; <strong style="color:var(--orange);">NEXT-030XXX</strong></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+</body>
+</html>
